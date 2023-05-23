@@ -1,0 +1,266 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>【Interview】ZooKeeper原理 | SilverSucks</title><meta name="author" content="Johnson Liam"><meta name="copyright" content="Johnson Liam"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="以我一己之见，全篇将Zookeeper最重要的东西就是： Watch监听机制（如何实现主备切换，即热备知道老大宕机了）。 Leader选举机制(过半原则：Paxos算法)。 SSH免密登陆原理(非对称加密-公钥加密，私钥解密)  Zookeeper简介及用途ZooKeeper，它是一个开放源码的分"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://github.com/weiswift/2023/05/23/2023.05.23/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '【Interview】ZooKeeper原理',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-05-23 22:39:17'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css"> <script src="/live2d-widget/autoload.js"></script><script src="/live2d-widget/autoload.js"> </script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s1.ax1x.com/2023/04/18/p9i6VDx.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">45</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">23</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Links</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-gamepad"></i><span> Games</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/mikutap/"><i class="fa-fw fa fa-music"></i><span> MikuTap 初音未来</span></a></li><li><a class="site-page child" href="/starbattle/"><i class="fa-fw fa fa-space-shuttle"></i><span> StartBattle 星际大战</span></a></li><li><a class="site-page child" href="/2048/"><i class="fa-fw fa fa-flag"></i><span> 2048 经典游戏</span></a></li><li><a class="site-page child" href="/battlecity/"><i class="fa-fw fa fa-arrow-circle-left"></i><span> BattleCity 坦克大战</span></a></li><li><a class="site-page child" href="/pacman/"><i class="fa-fw fa fa-bolt"></i><span> PacMan  吃豆人</span></a></li><li><a class="site-page child" href="/tetris/"><i class="fa-fw fa fa-arrows-alt"></i><span> Tetris 俄罗斯方块</span></a></li><li><a class="site-page child" href="/smallcat/"><i class="fa-fw fa fa-paw"></i><span> CatchCat 困住小猫</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-leaf"></i><span> Moments</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/diary/"><i class="fa-fw fas fa-bookmark"></i><span> Diary</span></a></li><li><a class="site-page child" href="/gallery/"><i class="fa-fw fa fa-hourglass-half"></i><span> Gallery</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-podcast"></i><span> More</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags标签</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About关于</span></a></li><li><a class="site-page child" href="/messageboard/"><i class="fa-fw fas fa-bookmark"></i><span> Messageboard留言板</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s1.ax1x.com/2023/04/18/p9i6u5D.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="SilverSucks"><span class="site-name">SilverSucks</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Links</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-gamepad"></i><span> Games</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/mikutap/"><i class="fa-fw fa fa-music"></i><span> MikuTap 初音未来</span></a></li><li><a class="site-page child" href="/starbattle/"><i class="fa-fw fa fa-space-shuttle"></i><span> StartBattle 星际大战</span></a></li><li><a class="site-page child" href="/2048/"><i class="fa-fw fa fa-flag"></i><span> 2048 经典游戏</span></a></li><li><a class="site-page child" href="/battlecity/"><i class="fa-fw fa fa-arrow-circle-left"></i><span> BattleCity 坦克大战</span></a></li><li><a class="site-page child" href="/pacman/"><i class="fa-fw fa fa-bolt"></i><span> PacMan  吃豆人</span></a></li><li><a class="site-page child" href="/tetris/"><i class="fa-fw fa fa-arrows-alt"></i><span> Tetris 俄罗斯方块</span></a></li><li><a class="site-page child" href="/smallcat/"><i class="fa-fw fa fa-paw"></i><span> CatchCat 困住小猫</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-leaf"></i><span> Moments</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/diary/"><i class="fa-fw fas fa-bookmark"></i><span> Diary</span></a></li><li><a class="site-page child" href="/gallery/"><i class="fa-fw fa fa-hourglass-half"></i><span> Gallery</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-podcast"></i><span> More</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags标签</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About关于</span></a></li><li><a class="site-page child" href="/messageboard/"><i class="fa-fw fas fa-bookmark"></i><span> Messageboard留言板</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">【Interview】ZooKeeper原理</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2023-05-22T17:00:00.000Z" title="Created 2023-05-23 00:00:00">2023-05-23</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-05-23T15:39:17.000Z" title="Updated 2023-05-23 22:39:17">2023-05-23</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="【Interview】ZooKeeper原理"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><blockquote>
+<p>以我一己之见，全篇将Zookeeper最重要的东西就是：</p>
+<p>Watch监听机制（如何实现主备切换，即热备知道老大宕机了）。</p>
+<p>Leader选举机制(过半原则：Paxos算法)。</p>
+<p>SSH免密登陆原理(非对称加密-公钥加密，私钥解密)</p>
+</blockquote>
+<h1 id="Zookeeper简介及用途"><a href="#Zookeeper简介及用途" class="headerlink" title="Zookeeper简介及用途"></a>Zookeeper简介及用途</h1><p>ZooKeeper，它是一个开放源码的分布式协调服务，它是一个集群的管理者，它将简单易用的接口提供给用户。</p>
+<p>可以基于Zookeeper 实现诸如<code>数据发布/订阅</code>、<code>负载均衡</code>、<code>命名服务</code>、分布式协调&#x2F;通知、<code>集群管理</code>、Master 选举、分布式锁和分布式队列等功能。<br>Zookeeper的用途：命名服务、配置管理、集群管理、分布式锁、队列管理</p>
+<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p><strong>ZooKeeper概念:</strong> Zookeeper是一个分布式协调服务的开源框架。本质上是一个分布式的小文件存储系统</p>
+<p><strong>ZooKeeper作用:</strong> 主要用来解决分布式集群中应用系统的一致性问题。</p>
+<p><strong>ZooKeeper结构:</strong> 采用树形层次结构，ZooKeeper树中的每个节点被称为—Znode。且树中的每个节点可以拥有子节点</p>
+<h2 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h2><ol>
+<li><p><code>全局数据一致：集群中每个服务器保存一份相同的数据副本，client无论连接到哪个服务器，展示的数据都是一致的，这是最重要的特征；</code></p>
+</li>
+<li><p><strong>可靠性：</strong>如果消息被其中一台服务器接受，那么将被所有的服务器接受。</p>
+</li>
+<li><p><strong>顺序性：</strong>包括全局有序和偏序两种：全局有序是指如果在一台服务器上消息a在消息b前发布，则在所有Server上消息a都将在消息b前被发布；偏序是指如果一个消息b在消息a后被同一个发送者发布，a必将排在b前面。</p>
+</li>
+<li><p><strong>数据更新原子性：</strong>一次数据更新要么成功（半数以上节点成功），要么失败，不存在中间状态；</p>
+</li>
+<li><p><strong>实时性</strong>：Zookeeper保证客户端将在一个时间间隔范围内获得服务器的更新信息，或者服务器失效的信息。</p>
+</li>
+</ol>
+<h1 id="ZooKeeper角色及作用"><a href="#ZooKeeper角色及作用" class="headerlink" title="ZooKeeper角色及作用"></a>ZooKeeper角色及作用</h1><h2 id="主节点的作用-Leader"><a href="#主节点的作用-Leader" class="headerlink" title="主节点的作用: Leader"></a>主节点的作用: Leader</h2><p>1.负责管理整个集群，即保证数据的全局一致性 </p>
+<p>2.负责数据事务(增删改)相关的操作. </p>
+<p>3.转发数据非事务操作给从节点.</p>
+<h2 id="从节点的作用-Follower"><a href="#从节点的作用-Follower" class="headerlink" title="从节点的作用: Follower"></a>从节点的作用: Follower</h2><p>1.实时从主节点拉取数据，保持数据的一致性.</p>
+<p>2.负责数据非事务(读)相关的操作.</p>
+<p>3.转发数据事务操作给主节点.</p>
+<h2 id="Observer的作用"><a href="#Observer的作用" class="headerlink" title="Observer的作用:"></a>Observer的作用:</h2><p>除了没有选举权，其他和Follower-样</p>
+<h1 id="ZooKeeper命令"><a href="#ZooKeeper命令" class="headerlink" title="ZooKeeper命令"></a>ZooKeeper命令</h1><h2 id="启动zookeeper服务"><a href="#启动zookeeper服务" class="headerlink" title="启动zookeeper服务"></a>启动zookeeper服务</h2><p>启动服务 <code>zkServer.sh start</code></p>
+<p>查看状态<code>zkServer.sh status</code></p>
+<p>如果想关闭可以使用stop<code>zkServer.sh stop</code></p>
+<blockquote>
+<p>查看所有shell命令：help</p>
+<p>常见命令解释:</p>
+<p>ls path [watch] : 查看节点信息</p>
+<p>get path [watch]: 获取数据</p>
+<p>ls2 path [watch]: 查看节点详情信息</p>
+<p>create [-s] [-e] path data acl: 创建数据节点</p>
+<p>delete path [version]: 删除节点</p>
+<p>rmr path: 删多层除节点</p>
+<p>set path data [version] ：设置&#x2F;修改节点数据</p>
+<p>history: 查看操作历史</p>
+<p>quit: 退出</p>
+</blockquote>
+<h1 id="ZNode节点类型"><a href="#ZNode节点类型" class="headerlink" title="ZNode节点类型"></a>ZNode节点类型</h1><p><strong>Znode兼具文件和目录两种特点</strong>是非常吊的好吧！</p>
+<blockquote>
+<p><strong>Znode兼具文件和目录两种特点:</strong> Znode没有文件和目录之分,Znode既有向文件一样存储数据,也能像目录一样作为路径标识的一部分</p>
+<p><strong>Znode具有原子性操作:</strong> 读操作将获取与节点相关的所有数据，写操作也将替换掉节点的所有数据</p>
+<p><strong>Znode存储数据大小有限制:</strong> 每个Znode的数据大小至多1M，当时常规使用中应该远小于此值</p>
+<p><strong>Znode通过路径引用:</strong> 路径必须是绝对的，因此他们必须由斜杠字符来开头。除此以外，他们必须是唯一的，也就是说每一个路径只有一个表示，因此这些路径不能改变。  <strong>默认有&#x2F;zookeeper节点</strong>用以保存关键的管理信息。</p>
+</blockquote>
+<h2 id="按照存活时间分类"><a href="#按照存活时间分类" class="headerlink" title="按照存活时间分类"></a>按照存活时间分类</h2><p>按照存活时间分，Znode有两种，分别为 <strong>永久节点 和 临时节点</strong>(Ephemeral) 。节点的类型在创建时即被确定，并且不能改变。</p>
+<p><strong>永久节点：</strong>该节点的生命周期不依赖于会话，并且只有在客户端显示执行删除操作的时候，他们才能被删除。</p>
+<ul>
+<li>注意: <strong>永久节点可以拥有子节点</strong></li>
+</ul>
+<p>创建永久节点: create &#x2F;节点名  节点值</p>
+<p><strong>临时节点：</strong>该节点的生命周期依赖于创建它们的会话。一旦会话结束，临时节点将被自动删除，也可手动删除。</p>
+<ul>
+<li>注意: <strong>临时节点不允许拥有子节点。</strong></li>
+</ul>
+<p><strong>创建临时节点:</strong> create -e &#x2F;节点名  节点值</p>
+<h2 id="按照有无序列号分类"><a href="#按照有无序列号分类" class="headerlink" title="按照有无序列号分类"></a>按照有无序列号分类</h2><p>分为有序（Sequential）节点和无序节点</p>
+<p><strong>序列化节点:</strong> Znode还有一个序列化的特性，就是如果创建的时候加 <strong>-s</strong> 指定的话，该Znode的名字后面会自动追加一个不断增加的序列号。</p>
+<p><strong>创建永久序列化节点:</strong> create -s &#x2F;节点名  节点值</p>
+<p><strong>创建临时序列化节点:</strong> create -e -s &#x2F;节点名  节点值</p>
+<h1 id="ZNode节点属性"><a href="#ZNode节点属性" class="headerlink" title="ZNode节点属性"></a>ZNode节点属性</h1><p><code>每个znode都包含了一系列的属性，通过命令**get /节点名**，可以获得节点的属性</code></p>
+<h2 id="事务ID介绍"><a href="#事务ID介绍" class="headerlink" title="事务ID介绍"></a>事务ID介绍</h2><p>对于zk来说，每次的变化都会产生一个唯一的事务id，<code>zxid（ZooKeeper Transaction Id）</code>。通过zxid，可以确定更新操作的先后顺序。例如，如果zxid1小于zxid2，说明zxid1操作先于zxid2发生，zxid对于整个zk都是唯一的，即使操作的是不同的znode。</p>
+<h2 id="MyID介绍"><a href="#MyID介绍" class="headerlink" title="MyID介绍"></a>MyID介绍</h2><p>一般是由机器自己创建的文件中存放MyId值</p>
+<p>路径在Zookeeper安装路径下&#x2F;export&#x2F;server&#x2F;zookeeper&#x2F;zkdatas&#x2F;myid 文件中</p>
+<h2 id="其他信息-了解"><a href="#其他信息-了解" class="headerlink" title="其他信息(了解)"></a>其他信息(了解)</h2><p><strong>cZxid ：</strong>Znode创建的事务id。</p>
+<p><strong>ctime ：</strong>Znode创建时的时间戳.</p>
+<p><strong>mZxid ：</strong>Znode被修改的事务id，即每次对当前znode的修改都会更新mZxid。</p>
+<p><strong>mtime ：</strong>Znode最新一次更新发生时的时间戳.</p>
+<p><strong>pZxid ：</strong>Znode的子节点列表变更的事务ID，添加子节点或删除子节点就会影响子节点列表</p>
+<p><strong>cversion ：</strong>子节点进行变更的版本号。添加子节点或删除子节点就会影响子节点版本号</p>
+<p><strong>dataVersion：</strong>数据版本号，每次对节点进行set操作，dataVersion的值都会增加1（即使设置的是相同的数据），可有效避免了数据更新时出现的先后顺序问题。</p>
+<p><strong>aclVersion :</strong> 权限变化列表版本 access control list Version</p>
+<p><strong>ephemeralOwner :</strong> 字面翻译临时节点拥有者，持久节点值为0，非持久节点不为0（会话ID）</p>
+<p><strong>dataLength :</strong>  Znode数据长度</p>
+<p><strong>numChildren:</strong>  当前Znode子节点数量(不包括子子节点）</p>
+<h1 id="监听机制"><a href="#监听机制" class="headerlink" title="监听机制"></a>监听机制</h1><p><strong>Watch监听机制格式:</strong>  <strong>get &#x2F;节点名 watch</strong></p>
+<p><strong>Watch监听机制特点:</strong></p>
+<ul>
+<li><p><strong>先注册再触发:</strong> Zookeeper中的watch机制，必须客户端先去服务端注册监听，这样事件发送才会触发监听，通知给客户端</p>
+</li>
+<li><p><strong>一次性触发:</strong> 事件发生触发监听，一个watcher event就会被发送到设置监听的客户端，这种效果是一次性的，后续再次发生同样的事件，不会再次触发。</p>
+</li>
+<li><p><strong>异步发送:</strong> watcher的通知事件从服务端发送到客户端是异步的。</p>
+</li>
+<li><p><strong>通知内容:</strong> 通知状态（keeperState），事件类型（EventType）和节点路径（path）</p>
+</li>
+</ul>
+<h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><p>数据发布&#x2F;订阅系统,就是发布者将数据发布到ZooKeeper的一个节点上，提供订阅者进行数据订阅，从而实现动态更新数据的目的，实现配置信息的集中式管理和数据的动态更新。</p>
+<h1 id="Leader选举"><a href="#Leader选举" class="headerlink" title="Leader选举"></a>Leader选举</h1><p>选举要求: 过半原则,所以搭建集群一般奇数,只要某个node节点票数过半立刻成为leader</p>
+<h2 id="集群第一次启动-新集群"><a href="#集群第一次启动-新集群" class="headerlink" title="集群第一次启动(新集群)"></a><strong>集群第一次启动</strong>(新集群)</h2><p>启动follower每次投票后,他们会相互同步投票情况,如果票数相同,谁的myid大,谁就当选leader</p>
+<p>一旦确定了leader,后面来的默认就是follower,即使它的myid大,leader也不会改变(除非leader宕机了)</p>
+<h2 id="leader宕机后启动-旧集群"><a href="#leader宕机后启动-旧集群" class="headerlink" title="leader宕机后启动(旧集群)"></a><strong>leader宕机后启动</strong>(旧集群)</h2><p>每一个leader当老大的时候,都会产生新纪元epoch,且每次操作完节点数据都会更新事务id(高32位_低32位) ,当leader<strong>宕机</strong>后,剩下的follower就会综合考虑几个因素选出最新的leader</p>
+<p>先比较最后一次更新数据事务id(高32位_低32位),谁的事务id最大,谁就当选leader</p>
+<p>如果更新数据的事务id都相同的情况下,就需要再次考虑myid,谁的myid大,谁就当选leader</p>
+<h1 id="SSH免密登陆"><a href="#SSH免密登陆" class="headerlink" title="SSH免密登陆"></a>SSH免密登陆</h1><blockquote>
+<p>假设两台服务器，node1和node2</p>
+<p>node2有自己的公钥和私钥（是一对），node1要给node2发送消息必须知道node2的公钥。</p>
+<p>node1将发送的消息（nihao）通过公钥加密，并将数据发送个node2</p>
+<p>node2用自己的私钥进行解密得到数据(nihao)</p>
+<p>node1将刚发送的字符串(nihao)通过md5-不可逆加密，并发送给node2</p>
+<p>node2将自己得到的数据也进行md5加密，然后和node1发送的MD5比对，一致则数据没问题</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://imgse.com/i/p9THefg"><img src="https://s1.ax1x.com/2023/05/23/p9THefg.png" alt="p9THefg.png"></a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="https://github.com/weiswift">Johnson Liam</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://github.com/weiswift/2023/05/23/2023.05.23/">https://github.com/weiswift/2023/05/23/2023.05.23/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Hadoop/">Hadoop</a><a class="post-meta__tags" href="/tags/Interview/">Interview</a><a class="post-meta__tags" href="/tags/Zookeeper/">Zookeeper</a></div><div class="post_share"><div class="social-share" data-image="https://s1.ax1x.com/2023/05/23/p9THulj.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> Donate</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2023/05/22/2023.05.22-hive%E8%B0%83%E4%BC%98/" title="【Interview】Hive原理及调优"><img class="cover" src="https://s1.ax1x.com/2023/05/20/p95lR1g.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">【Interview】Hive原理及调优</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2023/05/20/2023.05.20/" title="【Interview】Hadoop相关"><img class="cover" src="https://s1.ax1x.com/2023/05/20/p95lR1g.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-05-20</div><div class="title">【Interview】Hadoop相关</div></div></a></div><div><a href="/2023/05/22/2023.05.22-hive%E8%B0%83%E4%BC%98/" title="【Interview】Hive原理及调优"><img class="cover" src="https://s1.ax1x.com/2023/05/20/p95lR1g.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-05-22</div><div class="title">【Interview】Hive原理及调优</div></div></a></div><div><a href="/2023/05/21/2023.05.22/" title="【Interview】MapReduce和Yarn原理"><img class="cover" src="https://s1.ax1x.com/2023/05/22/p9oBGSH.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-05-21</div><div class="title">【Interview】MapReduce和Yarn原理</div></div></a></div><div><a href="/2023/05/13/2023.05.13/" title="初识Hadoop集群"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-05-13</div><div class="title">初识Hadoop集群</div></div></a></div><div><a href="/2023/05/14/2023.05.14/" title="HDFS及上手Hive"><img class="cover" src="https://s1.ax1x.com/2023/05/14/p9gFWSH.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-05-14</div><div class="title">HDFS及上手Hive</div></div></a></div><div><a href="/2023/05/16/2023.05.16/" title="【Hive】DDL语句详解一-知无不言"><img class="cover" src="https://s1.ax1x.com/2023/05/16/p9RsL8I.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-05-16</div><div class="title">【Hive】DDL语句详解一-知无不言</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s1.ax1x.com/2023/04/18/p9i6VDx.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Johnson Liam</div><div class="author-info__description">千万不要懒，懒习惯了，稍微努力一下，就会以为自己在拼命！</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">45</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">23</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><a id="card-info-btn" href="https://github.com/weiswift/"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/weiswift" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:1265019024@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">网站由Github服务器托管,感谢支持！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Zookeeper%E7%AE%80%E4%BB%8B%E5%8F%8A%E7%94%A8%E9%80%94"><span class="toc-number">1.</span> <span class="toc-text">Zookeeper简介及用途</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-number">2.</span> <span class="toc-text">概述</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%B9%E6%80%A7"><span class="toc-number">2.1.</span> <span class="toc-text">特性</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ZooKeeper%E8%A7%92%E8%89%B2%E5%8F%8A%E4%BD%9C%E7%94%A8"><span class="toc-number">3.</span> <span class="toc-text">ZooKeeper角色及作用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BB%E8%8A%82%E7%82%B9%E7%9A%84%E4%BD%9C%E7%94%A8-Leader"><span class="toc-number">3.1.</span> <span class="toc-text">主节点的作用: Leader</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8E%E8%8A%82%E7%82%B9%E7%9A%84%E4%BD%9C%E7%94%A8-Follower"><span class="toc-number">3.2.</span> <span class="toc-text">从节点的作用: Follower</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Observer%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-number">3.3.</span> <span class="toc-text">Observer的作用:</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ZooKeeper%E5%91%BD%E4%BB%A4"><span class="toc-number">4.</span> <span class="toc-text">ZooKeeper命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8zookeeper%E6%9C%8D%E5%8A%A1"><span class="toc-number">4.1.</span> <span class="toc-text">启动zookeeper服务</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ZNode%E8%8A%82%E7%82%B9%E7%B1%BB%E5%9E%8B"><span class="toc-number">5.</span> <span class="toc-text">ZNode节点类型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%89%E7%85%A7%E5%AD%98%E6%B4%BB%E6%97%B6%E9%97%B4%E5%88%86%E7%B1%BB"><span class="toc-number">5.1.</span> <span class="toc-text">按照存活时间分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%89%E7%85%A7%E6%9C%89%E6%97%A0%E5%BA%8F%E5%88%97%E5%8F%B7%E5%88%86%E7%B1%BB"><span class="toc-number">5.2.</span> <span class="toc-text">按照有无序列号分类</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ZNode%E8%8A%82%E7%82%B9%E5%B1%9E%E6%80%A7"><span class="toc-number">6.</span> <span class="toc-text">ZNode节点属性</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E5%8A%A1ID%E4%BB%8B%E7%BB%8D"><span class="toc-number">6.1.</span> <span class="toc-text">事务ID介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MyID%E4%BB%8B%E7%BB%8D"><span class="toc-number">6.2.</span> <span class="toc-text">MyID介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E4%BF%A1%E6%81%AF-%E4%BA%86%E8%A7%A3"><span class="toc-number">6.3.</span> <span class="toc-text">其他信息(了解)</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%9B%91%E5%90%AC%E6%9C%BA%E5%88%B6"><span class="toc-number">7.</span> <span class="toc-text">监听机制</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">7.1.</span> <span class="toc-text">应用场景</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Leader%E9%80%89%E4%B8%BE"><span class="toc-number">8.</span> <span class="toc-text">Leader选举</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9B%86%E7%BE%A4%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%90%AF%E5%8A%A8-%E6%96%B0%E9%9B%86%E7%BE%A4"><span class="toc-number">8.1.</span> <span class="toc-text">集群第一次启动(新集群)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#leader%E5%AE%95%E6%9C%BA%E5%90%8E%E5%90%AF%E5%8A%A8-%E6%97%A7%E9%9B%86%E7%BE%A4"><span class="toc-number">8.2.</span> <span class="toc-text">leader宕机后启动(旧集群)</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SSH%E5%85%8D%E5%AF%86%E7%99%BB%E9%99%86"><span class="toc-number">9.</span> <span class="toc-text">SSH免密登陆</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/05/23/2023.05.23/" title="【Interview】ZooKeeper原理"><img src="https://s1.ax1x.com/2023/05/23/p9THulj.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【Interview】ZooKeeper原理"/></a><div class="content"><a class="title" href="/2023/05/23/2023.05.23/" title="【Interview】ZooKeeper原理">【Interview】ZooKeeper原理</a><time datetime="2023-05-22T17:00:00.000Z" title="Created 2023-05-23 00:00:00">2023-05-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/05/22/2023.05.22-hive%E8%B0%83%E4%BC%98/" title="【Interview】Hive原理及调优"><img src="https://s1.ax1x.com/2023/05/20/p95lR1g.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【Interview】Hive原理及调优"/></a><div class="content"><a class="title" href="/2023/05/22/2023.05.22-hive%E8%B0%83%E4%BC%98/" title="【Interview】Hive原理及调优">【Interview】Hive原理及调优</a><time datetime="2023-05-21T17:00:00.000Z" title="Created 2023-05-22 00:00:00">2023-05-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/05/21/2023.05.22/" title="【Interview】MapReduce和Yarn原理"><img src="https://s1.ax1x.com/2023/05/22/p9oBGSH.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【Interview】MapReduce和Yarn原理"/></a><div class="content"><a class="title" href="/2023/05/21/2023.05.22/" title="【Interview】MapReduce和Yarn原理">【Interview】MapReduce和Yarn原理</a><time datetime="2023-05-20T17:00:00.000Z" title="Created 2023-05-21 00:00:00">2023-05-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/05/20/2023.05.20/" title="【Interview】Hadoop相关"><img src="https://s1.ax1x.com/2023/05/20/p95lR1g.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【Interview】Hadoop相关"/></a><div class="content"><a class="title" href="/2023/05/20/2023.05.20/" title="【Interview】Hadoop相关">【Interview】Hadoop相关</a><time datetime="2023-05-19T17:00:00.000Z" title="Created 2023-05-20 00:00:00">2023-05-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/05/20/2023.05.20%E7%AA%97%E5%8F%A3%E5%87%BD%E6%95%B0/" title="【Hive】窗口函数"><img src="https://s1.ax1x.com/2023/05/20/p95aGKf.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="【Hive】窗口函数"/></a><div class="content"><a class="title" href="/2023/05/20/2023.05.20%E7%AA%97%E5%8F%A3%E5%87%BD%E6%95%B0/" title="【Hive】窗口函数">【Hive】窗口函数</a><time datetime="2023-05-19T17:00:00.000Z" title="Created 2023-05-20 00:00:00">2023-05-20</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Johnson Liam</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Welcome to 小威の <a target="_blank" rel="noopener" href="https://www.cnblogs.com/liam-sliversucks/">Blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><canvas class="fireworks" mobile="true"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = true;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="true"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
