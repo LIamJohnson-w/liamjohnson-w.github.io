@@ -1,0 +1,494 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>【Flink】Flink技术栈(Theory及集群部署) | SilverSucks</title><meta name="author" content="Johnson Liam"><meta name="copyright" content="Johnson Liam"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="流式计算什么是数据流?什么是数据集 批处理对应的是数据集 流处理对应的是数据流  无界数据流和有界数据流 有界数据流：明确定义开始和结束的数据流，计算之前获取的所有数据-mysql、日志文件 无界数据流：只有开始没有结束的数据流，获取数据立即处理，无法等待所有数据到达-socket、kafka  硬"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://github.com/weiswift/2023/09/01/2023.09.05/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '【Flink】Flink技术栈(Theory及集群部署)',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-09-05 21:15:19'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css"> <script src="/live2d-widget/autoload.js"></script><script src="/live2d-widget/autoload.js"> </script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s1.ax1x.com/2023/04/18/p9i6VDx.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">124</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">33</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Links</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-gamepad"></i><span> Games</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/mikutap/"><i class="fa-fw fa fa-music"></i><span> MikuTap 初音未来</span></a></li><li><a class="site-page child" href="/starbattle/"><i class="fa-fw fa fa-space-shuttle"></i><span> StartBattle 星际大战</span></a></li><li><a class="site-page child" href="/2048/"><i class="fa-fw fa fa-flag"></i><span> 2048 经典游戏</span></a></li><li><a class="site-page child" href="/battlecity/"><i class="fa-fw fa fa-arrow-circle-left"></i><span> BattleCity 坦克大战</span></a></li><li><a class="site-page child" href="/pacman/"><i class="fa-fw fa fa-bolt"></i><span> PacMan  吃豆人</span></a></li><li><a class="site-page child" href="/tetris/"><i class="fa-fw fa fa-arrows-alt"></i><span> Tetris 俄罗斯方块</span></a></li><li><a class="site-page child" href="/smallcat/"><i class="fa-fw fa fa-paw"></i><span> CatchCat 困住小猫</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-leaf"></i><span> Moments</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/diary/"><i class="fa-fw fas fa-bookmark"></i><span> Diary</span></a></li><li><a class="site-page child" href="/gallery/"><i class="fa-fw fa fa-hourglass-half"></i><span> Gallery</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-podcast"></i><span> More</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags标签</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About关于</span></a></li><li><a class="site-page child" href="/messageboard/"><i class="fa-fw fas fa-bookmark"></i><span> Messageboard留言板</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s1.ax1x.com/2023/04/18/p9i6u5D.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="SilverSucks"><span class="site-name">SilverSucks</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Links</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-gamepad"></i><span> Games</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/mikutap/"><i class="fa-fw fa fa-music"></i><span> MikuTap 初音未来</span></a></li><li><a class="site-page child" href="/starbattle/"><i class="fa-fw fa fa-space-shuttle"></i><span> StartBattle 星际大战</span></a></li><li><a class="site-page child" href="/2048/"><i class="fa-fw fa fa-flag"></i><span> 2048 经典游戏</span></a></li><li><a class="site-page child" href="/battlecity/"><i class="fa-fw fa fa-arrow-circle-left"></i><span> BattleCity 坦克大战</span></a></li><li><a class="site-page child" href="/pacman/"><i class="fa-fw fa fa-bolt"></i><span> PacMan  吃豆人</span></a></li><li><a class="site-page child" href="/tetris/"><i class="fa-fw fa fa-arrows-alt"></i><span> Tetris 俄罗斯方块</span></a></li><li><a class="site-page child" href="/smallcat/"><i class="fa-fw fa fa-paw"></i><span> CatchCat 困住小猫</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-leaf"></i><span> Moments</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/diary/"><i class="fa-fw fas fa-bookmark"></i><span> Diary</span></a></li><li><a class="site-page child" href="/gallery/"><i class="fa-fw fa fa-hourglass-half"></i><span> Gallery</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-podcast"></i><span> More</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags标签</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About关于</span></a></li><li><a class="site-page child" href="/messageboard/"><i class="fa-fw fas fa-bookmark"></i><span> Messageboard留言板</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">【Flink】Flink技术栈(Theory及集群部署)</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2023-08-31T17:00:00.000Z" title="Created 2023-09-01 00:00:00">2023-09-01</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-09-05T14:15:19.000Z" title="Updated 2023-09-05 21:15:19">2023-09-05</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="【Flink】Flink技术栈(Theory及集群部署)"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="流式计算"><a href="#流式计算" class="headerlink" title="流式计算"></a>流式计算</h1><h2 id="什么是数据流-什么是数据集"><a href="#什么是数据流-什么是数据集" class="headerlink" title="什么是数据流?什么是数据集"></a>什么是数据流?什么是数据集</h2><blockquote>
+<p>批处理对应的是数据集</p>
+<p>流处理对应的是数据流</p>
+</blockquote>
+<h2 id="无界数据流和有界数据流"><a href="#无界数据流和有界数据流" class="headerlink" title="无界数据流和有界数据流"></a>无界数据流和有界数据流</h2><blockquote>
+<p>有界数据流：明确定义开始和结束的数据流，计算之前获取的所有数据-mysql、日志文件</p>
+<p>无界数据流：只有开始没有结束的数据流，获取数据立即处理，无法等待所有数据到达-socket、kafka</p>
+</blockquote>
+<h1 id="硬核Flink介绍"><a href="#硬核Flink介绍" class="headerlink" title="硬核Flink介绍"></a>硬核Flink介绍</h1><h2 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h2><p>这里先贴上一个官方链接🔗保命: <a target="_blank" rel="noopener" href="https://flink.apache.org/">https://flink.apache.org/</a></p>
+<blockquote>
+<ul>
+<li>第1代—Hadoop <code>MapReduce</code></li>
+</ul>
+<p>首先第一代的计算引擎，无疑就是 Hadoop 承载的 MapReduce。它将计算分为两个阶段，分别为 Map 和 Reduce。对于上层应用来说，就不得不想方设法去拆分算法，甚至于不得不在上层应用实现多个 Job 的串联，以完成一个完整的算法，例如迭代计算。</p>
+<ul>
+<li>第2代—<code>DAG框架（Tez）</code> + MapReduce</li>
+</ul>
+<p>由于这样的弊端，催生了支持 DAG 框架的产生。因此，支持 DAG 的框架被划分为第二代计算引擎。如 Tez 以及更上层的 Oozie。这里我们不去细究各种 DAG 实现之间的区别，不过对于当时的 Tez 和 Oozie 来说，大多还是批处理的任务。</p>
+<ul>
+<li>第3代—<code>Spark</code></li>
+</ul>
+<p>接下来就是以 Spark 为代表的第三代的计算引擎。第三代计算引擎的特点主要是 Job 内部的 DAG 支持（不跨越 Job），以及强调的实时计算。在这里，很多人也会认为第三代计算引擎也能够很好的运行批处理的 Job。</p>
+<ol>
+<li>离线计算、实时计算、SQL高层API</li>
+<li>自带DAG</li>
+<li>内存迭代计算，性能大幅提升</li>
+</ol>
+<ul>
+<li>第4代—<code>Flink</code></li>
+</ul>
+<p>随着第三代计算引擎的出现，促进了上层应用快速发展，例如各种迭代计算的性能以及对流计算和 SQL 等的支持。Flink 的诞生就被归在了第四代。这应该主要表现在 Flink 对流计算的支持，以及更一步的实时性上面。当然 Flink 也可以支持 Batch 的任务，以及 DAG 的运算。</p>
+<ol>
+<li>离线计算、实时计算、SQL高层API</li>
+<li>自带DAG</li>
+<li>流式计算性能更好，可靠性更高</li>
+</ol>
+</blockquote>
+<h2 id="Flink流处理特性"><a href="#Flink流处理特性" class="headerlink" title="Flink流处理特性"></a>Flink流处理特性</h2><blockquote>
+<ul>
+<li>支持高吞吐、低延迟（亚秒）、高性能的流处理</li>
+<li>支持带有事件时间的窗口（Window）操作</li>
+<li>支持有状态计算端到端的Exactly-once语义</li>
+<li>支持高度灵活的窗口（Window）操作，支持基于time、count、session，以及data-driven的窗口操作</li>
+<li>支持具有Backpressure功能的持续流模型</li>
+<li>支持基于轻量级分布式快照（Snapshot）实现的容错</li>
+<li>一个运行时同时支持Batch on Streaming处理和Streaming处理</li>
+<li>Flink在JVM内部实现了自己的内存管理</li>
+<li>支持迭代计算</li>
+<li>支持程序自动优化：避免特定情况下Shuffle、排序等昂贵操作，中间结果有必要进行缓存</li>
+</ul>
+</blockquote>
+<h2 id="Flink的应用场景"><a href="#Flink的应用场景" class="headerlink" title="Flink的应用场景"></a>Flink的应用场景</h2><blockquote>
+<ul>
+<li>Event-driven Applications（事件驱动）<ul>
+<li>信用卡交易、刷单、监控</li>
+</ul>
+</li>
+<li>Data Analytics Applications（数据分析）<ul>
+<li>双11大屏、库存分析</li>
+</ul>
+</li>
+<li>Data Pipeline Applications（数据管道）<ul>
+<li>用于数据提取-转换-加载在存储系统间进行数据转换和迁移的管道</li>
+<li>对于批处理ETL是一个周期性的任务</li>
+<li>对于流处理ETL是一个持续提取-转换-加载的管道</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h2 id="Flink架构体系"><a href="#Flink架构体系" class="headerlink" title="Flink架构体系"></a>Flink架构体系</h2><blockquote>
+<p>Flink是典型的主从架构(浅浅总结一下吧!)</p>
+<ul>
+<li>主从架构：hadoop(hdfs mapreduce yarn)、spark、hbase、flink</li>
+<li>去中心化架构：zookeeper、Kafka</li>
+</ul>
+<p><code>所有的 Flink 程序都可以归纳为由三部分构成： </code></p>
+<ul>
+<li>Source：表示“源算子”，负责读取数据源。</li>
+<li>Transformation：表示“转换算子”，利用各种算子进行处理加工。</li>
+<li>Sink：表示“下沉算子”，负责数据的输出。</li>
+</ul>
+</blockquote>
+<h3 id="系统整体构成"><a href="#系统整体构成" class="headerlink" title="系统整体构成"></a>系统整体构成</h3><blockquote>
+<ul>
+<li>Client：Flink 客户端是 F1ink 提供的 CLI 命令行工具，用来提交 Flink 作业到 Flink 集群，在客户端中负责 StreamGraph (流图)和 Job Graph (作业图)的构建。</li>
+<li>JobManager：JobManager处理器也称之为Master，JobManager根据并行度将Flink客户端提交的Flink应用分解为子任务，从资源管理器 ResourceManager 申请所需的计算资源，资源具备之后，开始分发任务到TaskManager 执行 Task，并负责应用容错，跟踪作业的执行状态，发现异常则恢复作业等。</li>
+<li>TaskManager：TaskManager处理器也称之为Worker，TaskManager 接收 JobManage 分发的子任务，根据自身的资源情况管理子任务的启动、 停止、销毁、异常恢复等生命周期阶段。Flink运行时至少会存在一个worker处理器。</li>
+</ul>
+</blockquote>
+<h3 id="运行时架构"><a href="#运行时架构" class="headerlink" title="运行时架构"></a>运行时架构</h3><blockquote>
+<p><code>作业管理器-JobManager(包含Dispatcher, JobMaster, ResourceManager)</code></p>
+<ul>
+<li>分发器（Dispatcher）<ul>
+<li>Dispatcher 主要负责提供一个 REST 接口，用来提交应用，并且负责为每一个新提交的作业启动一个新的 JobMaster 组件。Dispatcher 也会启动一个 Web UI，用来方便地展示和监控作业执行的信息。</li>
+</ul>
+</li>
+<li>作业处理器（JobMaster）<ul>
+<li>JobMaster 是 JobManager 中最核心的组件，负责处理单独的作业（Job），JobMaster和每个作业是一一对应的。</li>
+</ul>
+</li>
+<li>资源管理器（ResourceManager）<ul>
+<li>ResourceManager 主要负责资源的分配和管理，在 Flink 集群中只有一个。所谓“资源”，主要是指 TaskManager 的任务槽（task slots）。任务槽就是 Flink 集群中的资源调配单元，包含了机器用来执行计算的一组 CPU 和内存资源。每一个任务（Task）都需要分配到一个 slot 上执行。</li>
+</ul>
+</li>
+</ul>
+<p><code>任务管理器-TaskManager</code></p>
+<ul>
+<li>Slot 任务执行槽<ul>
+<li>物理概念，一个TM(TaskManager)内会划分出多个Slot，1个Slot内最多可以运行1个Task(Subtask)或一组由Task(Subtask)组成的任务链。</li>
+<li>多个Slot之间会共享平分当前TM的内存空间。Slot是对一个TM的资源进行固定分配的工具，每个Slot在TM启动后，可以获得固定的资源。</li>
+<li>flink集群只要启动，TaskManager设置的资源就是固定，就意味着每个slot资源也是固定。</li>
+<li><code>通过集群的配置文件来设定 TaskManager 的 slot 数量taskmanager.numberOfTaskSlots:8</code></li>
+</ul>
+</li>
+</ul>
+<p><code>注意：slot 目前仅仅用来隔离内存，不会涉及 CPU 的隔离。在具体应用时，可以将 slot 数量配置为机器的 CPU 核心数，尽量避免不同任务之间对 CPU 的竞争。这也是开发环境默认并行度设为机器 CPU 数量的原因。</code></p>
+</blockquote>
+<h1 id="Flink计算优化"><a href="#Flink计算优化" class="headerlink" title="Flink计算优化"></a>Flink计算优化</h1><h2 id="Flink并行计算"><a href="#Flink并行计算" class="headerlink" title="Flink并行计算"></a>Flink并行计算</h2><p><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/blog/image-20230905145057727.png"></p>
+<p>如何设置：</p>
+<ul>
+<li>代码中设置</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">我们在代码中，可以很简单地在算子后跟着调用 setParallelism()方法，来设置当前算子的并行度,这种方式设置的并行度，只针对当前算子有效：</span></span><br><span class="line">stream.map(word -&gt; Tuple2.of(word, 1L)).setParallelism(2);</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">我们也可以直接调用执行环境的 setParallelism()方法，全局设定并行度：</span></span><br><span class="line">env.setParallelism(2);</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">这样代码中所有算子，默认的并行度就都为 2 了。我们一般不会在程序中设置全局并行度，因为如果在程序中对全局并行度进行硬编码，会导致无法动态扩容。</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>提交应用时设置</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">在使用 flink run 命令提交应用时，可以增加-p 参数来指定当前应用程序执行的并行度，它的作用类似于执行环境的全局设置：</span></span><br><span class="line">bin/flink run –p 2 –c org.apache.flink.examples.java.wordcount.WordCount /export/server/flink/examples/batch/WordCount.jar</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>配置文件中设置</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">直接在集群的配置文件 flink-conf.yaml 中直接更改默认并行度：</span></span><br><span class="line">parallelism.default: 2</span><br></pre></td></tr></table></figure>
+
+<p><code>优先级：算子 &gt; 代码全局 &gt; 命令行参数 &gt; 配置文件</code></p>
+<h2 id="Flink合并算子链（Operator-Chain）"><a href="#Flink合并算子链（Operator-Chain）" class="headerlink" title="Flink合并算子链（Operator Chain）"></a>Flink合并算子链（Operator Chain）</h2><h3 id="什么是算子链-算子间的数据传输"><a href="#什么是算子链-算子间的数据传输" class="headerlink" title="什么是算子链: (算子间的数据传输)"></a>什么是算子链: (算子间的数据传输)</h3><ul>
+<li>一对一（One-to-one，forwarding）</li>
+</ul>
+<blockquote>
+<p>这种模式下，数据流维护着分区以及元素的顺序。比如图中的 source 和 map 算子，source算子读取数据之后，可以直接发送给 map 算子做处理，它们之间不需要重新分区，也不需要调整数据的顺序。这就意味着 map 算子的子任务，看到的元素个数和顺序跟 source 算子的子任务产生的完全一样，保证着“一对一”的关系。map、filter、flatMap 等算子都是这种 one-to-one的对应关系。这种关系类似于 Spark 中的窄依赖。</p>
+</blockquote>
+<ul>
+<li>重分区（Redistributing）</li>
+</ul>
+<blockquote>
+<p>在这种模式下，数据流的分区会发生改变。比图中的 map 和后面的 keyBy&#x2F;window 算子之间（这里的 keyBy 是数据传输算子，后面的 window、apply 方法共同构成了 window 算子）,以及 keyBy&#x2F;window 算子和 Sink 算子之间，都是这样的关系。<br>每一个算子的子任务，会根据数据传输的策略，把数据发送到不同的下游目标任务。例如，keyBy()是分组操作，本质上基于键（key）的哈希值（hashCode）进行了重分区；而当并行度改变时，比如从并行度为 2 的 window 算子，要传递到并行度为 1 的 Sink 算子，这时的数据传输方式是再平衡（rebalance），会把数据均匀地向下游子任务分发出去。这些传输方式都会引起重分区（redistribute）的过程，这一过程类似于 Spark 中的 shuffle。这种算子间的关系类似于 Spark 中的宽依赖。</p>
+</blockquote>
+<h3 id="合并算子链"><a href="#合并算子链" class="headerlink" title="合并算子链"></a>合并算子链</h3><blockquote>
+<ul>
+<li>合并算子链是flink作业<code>自动进行的优化</code>，当然可以手动关闭</li>
+</ul>
+<p>在 Flink 中，并行度相同的一对一（one to one）算子操作，可以直接链接在一起形成一个“大”的任务（task），这样原来的算子就成为了真正任务里的一部分，每个 task会被一个线程执行。这样的技术被称为“算子链”（Operator Chain）。</p>
+<p>将算子链接成 task 是非常有效的优化：可以减少线程之间的切换和基于缓存区的数据交换，在减少时延的同时提升吞吐量。</p>
+<ul>
+<li>关闭合并算子链, 一般不这么做</li>
+</ul>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">在代码中对算子做一些特定的设置：</span></span><br><span class="line"><span class="attr">//</span> <span class="string">禁用算子链</span></span><br><span class="line"><span class="attr">.map(word</span> <span class="string">-&gt; Tuple2.of(word, 1L)).disableChaining();</span></span><br><span class="line"><span class="attr">//</span> <span class="string">从当前算子开始新链</span></span><br><span class="line"><span class="attr">.map(word</span> <span class="string">-&gt; Tuple2.of(word, 1L)).startNewChain()</span></span><br></pre></td></tr></table></figure>
+
+
+</blockquote>
+<h2 id="Flink任务槽的共享"><a href="#Flink任务槽的共享" class="headerlink" title="Flink任务槽的共享"></a>Flink任务槽的共享</h2><ul>
+<li>引入, 因为一个算子就要占用一个slot, 且多个资源相互隔离有什么问题？<ul>
+<li>存在比较多的网络io</li>
+</ul>
+</li>
+<li>Flink 默认是允许 slot 共享的<ul>
+<li>如果希望某个算子对应的任务完全独占一个 slot，或者只有某一部分算子共享 slot，我们也可以通过设置“slot 共享组”（SlotSharingGroup）手动指定：<code>.map(word -&gt; Tuple2.of(word, 1L)).slotSharingGroup(“1”);</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="什么是任务槽的共享"><a href="#什么是任务槽的共享" class="headerlink" title="什么是任务槽的共享"></a>什么是任务槽的共享</h3><p>每个任务节点的并行子任务一字排开，占据不同的 slot；而不同的任务节点的子任务可以共享 slot。一个 slot 中，可以将程序处理的所有任务都放在这里执行，我们把它叫作保存了整个作业的运行管道（pipeline）。</p>
+<p>只要属于同一个作业，那么对于不同任务节点的并行子任务，就可以放到同一个 slot 上执行。</p>
+<p><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/blog/image-20230905151246076.png"></p>
+<h2 id="任务槽和并行度的关系※"><a href="#任务槽和并行度的关系※" class="headerlink" title="任务槽和并行度的关系※"></a>任务槽和并行度的关系※</h2><blockquote>
+<ul>
+<li>概念上<ul>
+<li>slot是静态的概念, 是指TaskManager具有的并发执行能力, 可以通过参数<code>taskmanager.numberOfTaskSlots</code> 进行配置；而并行度（parallelism）是动态概念，也就是TaskManager 运行程序时实际使用的并发能力，可以通过参数 parallelism.default 进行配置。</li>
+</ul>
+</li>
+<li>同一个任务节点的并行子任务是不能共享 slot 的，所以允许 slot 共享之后，运行作业所需的 slot 数量正好就是作业中所有算子并行度的最大值。</li>
+<li>同一个slot中不能有同一个任务的两个及以上的并行子任务</li>
+</ul>
+</blockquote>
+<h2 id="流图转换"><a href="#流图转换" class="headerlink" title="流图转换"></a>流图转换</h2><blockquote>
+<p>由 Flink 程序直接映射成的数据流图（dataflow graph），也被称为逻辑流图（logicalStreamGraph），因为它们表示的是计算逻辑的高级视图。到具体执行环节时，我们还要考虑并行子任务的分配、数据在任务间的传输，以及合并算子链的优化。为了说明最终应该怎样执行一个流处理程序，Flink 需要将逻辑流图进行解析，转换为物理数据流图。</p>
+<p>在这个转换过程中，有几个不同的阶段，会生成不同层级的图，其中最重要的就是作业图（JobGraph）和执行图（ExecutionGraph）。Flink 中任务调度执行的图，按照生成顺序可以分成四层：</p>
+<p>逻辑流图（StreamGraph）→ 作业图（JobGraph）→ 执行图（ExecutionGraph）→ 物理图（Physical Graph）</p>
+</blockquote>
+<p><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/blog/image-20221130190019631.png"></p>
+<p>1.逻辑流图（一般在客户端完成）dataflow</p>
+<blockquote>
+<p>这个是根据用户自己写的DataStream API代码生成的DAG图，用来表示程序的拓扑结构。</p>
+</blockquote>
+<p>2.作业图（一般在客户端完成）job graph</p>
+<blockquote>
+<p>逻辑流图经过优化之后生成的就是作业图，会随着作业一起提交给JobManager。</p>
+<p>主要优化的是将多个符合条件的节点进行合并，形成算子链。</p>
+</blockquote>
+<p>3.执行图（在JobMaster中完成）execute graph</p>
+<blockquote>
+<p>JobMaster收到作业图后，会生成执行图，执行图是作业图的并行化版本，按照真正的并行度进行拆分。</p>
+</blockquote>
+<p>4.物理图</p>
+<blockquote>
+<p>Jobmaster生成执行图后，会将执行图分发给TaskManager，由TM根据执行图生成“物理图”。</p>
+</blockquote>
+<h1 id="Flink集群搭建"><a href="#Flink集群搭建" class="headerlink" title="Flink集群搭建"></a>Flink集群搭建</h1><blockquote>
+<p>Flink支持多种安装模式。</p>
+<ul>
+<li>local（本地）——本地模式</li>
+<li>standalone——独立模式，Flink自带集群，开发测试环境使用</li>
+<li>standaloneHA—独立集群高可用模式，Flink自带集群，开发测试环境使用</li>
+<li>yarn——计算资源统一由Hadoop YARN管理，生产环境测试</li>
+</ul>
+</blockquote>
+<h2 id="Standalone"><a href="#Standalone" class="headerlink" title="Standalone"></a>Standalone</h2><p><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/blog/2023-09-05_21-58-01.png"></p>
+<blockquote>
+<p>Flink程序需要提交给JobClient</p>
+<p>JobClient将作业提交给obManager</p>
+<p>JobManager负责协调资源分配和作业执行。 资源分配完成后，任务将提交给相应的TaskManager</p>
+<p>TaskManager启动一个线程以开始执行。TaskManager会向JobManager报告状态更改。例如开始执行，正在进行或已完成。 </p>
+<p>作业执行完成后，结果将发送回客户端（JobClient）</p>
+</blockquote>
+<h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><ul>
+<li>jdk11及以上【配置JAVA_HOME环境变量】</li>
+<li>ssh免密码登录【集群内节点之间免密登录】</li>
+</ul>
+<h3 id="下载安装包"><a href="#下载安装包" class="headerlink" title="下载安装包"></a>下载安装包</h3><p><a target="_blank" rel="noopener" href="https://dlcdn.apache.org/flink/flink-1.15.2/flink-1.15.2-bin-scala_2.12.tgz">https://dlcdn.apache.org/flink/flink-1.15.2/flink-1.15.2-bin-scala_2.12.tgz</a></p>
+<h3 id="服务器规划"><a href="#服务器规划" class="headerlink" title="服务器规划"></a>服务器规划</h3><p>服务器: node1(Master +Worker)</p>
+<h3 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h3><ul>
+<li>上传Flink压缩包到指定目录</li>
+<li>解压缩flink到 &#x2F;export&#x2F;server 目录</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf flink-1.15.2-bin-scala_2.12.tgz -C /export/server/</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>改名或创建软链接：方便后期升级</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /export/server</span><br><span class="line">ln -s flink-1.15.2/ /export/server/flink</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>修改配置文件flink-conf.yaml</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /export/server/flink</span><br><span class="line">vim conf/flink-conf.yaml</span><br></pre></td></tr></table></figure>
+
+<p>将下面两个参数注释掉或者值改为node1（这里我们采取第一种注释掉）</p>
+<p><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/blog/wps14.jpg">第二种方式</p>
+<p><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/blog/wps18.jpg"></p>
+<ul>
+<li>启动Flink</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/start-cluster.sh</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>通过jps查看进程信息</li>
+<li>访问web界面<a target="_blank" rel="noopener" href="http://node1:8081/">http://node1:8081</a></li>
+<li>运行测试任务</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/flink run /export/server/flink/examples/batch/WordCount.jar</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>日志的查看JobManager 和 TaskManager 的启动日志可以在 Flink binary 目录下的 log 子目录中找到</li>
+</ul>
+<blockquote>
+<p>log 目录中以“flink-${user}-standalonesession-${id}-${hostname}”为前缀的文件对应的即是 JobManager 的输出，其中有三个文件：</p>
+</blockquote>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">-</span> <span class="string">flink-$&#123;user&#125;-standalonesession-$&#123;id&#125;-$&#123;hostname&#125;.log：代码中的日志输出 </span></span><br><span class="line"><span class="attr">-</span> <span class="string">flink-$&#123;user&#125;-standalonesession-$&#123;id&#125;-$&#123;hostname&#125;.out：进程执行时的 stdout 输出 </span></span><br><span class="line"><span class="attr">-</span> <span class="string">flink-$&#123;user&#125;-standalonesession-$&#123;id&#125;-$&#123;hostname&#125;-gc.log：JVM 的 GC 的日志</span></span><br><span class="line"><span class="attr">log</span> <span class="string">目录中以“flink-$&#123;user&#125;-taskexecutor-$&#123;id&#125;-$&#123;hostname&#125;”为前缀的文件对应的是 TaskManager 的输出，也包括三个文件，和 JobManager 的输出一致。</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>日志的配置文件在 Flink binary 目录的 conf 子目录下：</p>
+</blockquote>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">-</span> <span class="string">log4j-cli.properties：用 Flink 命令行时用的 log 配置，比如执行“flink run”命令</span></span><br><span class="line"><span class="attr">-</span> <span class="string">log4j-console.properties：JobManagers/TaskManagers 在前台模式运行时使用（例如 Kubernetes）；</span></span><br><span class="line"><span class="attr">-</span> <span class="string">log4j-session.properties：是用 yarn-session.sh或Kubernetes session时启动时命令行执行时用的 log 配置</span></span><br><span class="line"><span class="attr">log4j.properties：无论是</span> <span class="string">standalone 还是 yarn 模式，JobManager 和 TaskManager 上用 的 log 配置都是 log4j.properties</span></span><br><span class="line"><span class="attr">这三个“log4j.*properties”文件分别有三个“logback.*xml”文件与之对应</span>:<span class="string"></span></span><br><span class="line"><span class="attr">-</span> <span class="string">log4j-console.properties -&gt; logback-console.xml </span></span><br><span class="line"><span class="attr">-</span> <span class="string">log4j-session.properties -&gt; logback-session.xml </span></span><br><span class="line"><span class="attr">-</span> <span class="string">log4j.properties -&gt; logback.xml</span></span><br><span class="line"><span class="attr">如果想使用</span> <span class="string">logback 的同学， 需要</span></span><br><span class="line"><span class="attr">从</span> <span class="string">lib 目录中移除 log4j-slf4j-impl jars；</span></span><br><span class="line"><span class="attr">向</span> <span class="string">lib 目录中添加 logback-core 和 logback-classic jars。</span></span><br><span class="line"><span class="attr">如果启用了</span> <span class="string">logback，则会自动使用”logback.*xml”这些文件</span></span><br><span class="line"><span class="attr">需要注意的是，“flink-$&#123;user&#125;-standalonesession-$&#123;id&#125;-$&#123;hostname&#125;”和“flink-$&#123;user&#125;-</span> <span class="string">taskexecutor-$&#123;id&#125;-$&#123;hostname&#125;”都带有“$&#123;id&#125;”，“$&#123;id&#125;”表示本进程在本机上该角色（JobManager 或 TaskManager）的所有进程中的启动顺序，默认从 0 开始。</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="yarn集群环境"><a href="#yarn集群环境" class="headerlink" title="yarn集群环境"></a>yarn集群环境</h2><h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><p> jdk1.8及以上（推荐jdk11）【配置JAVA_HOME环境变量】</p>
+<p>ssh免密码登录【集群内节点之间免密登录】</p>
+<p>至少hadoop2.8.5</p>
+<p> hdfs &amp; yarn均启动</p>
+<h3 id="集群规划"><a href="#集群规划" class="headerlink" title="集群规划"></a>集群规划</h3><p>服务器: node1(Master +Worker)</p>
+<p>服务器: node2(Worker)</p>
+<p>服务器: node3(Worker)</p>
+<h3 id="修改hadoop的配置参数"><a href="#修改hadoop的配置参数" class="headerlink" title="修改hadoop的配置参数"></a>修改hadoop的配置参数</h3><ul>
+<li>打开yarn配置页面（每台hadoop节点都需要修改）</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">vim /export/server/hadoop/etc/hadoop/yarn-site.xml</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">添加</span></span><br><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;yarn.nodemanager.vmem-check-enabled&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;false&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">是否启动一个线程检查每个任务正使用的虚拟内存量，如果任务超出分配值，则直接将其杀掉，默认是<span class="literal">true</span>。</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">在这里面我们需要关闭，因为对于flink使用yarn模式下，很容易内存超标，这个时候yarn会自动杀掉job</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>分发yarn-site.xml到其它服务器节点</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scp yarn-site.xml node2:$PWD</span><br><span class="line">scp yarn-site.xml node3:$PWD</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>启动ZK、HDFS、YARN集群</li>
+</ul>
+<h2 id="Flink-On-Yarn"><a href="#Flink-On-Yarn" class="headerlink" title="Flink On Yarn"></a>Flink On Yarn</h2><p>在企业实际开发中，使用Flink时，更多的使用方式是Flink On Yarn模式，原因如下：</p>
+<ul>
+<li>Yarn的资源可以按需使用，提高集群的资源利用率</li>
+<li>Yarn的任务有优先级，根据优先级运行作业</li>
+<li>基于Yarn调度系统，能够自动化地处理各个角色的 Failover(容错)<ul>
+<li>JobManager 进程和 TaskManager 进程都由 Yarn NodeManager 监控</li>
+<li>如果 JobManager 进程异常退出，则 Yarn ResourceManager 会重新调度 JobManager 到其他机器</li>
+<li>如果 TaskManager 进程异常退出，JobManager 会收到消息并重新向 Yarn ResourceManager 申请资源，重新启动 TaskManager</li>
+</ul>
+</li>
+</ul>
+<h3 id="运行机制"><a href="#运行机制" class="headerlink" title="运行机制"></a>运行机制</h3><blockquote>
+<p>Yarn的客户端需要获取hadoop的配置信息，连接Yarn的ResourceManager。所以要有设置有 YARN_CONF_DIR或者HADOOP_CONF_DIR或者HADOOP_CONF_PATH,只要设置了其中一个环境变量，就会被读取。如果读取上述的变量失败了，那么将会选择hadoop_home的环境变量，读取成功将会尝试加载$HADOOP_HOME&#x2F;etc&#x2F;hadoop的配置文件。</p>
+</blockquote>
+<p><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/blog/image-20230905163143710.png"></p>
+<h3 id="Session模式"><a href="#Session模式" class="headerlink" title="Session模式"></a>Session模式</h3><blockquote>
+<p>这种模式会预先在yarn或者k8s上启动一个flink集群，然后将作业提交到这个集群上，这种模式，集群中的作业使用相同的资源，如果某一个作业出现了问题导致整个集群挂掉，那就得重启集群中的所有任务，这样就会给集群造成很大的负面影响。</p>
+</blockquote>
+<blockquote>
+<p>特点：需要事先启动一个flink集群申请资源，提前启动JobManager和TaskManager</p>
+<p>优点：不需要每次提交作业都申请资源，而是使用已经申请好的资源，从而执行效率高</p>
+<p>缺点：作业每次执行完不会释放资源，因此会一起占用资源</p>
+<p>应用场景：比较适合于提交比较频繁的场景，小作业比较多</p>
+</blockquote>
+<p><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/blog/image-20221129222646948.png"></p>
+<h3 id="Per-Job模式（1-15废弃）"><a href="#Per-Job模式（1-15废弃）" class="headerlink" title="Per-Job模式（1.15废弃）"></a>Per-Job模式（1.15废弃）</h3><p>考虑到集群的资源隔离情况，一般生产上的任务都会选择per job模式，也就是每个作业启动一个flink集群，各个集群之间独立运行，互不影响,且每个集群可以设置独立的配置。</p>
+<blockquote>
+<p>特点：每次提交作业都需要申请一次资源（每个作业都会创建一个JobManager）</p>
+<p>优点：作业运行完成后，资源会被释放</p>
+<p>缺点：每次提交都重新申请资源，会影响执行效率</p>
+<p>应用场景：适合作业比较少的场景，大作业的情况下</p>
+</blockquote>
+<p><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/blog/image-20221129222831921.png"></p>
+<h3 id="Application模式"><a href="#Application模式" class="headerlink" title="Application模式"></a>Application模式</h3><p>flink-1.11引入了一种新的部署模式，即 Application 模式。目前，flink-1.11 已经可以支持基于 Yarn 和 Kubernetes 的 Application 模式。 </p>
+<p>Session模式：所有作业共享集群资源，隔离性差，JM 负载瓶颈，main 方法在客户端执行。</p>
+<p>Per-Job模式：每个作业单独启动集群，隔离性好，JM 负载均衡，main 方法在客户端执行。</p>
+<blockquote>
+<p>通过以上两种模式的特点描述，可以看出，main方法都是在客户端执行，社区考虑到在客户端执行 main() 方法来获取 flink 运行时所需的依赖项，并生成 JobGraph，提交到集群的操作都会在实时平台所在的机器上执行，那么将会给服务器造成很大的压力。尤其在大量用户共享客户端时，问题更加突出。</p>
+</blockquote>
+<p>Application 模式下，用户程序的 main 方法将在集群中而不是客户端运行，用户将程序逻辑和依赖打包进一个可执行的 jar 包里，集群的入口程序 (ApplicationClusterEntryPoint) 负责调用其中的 main 方法来生成 JobGraph。Application 模式为每个提交的应用程序创建一个集群，该集群可以看作是在特定应用程序的作业之间共享的会话集群，并在应用程序完成时终止。</p>
+<p><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/blog/image-20221129223201405.png"></p>
+<h2 id="Fink-On-Yarn三种模式比较"><a href="#Fink-On-Yarn三种模式比较" class="headerlink" title="Fink On Yarn三种模式比较"></a>Fink On Yarn三种模式比较</h2><blockquote>
+<p>yarn session：需要事先在yarn集群上启动一个flink集群，所有的flink作业共享这个集群，资源利用率高，程序执行效率高，但是程序运行结束不会释放资源，程序之间的隔离性较差，同时main方法运行客户端上，作业提交多</p>
+<p>yarn per-job：不需要事先启动flink集群，每提交一个flink作业会启动一个flink集群，作业与作业之间资源互不影响，隔离性较好，作业运行结束会释放资源，同时main方法运行客户端上，作业提交少</p>
+<p>yarn application：main方法运行在集群上，其它与per-job相同</p>
+</blockquote>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="https://github.com/weiswift">Johnson Liam</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://github.com/weiswift/2023/09/01/2023.09.05/">https://github.com/weiswift/2023/09/01/2023.09.05/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Interview/">Interview</a><a class="post-meta__tags" href="/tags/Flink/">Flink</a></div><div class="post_share"><div class="social-share" data-image="https://s1.ax1x.com/2023/04/18/p9i6VDx.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> Donate</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/09/01/2023.09.01/" title="【Java温故知新(二)】面向对象|API|工具类"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">【Java温故知新(二)】面向对象|API|工具类</div></div></a></div><div class="next-post pull-right"><a href="/2023/08/30/2023.08.30/" title="【Java温故知新(一)】数组|面向对象特征|两个关键字"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">【Java温故知新(一)】数组|面向对象特征|两个关键字</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2023/05/20/2023.05.20/" title="【Interview】Hadoop相关"><img class="cover" src="https://s1.ax1x.com/2023/05/20/p95lR1g.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-05-20</div><div class="title">【Interview】Hadoop相关</div></div></a></div><div><a href="/2023/05/22/2023.05.22-hive%E8%B0%83%E4%BC%98/" title="【Interview】Hive原理及调优"><img class="cover" src="https://s1.ax1x.com/2023/05/20/p95lR1g.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-05-22</div><div class="title">【Interview】Hive原理及调优</div></div></a></div><div><a href="/2023/05/21/2023.05.22/" title="【Interview】MapReduce和Yarn原理"><img class="cover" src="https://s1.ax1x.com/2023/05/22/p9oBGSH.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-05-21</div><div class="title">【Interview】MapReduce和Yarn原理</div></div></a></div><div><a href="/2023/05/23/2023.05.23/" title="【Interview】ZooKeeper原理"><img class="cover" src="https://s1.ax1x.com/2023/05/23/p9THulj.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-05-23</div><div class="title">【Interview】ZooKeeper原理</div></div></a></div><div><a href="/2023/05/25/2023.05.25/" title="数仓项目需求及技术架构"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-05-25</div><div class="title">数仓项目需求及技术架构</div></div></a></div><div><a href="/2023/06/08/%E5%A6%82%E4%BD%95%E5%86%99%E9%9D%A2%E8%AF%95%E7%AE%80%E5%8E%86_06.08/" title="INTERVIEW"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-06-08</div><div class="title">INTERVIEW</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s1.ax1x.com/2023/04/18/p9i6VDx.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Johnson Liam</div><div class="author-info__description">机器都在学习,你有什么理由不学习?</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">124</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">33</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><a id="card-info-btn" href="https://github.com/weiswift/"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/weiswift" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:1265019024@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">网站由Github服务器托管,感谢支持！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B5%81%E5%BC%8F%E8%AE%A1%E7%AE%97"><span class="toc-number">1.</span> <span class="toc-text">流式计算</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%95%B0%E6%8D%AE%E6%B5%81-%E4%BB%80%E4%B9%88%E6%98%AF%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="toc-number">1.1.</span> <span class="toc-text">什么是数据流?什么是数据集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A0%E7%95%8C%E6%95%B0%E6%8D%AE%E6%B5%81%E5%92%8C%E6%9C%89%E7%95%8C%E6%95%B0%E6%8D%AE%E6%B5%81"><span class="toc-number">1.2.</span> <span class="toc-text">无界数据流和有界数据流</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%A1%AC%E6%A0%B8Flink%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.</span> <span class="toc-text">硬核Flink介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.1.</span> <span class="toc-text">基本介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Flink%E6%B5%81%E5%A4%84%E7%90%86%E7%89%B9%E6%80%A7"><span class="toc-number">2.2.</span> <span class="toc-text">Flink流处理特性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Flink%E7%9A%84%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">2.3.</span> <span class="toc-text">Flink的应用场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Flink%E6%9E%B6%E6%9E%84%E4%BD%93%E7%B3%BB"><span class="toc-number">2.4.</span> <span class="toc-text">Flink架构体系</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E6%95%B4%E4%BD%93%E6%9E%84%E6%88%90"><span class="toc-number">2.4.1.</span> <span class="toc-text">系统整体构成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E6%97%B6%E6%9E%B6%E6%9E%84"><span class="toc-number">2.4.2.</span> <span class="toc-text">运行时架构</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Flink%E8%AE%A1%E7%AE%97%E4%BC%98%E5%8C%96"><span class="toc-number">3.</span> <span class="toc-text">Flink计算优化</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Flink%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97"><span class="toc-number">3.1.</span> <span class="toc-text">Flink并行计算</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Flink%E5%90%88%E5%B9%B6%E7%AE%97%E5%AD%90%E9%93%BE%EF%BC%88Operator-Chain%EF%BC%89"><span class="toc-number">3.2.</span> <span class="toc-text">Flink合并算子链（Operator Chain）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E7%AE%97%E5%AD%90%E9%93%BE-%E7%AE%97%E5%AD%90%E9%97%B4%E7%9A%84%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93"><span class="toc-number">3.2.1.</span> <span class="toc-text">什么是算子链: (算子间的数据传输)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%88%E5%B9%B6%E7%AE%97%E5%AD%90%E9%93%BE"><span class="toc-number">3.2.2.</span> <span class="toc-text">合并算子链</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Flink%E4%BB%BB%E5%8A%A1%E6%A7%BD%E7%9A%84%E5%85%B1%E4%BA%AB"><span class="toc-number">3.3.</span> <span class="toc-text">Flink任务槽的共享</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E4%BB%BB%E5%8A%A1%E6%A7%BD%E7%9A%84%E5%85%B1%E4%BA%AB"><span class="toc-number">3.3.1.</span> <span class="toc-text">什么是任务槽的共享</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%BB%E5%8A%A1%E6%A7%BD%E5%92%8C%E5%B9%B6%E8%A1%8C%E5%BA%A6%E7%9A%84%E5%85%B3%E7%B3%BB%E2%80%BB"><span class="toc-number">3.4.</span> <span class="toc-text">任务槽和并行度的关系※</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%81%E5%9B%BE%E8%BD%AC%E6%8D%A2"><span class="toc-number">3.5.</span> <span class="toc-text">流图转换</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Flink%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA"><span class="toc-number">4.</span> <span class="toc-text">Flink集群搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Standalone"><span class="toc-number">4.1.</span> <span class="toc-text">Standalone</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="toc-number">4.1.1.</span> <span class="toc-text">环境准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85%E5%8C%85"><span class="toc-number">4.1.2.</span> <span class="toc-text">下载安装包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%A7%84%E5%88%92"><span class="toc-number">4.1.3.</span> <span class="toc-text">服务器规划</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4"><span class="toc-number">4.1.4.</span> <span class="toc-text">安装步骤</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#yarn%E9%9B%86%E7%BE%A4%E7%8E%AF%E5%A2%83"><span class="toc-number">4.2.</span> <span class="toc-text">yarn集群环境</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-number">4.2.1.</span> <span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%86%E7%BE%A4%E8%A7%84%E5%88%92"><span class="toc-number">4.2.2.</span> <span class="toc-text">集群规划</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9hadoop%E7%9A%84%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0"><span class="toc-number">4.2.3.</span> <span class="toc-text">修改hadoop的配置参数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Flink-On-Yarn"><span class="toc-number">4.3.</span> <span class="toc-text">Flink On Yarn</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6"><span class="toc-number">4.3.1.</span> <span class="toc-text">运行机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Session%E6%A8%A1%E5%BC%8F"><span class="toc-number">4.3.2.</span> <span class="toc-text">Session模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Per-Job%E6%A8%A1%E5%BC%8F%EF%BC%881-15%E5%BA%9F%E5%BC%83%EF%BC%89"><span class="toc-number">4.3.3.</span> <span class="toc-text">Per-Job模式（1.15废弃）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Application%E6%A8%A1%E5%BC%8F"><span class="toc-number">4.3.4.</span> <span class="toc-text">Application模式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Fink-On-Yarn%E4%B8%89%E7%A7%8D%E6%A8%A1%E5%BC%8F%E6%AF%94%E8%BE%83"><span class="toc-number">4.4.</span> <span class="toc-text">Fink On Yarn三种模式比较</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/03/2023.09.03/" title="【Java温故知新(四)】JDBC优化方案|多线程|Maven">【Java温故知新(四)】JDBC优化方案|多线程|Maven</a><time datetime="2023-09-02T17:00:00.000Z" title="Created 2023-09-03 00:00:00">2023-09-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/02/2023.09.02/" title="【Java温故知新(三)】异常|集合|可变参|Lambda|JDBC">【Java温故知新(三)】异常|集合|可变参|Lambda|JDBC</a><time datetime="2023-09-01T17:00:00.000Z" title="Created 2023-09-02 00:00:00">2023-09-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/01/2023.09.01/" title="【Java温故知新(二)】面向对象|API|工具类">【Java温故知新(二)】面向对象|API|工具类</a><time datetime="2023-08-31T17:00:00.000Z" title="Created 2023-09-01 00:00:00">2023-09-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/01/2023.09.05/" title="【Flink】Flink技术栈(Theory及集群部署)">【Flink】Flink技术栈(Theory及集群部署)</a><time datetime="2023-08-31T17:00:00.000Z" title="Created 2023-09-01 00:00:00">2023-09-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/08/30/2023.08.30/" title="【Java温故知新(一)】数组|面向对象特征|两个关键字">【Java温故知新(一)】数组|面向对象特征|两个关键字</a><time datetime="2023-08-29T17:00:00.000Z" title="Created 2023-08-30 00:00:00">2023-08-30</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Johnson Liam</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Welcome to 小威の <a target="_blank" rel="noopener" href="https://www.cnblogs.com/liam-sliversucks/">Blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><canvas class="fireworks" mobile="true"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = true;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="true"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
