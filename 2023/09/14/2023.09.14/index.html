@@ -1,0 +1,424 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>【FLink教育】Flink技术选型 | SilverSucks</title><meta name="author" content="Johnson Liam"><meta name="copyright" content="Johnson Liam"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="传统方案传统数据集成方案的痛点 大数据技术的应用可以从海量的用户行为数据中进行挖掘分析，根据分析结果优化平台的服务质量，最终满足用户的需求。大数据分析平台就是将大数据技术应用于教育培训领域，为企业经营提供数据支撑：  建立集团数据仓库，统一集团数据中心，把分散的业务数据进行预先处理和存储。 根据业务"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://github.com/weiswift/2023/09/14/2023.09.14/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '【FLink教育】Flink技术选型',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-09-14 20:56:13'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css"> <script src="/live2d-widget/autoload.js"></script><script src="/live2d-widget/autoload.js"> </script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s1.ax1x.com/2023/04/18/p9i6VDx.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">133</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">33</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Links</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-gamepad"></i><span> Games</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/mikutap/"><i class="fa-fw fa fa-music"></i><span> MikuTap 初音未来</span></a></li><li><a class="site-page child" href="/starbattle/"><i class="fa-fw fa fa-space-shuttle"></i><span> StartBattle 星际大战</span></a></li><li><a class="site-page child" href="/2048/"><i class="fa-fw fa fa-flag"></i><span> 2048 经典游戏</span></a></li><li><a class="site-page child" href="/battlecity/"><i class="fa-fw fa fa-arrow-circle-left"></i><span> BattleCity 坦克大战</span></a></li><li><a class="site-page child" href="/pacman/"><i class="fa-fw fa fa-bolt"></i><span> PacMan  吃豆人</span></a></li><li><a class="site-page child" href="/tetris/"><i class="fa-fw fa fa-arrows-alt"></i><span> Tetris 俄罗斯方块</span></a></li><li><a class="site-page child" href="/smallcat/"><i class="fa-fw fa fa-paw"></i><span> CatchCat 困住小猫</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-leaf"></i><span> Moments</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/diary/"><i class="fa-fw fas fa-bookmark"></i><span> Diary</span></a></li><li><a class="site-page child" href="/gallery/"><i class="fa-fw fa fa-hourglass-half"></i><span> Gallery</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-podcast"></i><span> More</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags标签</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About关于</span></a></li><li><a class="site-page child" href="/messageboard/"><i class="fa-fw fas fa-bookmark"></i><span> Messageboard留言板</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s1.ax1x.com/2023/04/18/p9i6u5D.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="SilverSucks"><span class="site-name">SilverSucks</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Links</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-gamepad"></i><span> Games</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/mikutap/"><i class="fa-fw fa fa-music"></i><span> MikuTap 初音未来</span></a></li><li><a class="site-page child" href="/starbattle/"><i class="fa-fw fa fa-space-shuttle"></i><span> StartBattle 星际大战</span></a></li><li><a class="site-page child" href="/2048/"><i class="fa-fw fa fa-flag"></i><span> 2048 经典游戏</span></a></li><li><a class="site-page child" href="/battlecity/"><i class="fa-fw fa fa-arrow-circle-left"></i><span> BattleCity 坦克大战</span></a></li><li><a class="site-page child" href="/pacman/"><i class="fa-fw fa fa-bolt"></i><span> PacMan  吃豆人</span></a></li><li><a class="site-page child" href="/tetris/"><i class="fa-fw fa fa-arrows-alt"></i><span> Tetris 俄罗斯方块</span></a></li><li><a class="site-page child" href="/smallcat/"><i class="fa-fw fa fa-paw"></i><span> CatchCat 困住小猫</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-leaf"></i><span> Moments</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/diary/"><i class="fa-fw fas fa-bookmark"></i><span> Diary</span></a></li><li><a class="site-page child" href="/gallery/"><i class="fa-fw fa fa-hourglass-half"></i><span> Gallery</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-podcast"></i><span> More</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags标签</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About关于</span></a></li><li><a class="site-page child" href="/messageboard/"><i class="fa-fw fas fa-bookmark"></i><span> Messageboard留言板</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">【FLink教育】Flink技术选型</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2023-09-13T17:00:00.000Z" title="Created 2023-09-14 00:00:00">2023-09-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-09-14T13:56:13.000Z" title="Updated 2023-09-14 20:56:13">2023-09-14</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="【FLink教育】Flink技术选型"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="传统方案"><a href="#传统方案" class="headerlink" title="传统方案"></a>传统方案</h1><h2 id="传统数据集成方案的痛点"><a href="#传统数据集成方案的痛点" class="headerlink" title="传统数据集成方案的痛点"></a>传统数据集成方案的痛点</h2><blockquote>
+<p>大数据技术的应用可以从海量的用户行为数据中进行挖掘分析，根据分析结果优化平台的服务质量，最终满足用户的需求。大数据分析平台就是将大数据技术应用于教育培训领域，为企业经营提供数据支撑：</p>
+<ul>
+<li>建立集团数据仓库，统一集团数据中心，把分散的业务数据进行预先处理和存储。</li>
+<li>根据业务分析需要，从海量的用户行为数据中进行挖掘分析，定制多维的数据集合，形成数据集市，供各个场景主题使用。</li>
+<li>前端业务数据展示选择和控制，选取合适的前端数据统计、分析结果展示工具。</li>
+</ul>
+</blockquote>
+<p>- </p>
+<p><img src="http://lesson-pic.oss-cn-hangzhou.aliyuncs.com/pics/afe2266b0d0370c9cddc858de4bf229f.jpeg" alt="IMG_256"></p>
+<p>上图为传统数据入仓架构 1.0，主要使用 DataX 或 Sqoop 全量同步到 HDFS，再围绕 Hive 做数仓。</p>
+<p>此方案存在诸多缺陷：容易影响业务稳定性，因为每天都需要从业务表里查询数据；天级别的产出导致时效性差，延迟高；如果将调度间隔调成几分钟一次，则会对源库造成非常大的压力；扩展性差，业务规模扩大后极易出现性能瓶颈。</p>
+<p><img src="http://lesson-pic.oss-cn-hangzhou.aliyuncs.com/pics/f48bd72f94db29548d78ecc9137f04ac.png"></p>
+<p>上图为传统数据入仓 2.0 架构。分为实时和离线两条链路，实时链路做增量同步，比如通过 Canal 同步到 Kafka 后再做实时回流；全量同步一般只做一次，与每天的增量在 HDFS 上做定时合并，最后导入到 Hive 数仓里。</p>
+<p>此方式只做一次全量同步，因此基本不影响业务稳定性，但是增量同步有定时回流，一般只能保持在小时和天级别，因此它的时效性也比较低。同时，全量与增量两条链路是割裂的，意味着链路多，需要维护的组件也多，系统的可维护性会比较差。</p>
+<p><img src="http://lesson-pic.oss-cn-hangzhou.aliyuncs.com/pics/7453d1aa883868241ba6e4b7c5fcfe52.jpeg" alt="IMG_256"></p>
+<p>上图为传统 CDC ETL 分析架构。通过 Debezium、Canal 等工具采集 CDC 数据后，写入消息队列，再使用计算引擎做计算清洗，最终传输到下游存储，完成实时数仓、数据湖的构建。</p>
+<p><img src="http://lesson-pic.oss-cn-hangzhou.aliyuncs.com/pics/e610e20938ca095d6834be49ee5147eb.jpeg" alt="IMG_256"></p>
+<p>传统 CDC ETL 分析里引入了很多组件比如 Debezium、Canal，都需要部署和维护， Kafka 消息队列集群也需要维护。Debezium 的缺陷在于它虽然支持全量加增量，但它的单并发模型无法很好地应对海量数据场景。而 Canal 只能读增量，需要 DataX 与 Sqoop 配合才能读取全量，相当于需要两条链路，需要维护的组件也增加。因此，传统 CDC ETL 分析的痛点是单并发性能差，全量增量割裂，依赖的组件较多。</p>
+<h1 id="优享学教育大数据平台"><a href="#优享学教育大数据平台" class="headerlink" title="优享学教育大数据平台"></a>优享学教育大数据平台</h1><h2 id="1-0版本技术架构简要分析"><a href="#1-0版本技术架构简要分析" class="headerlink" title="1.0版本技术架构简要分析"></a>1.0版本技术架构简要分析</h2><p><img src="http://lesson-pic.oss-cn-hangzhou.aliyuncs.com/pics/c5895a5e83e24dfb1a79527c30d7a2f1.png" alt="IMG_256"></p>
+<p><strong>架构 : Debezium 1.8 + Pulsar 2.7.0 + Clickhouse 21.9.4</strong></p>
+<p><strong>数据处理流程分析：</strong></p>
+<ul>
+<li><strong>数据源</strong></li>
+</ul>
+<p>Mysql的数据使用Debezium工具单机同步至Pulsar。</p>
+<p>七陌及诸葛智能的数据采用Http的方式同步至Pulsar。</p>
+<ul>
+<li><strong>数据处理</strong></li>
+</ul>
+<p>中间无处理，数据最终在Clickhouse中进行处理。</p>
+<ul>
+<li><strong>数据存储</strong></li>
+</ul>
+<p>Clickhouse直接消费Pulsar的数据，写入到Clickhouse中，Clickhouse存储原始数据。</p>
+<p><strong>现有架构存在的问题主要如下：</strong></p>
+<ol>
+<li>对于Mysql数据源采用的是Debezium工具，该工具仅能单机部署，只能单并发读取<code>Binlog</code>日志，且全量同步不支持断点续传，传输能力较差，每次服务器重启会对Mysql数据进行全量同步，相当耗时，且生态扩展性不好。</li>
+<li>Pulsar作为消息传输系统不建议持久化存储数据，因此数据的持久化存储到了Clickhouse中，因此导致Clickhouse存储的是大量明细数据，会导致Clickhouse变得臃肿。</li>
+<li>Pulsar与Clickhouse之间缺少数据的处理过程，如果遇到复杂的业务逻辑，比如数据的拉宽、清洗、转换，该架构是无法胜任的。</li>
+<li>Clickhouse单表查询性能强劲，但join性能和并发相对较差，而1.0架构的查询Join操作也是在Clickhouse中进行。Clickhouse运维成本高，扩展性较差，各个节点一致性要求高，语法非标准SQL增加使用成本。</li>
+<li>缺乏数仓分层的概念和支撑，如果后期随着业务的发展，指标的计算可能会比较复杂，因此引入数仓分层是非常有必要的。</li>
+</ol>
+<h2 id="优享学教育大数据平台2-0版本逻辑架构"><a href="#优享学教育大数据平台2-0版本逻辑架构" class="headerlink" title="优享学教育大数据平台2.0版本逻辑架构"></a>优享学教育大数据平台2.0版本逻辑架构</h2><p><img src="http://lesson-pic.oss-cn-hangzhou.aliyuncs.com/pics/bc680c4ba955df3aa844e7456a3ba061.png" alt="图示 中度可信度描述已自动生成"></p>
+<p>初步设想是将MySQL数据通过Debezium进入到Kafka。但是存储在Kafka的数据有失效时间，不会存太久的历史数据，这样就必须把维度表持久化到HBase中。并且该架构单并发性能差，依赖组件多，链路长，维护工作量庞大，对系统资源的消耗极大。</p>
+<p>我们整体的目标规划是替代kafka，把Hudi作为中间存储，将数仓建设在Hudi之上，并以Flink 作为流批一体计算引擎。</p>
+<p><img src="http://lesson-pic.oss-cn-hangzhou.aliyuncs.com/pics/d7f8e6e56243b81be1ffdb8a546aefbf.png"></p>
+<p><img src="http://lesson-pic.oss-cn-hangzhou.aliyuncs.com/pics/6e1b586373084d7ed38d27586b62ea24.png" alt="形状 描述已自动生成"></p>
+<p>最终，我们决定直接通过Flink CDC千表入湖，替换Debezium、kafka组件采集数据，采用Flink sql实时处理，在Hudi中做数仓分层，替代在kafka中做分层处理。并且在该项目中，我们采用Dinky将多表的source进行了合并，实现千表入湖，source的合并也可以避免多个任务通过Flink CDC接MySQL表以及Binlog，对MySQL库的性能造成影响。</p>
+<p><strong>最终我们采用的架构2.0如下图</strong>：</p>
+<p><img src="http://lesson-pic.oss-cn-hangzhou.aliyuncs.com/pics/8ef39deced4ac78d4d2baa4eb0f943c0.png"></p>
+<p><strong>架构 : Mysql 5.7 + Flink CDC 2.2 + Hadoop 3.3.0 + Hive 3.1.2 + Flink 1.14.5 + Hudi 0.11.1 + Doris 1.1.0 + Dinky 0.6.6 + Presto 0.261 + Hue 4.1.0</strong></p>
+<ul>
+<li><strong>数据源</strong></li>
+</ul>
+<p>Mysql业务数据库</p>
+<ul>
+<li><strong>数据采集</strong></li>
+</ul>
+<p>使用Flink CDC 2.2作为同步工具,将Mysql数据多并发实时采集传输至存储端</p>
+<ul>
+<li><strong>数据存储</strong></li>
+</ul>
+<p>使用Hudi存储数据，使用Doris存储DWD层与DWS数据做查询分析</p>
+<ul>
+<li><strong>数据计算</strong></li>
+</ul>
+<p>实时计算:使用Flink&#x2F;Flink SQL进行实时数据处理</p>
+<p>使用Persto灵活用于离线数据分析</p>
+<ul>
+<li><strong>数据分析</strong></li>
+</ul>
+<p>使用Doris灵活用于自定义数据分析</p>
+<ul>
+<li><strong>大数据平台应用</strong></li>
+</ul>
+<p>实时场景:实时报表,业务监控,动态展示大屏</p>
+<p><strong>这样做的好处有：</strong></p>
+<ul>
+<li>Kafka不再担任实时数据仓库存储的中间存储介质，而Hudi存储在HDFS上，可以存储海量数据集；</li>
+<li>实时数据仓库中间层可以使用 OLAP 分析引擎查询中间结果数据；</li>
+<li>真正意义上的准实时，数据 T+1 延迟的问题得到解决；</li>
+<li>读时 Schema 不再需要严格定义 Schema 类型，支持 schema evolution；</li>
+<li>支持主键索引，数据查询效率数倍增加，并且支持 ACID 语义，保证数据不重复不丢失；</li>
+<li>Hudi 具有 Timeline 的功能，可以更多存储数据中间的状态数据，数据完备性更强。</li>
+</ul>
+<h2 id="优享学教育大数据平台2-0版本数据流转"><a href="#优享学教育大数据平台2-0版本数据流转" class="headerlink" title="优享学教育大数据平台2.0版本数据流转"></a>优享学教育大数据平台2.0版本数据流转</h2><p>数据流转如下图</p>
+<p><img src="http://lesson-pic.oss-cn-hangzhou.aliyuncs.com/pics/7666462c388da049cf885bdd8262aefb.png" alt="图示 描述已自动生成"></p>
+<ul>
+<li>业务数据主要放在业务数据库Mysql两个数据库<strong>bxg</strong>库和<strong>crm</strong>库中。</li>
+<li>Flink CDC通过读取Mysql数据库的Binlog日志(Mysql的Binlog日志完整记录了数据库中的变更，可以把Binlog文件当作流的数据源)，实时捕获数据变更,将原始数据通过Dinky千表入湖,同步到Hudi的ODS层，并使用Hudi on Hive 会将ODS层元数据信息自动同步到Hive中，便于管理。</li>
+<li>使用Flink SQL将Hudi的ODS层数据拉宽写入到Hudi的DWD层 ，DWD层通过join和轻度聚合进入DWS层，DWS层可直接用于BI报表。</li>
+<li>使用Flink SQL将Hudi的DWD和DWS层数据同步到Doris的DWD和DWS层。</li>
+<li>最终动态显示大屏连接到Doris的DWS层指标数据，将指标动态显示到大屏上。</li>
+</ul>
+<h3 id="未来展望"><a href="#未来展望" class="headerlink" title="未来展望"></a>未来展望</h3><p>由于在Hive中查询较慢，故在当前的架构中，我们在Doris中也保存了一份数据便于业务查询。但是这导致Doris和Hudi没有很好的融合，数据冗余存储，所以目前相当于还是两套架构。</p>
+<p>在后续Doris即将发布的1.2版本支持数据湖联邦查询，即可以通过外表的方式联邦分析位于Hudi中的数据，在避免数据拷贝的前提下，查询性能大幅提升。我们可以升级为如下架构，Metabase和Hue直接接入Doris进行可视化展示。可以很好的解决了我们现有架构的一些问题。</p>
+<p><img src="http://lesson-pic.oss-cn-hangzhou.aliyuncs.com/pics/907c081b104f6ec657e822d60a3324c1.png"></p>
+<h1 id="项目技术选型"><a href="#项目技术选型" class="headerlink" title="项目技术选型"></a>项目技术选型</h1><h2 id="流式处理平台"><a href="#流式处理平台" class="headerlink" title="流式处理平台"></a>流式处理平台</h2><p><strong>采用Flink CDC作为同步工具</strong></p>
+<ul>
+<li><strong>为什么选用Flink CDC 2.2?</strong></li>
+</ul>
+<p>2.0架构选用了Flink CDC 2.2作为同步工具，相比较 Debezium，Flink CDC底层封装了Debezium，Flink CDC 2.2解决了Debezium的痛点(详见后续CDC讲解):</p>
+<ol>
+<li>并发读取，全量数据的读取性能可以水平扩展。</li>
+<li>全程无锁，不对线上业务产生锁的风险。</li>
+<li>断点续传，支持全量阶段的 Checkpoint。</li>
+</ol>
+<ul>
+<li><strong>对比全量+增量同步的能力:</strong></li>
+</ul>
+<p>Debezium仅支持单机部署，Flink CDC 2.2支持分布式架构，多并发能力大大提升作业速度。支持断点续传，无需再为每次服务器重启的全量同步耽误大量时间担忧。</p>
+<ul>
+<li><strong>在数据转换 &#x2F; 数据清洗能力上:</strong></li>
+</ul>
+<p>在Flink CDC上操作相当简单，可以通过Flink SQL去操作数据，Debezium等则需要通过脚本或者模板去做，所以用户的使用门槛会比较高。</p>
+<ul>
+<li><strong>在生态方面，对下游的一些数据库或者数据源的支持:</strong></li>
+</ul>
+<p>Flink CDC下游有丰富的Connector，也支持各种自定义Connector。其架构分布式架构不单纯体现在数据读取能力的水平扩展上，更重要的是在大数据场景下分布式系统接入能力。例如Flink CDC的数据入湖或者入仓的时候，下游通常是分布式的系统，如Hive、HDFS、Iceberg、Hudi等，那么从对接入分布式系统能力上看，Flink CDC的架构能够很好地接入此类系统。</p>
+<ul>
+<li><strong>配合Dinky实现千表入湖和千表入仓</strong></li>
+</ul>
+<p>在Flink CDC进行多表入Hudi和Doris，使用了Dinky作为实时计算平台，可实现千表入仓入湖。Dinky定义了CDCSOURCE整库同步的语法，该语法和CDAS作用相似，可以直接自动构建一个整库入仓入湖的实时任务，并且对Source进行了合并，不会产生额外的Mysql及网络压力，支持对任意Sink的同步，如Kafka、Doris、Hudi、Jdbc 。</p>
+<h2 id="分布式计算平台"><a href="#分布式计算平台" class="headerlink" title="分布式计算平台"></a>分布式计算平台</h2><p><strong>分布式计算采用Flink SQL</strong></p>
+<ul>
+<li><strong>为什么采用Flink SQL?</strong></li>
+</ul>
+<ol>
+<li>Flink 具备统一的框架处理有界和无界两种数据流的能力</li>
+<li>部署灵活，Flink 底层支持多种资源调度器，包括Yarn、Kubernetes 等。Flink 自身带的Standalone的调度器，在部署上也十分灵活。</li>
+<li>极高的可伸缩性，可伸缩性对于分布式系统十分重要，阿里巴巴双11大屏采用Flink 处理海量数据，使用过程中测得Flink 峰值可达17亿条&#x2F;秒。</li>
+<li>极致的流式处理性能。Flink 相对于Storm 最大的特点是将状态语义完全抽象到框架中，支持本地状态读取，避免了大量网络IO，可以极大提升状态存取的性能。</li>
+<li>Flink 是目前开源社区中唯一一套集高吞吐、低延迟、高性能于一身的分布式流式数据处理框架。</li>
+<li>基于轻量级分布式快照(Snapshot&#x2F;Checkpoints)的容错机制</li>
+<li>支持SavePoint保存点，Flink 通过SavePoints 技术将任务执行的快照保存在存储介质上，当任务重启的时候，可以从事先保存的 SavePoints 恢复原有的计算状态，使得任务继续按照停机之前的状态运行。</li>
+<li>Flink SQL开发大大降低了开发难度,易于开发和维护</li>
+</ol>
+<h3 id="海量数据存储"><a href="#海量数据存储" class="headerlink" title="海量数据存储"></a>海量数据存储</h3><p><strong>使用Hudi 存储原始数据,使用Doris存储实时宽表和聚合数据。</strong></p>
+<ul>
+<li><strong>为什么选用Hudi?</strong></li>
+</ul>
+<p>数据湖是一个集中式数据存储库，用来存储大量的原始数据，使用平面架构来存储数据。湖仓一体（LakeHouse）是新出现的一种数据架构，它同时吸收了数据仓库和数据湖的优势。直接在用于数据湖的低成本存储上实现与数据仓库中类似的数据结构和数据管理功能。<br> 目前市面上流行的三大开源数据湖方案分别为：Delta Lake、Apache Iceberg和Apache Hudi。与其它两种方案相比，Hudi（Hadoop Update Delete Incremantal）最大的特点是：</p>
+<ol>
+<li>Update&#x2F;Delete记录，Hudi使用细粒度的文件&#x2F;记录级别索引来支持Update&#x2F;Delete记录，同时还提供写操作的事务保证。查询会处理最后一个提交的快照，并基于此输出结果。</li>
+<li>变更流，Hudi对获取数据变更提供了一流的支持：可以从给定的时间点获取给定表中已Updated&#x2F;Inserted&#x2F;Deleted的所有记录的增量流，并解锁新的查询姿势（类别）。</li>
+</ol>
+<ul>
+<li><strong>为什么选用Doris</strong></li>
+</ul>
+<p><strong>相比较于Clickhouse，Doris优势:</strong></p>
+<ol>
+<li>SQL的标准兼容好，使用成本低，是一个强一致性元数据的系统，导数功能较为完备。</li>
+<li>大宽表和多表查询速度都很快，具备CBO（基于代价）优化器，可以很好应对复杂查询，支持高并发查询。</li>
+<li>弹性伸缩能力要好，支持在线扩缩容，运维成本低。</li>
+</ol>
+<p><strong>相较于Doris，Clickhouse则需要做较多工作：</strong></p>
+<ol>
+<li>ZooKeeper存在性能瓶颈导致集群规模不能特别大。</li>
+<li>基本无法做到弹性伸缩，纯手工扩缩容工作量巨大且容易出错。</li>
+<li>故障节点的容忍度较低，出现一个节点故障会引发某些操作失败。</li>
+<li>导数需要外部保证数据不重不丢，导数失败需要删了重导。</li>
+<li>元数据需要自己保证各个节点一致性，偶发性的不一致情况较多。</li>
+<li>分布式表和本地表有两套表结构，较多用户难以理解。</li>
+<li>多表Join SQL需要改写和优化，方言较多几乎是不兼容其他引擎的SQL。</li>
+</ol>
+<p>总体上说，新框架2.0，解决了1.0框架的痛点问题，且实时性更佳,更好的满足业务需求。</p>
+<p>在该架构方案的基础上可以继续实现用户画像、智能推荐、数据挖掘等等，非常容易扩展且不需要修改整体架构，因此具有高度的灵活和可扩展性。</p>
+<h2 id="框架软件版本"><a href="#框架软件版本" class="headerlink" title="框架软件版本"></a>框架软件版本</h2><table>
+<thead>
+<tr>
+<th><strong>软件</strong></th>
+<th><strong>版本</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Mysql</td>
+<td>5.7</td>
+</tr>
+<tr>
+<td>Java</td>
+<td>1.8.0_241</td>
+</tr>
+<tr>
+<td>Hadoop</td>
+<td>3.3.0</td>
+</tr>
+<tr>
+<td>Zookeeper</td>
+<td>3.4.6</td>
+</tr>
+<tr>
+<td>Hive</td>
+<td>3.1.2</td>
+</tr>
+<tr>
+<td>Flink</td>
+<td>1.14.5</td>
+</tr>
+<tr>
+<td>Hudi</td>
+<td>0.11.1</td>
+</tr>
+<tr>
+<td>Doris</td>
+<td>1.1.0</td>
+</tr>
+<tr>
+<td>Dinky</td>
+<td>0.6.6</td>
+</tr>
+<tr>
+<td>Flink CDC</td>
+<td>2.2.0</td>
+</tr>
+<tr>
+<td>Presto</td>
+<td>0.261</td>
+</tr>
+<tr>
+<td>Hue</td>
+<td>4.1.0</td>
+</tr>
+</tbody></table>
+<h2 id="非功能描述"><a href="#非功能描述" class="headerlink" title="非功能描述"></a>非功能描述</h2><h3 id="框架版本选型"><a href="#框架版本选型" class="headerlink" title="框架版本选型"></a>框架版本选型</h3><ul>
+<li><p>Apache：运维麻烦，组件间兼容性需要自己调研。（一般大厂使用，技术实力雄厚，有专业的运维人员）</p>
+</li>
+<li><p>CDH：国内使用最多的版本，但CM不开源，但其实对中、小公司使用来说没有影响（建议使用）</p>
+</li>
+<li><p>HDP：开源，可以进行二次开发，但是没有CDH稳定，国内使用较少</p>
+<table>
+<thead>
+<tr>
+<th><strong>资源类型</strong></th>
+<th><strong>资源大小</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CPU</td>
+<td>32核</td>
+<td>CPU是计算机的大脑，是衡量服务器性能的首要指标</td>
+</tr>
+<tr>
+<td>内存</td>
+<td>128G</td>
+<td>Spark计算非常的耗内存，因此使用128G内存的服务器，如果有钱可以提供更大的内存服务器</td>
+</tr>
+<tr>
+<td>硬盘</td>
+<td>10T</td>
+<td>数据存储的地方，因此数据量越大，硬盘的容量必然更高</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<p><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/blog/image-20230914162438272.png"></p>
+<h2 id="技术亮点"><a href="#技术亮点" class="headerlink" title="技术亮点"></a>技术亮点</h2><blockquote>
+<ul>
+<li>使用Flink CDC实现业务数据库Mysql的实时采集,支持多并发读取数据源, 大幅提高同步读取的速度。</li>
+<li>使用Flink CDC全量读取阶段全程无锁并支持checkpoint,避免锁库风险，同时支持数据断点续传。针对大数据量的全量同步，避免失败造成全量重新同步。</li>
+<li>使用 Flink CDC 去替换传统采集组件和消息队列，简化分析链路，降低维护成本,同时更少的组件也意味着数据时效性能够进一步提高。</li>
+<li>Flink CDC社区22年4月总结用户用了 Flink CDC 后，遇到的第一个痛点就是需要将 MySQL 的 DDL 手工映射成 Flink 的 DDL。手工映射表结构是比较繁琐的，尤其是当表和字段数非常多的时候,手工映射也容易出错。本项目中解决了该问题,实现了自动帮助用户自动去映射表结构。</li>
+<li>本项目解决了Flink CDC整库入湖的挑战。用户主要使用SQL，这就需要为每个表的数据同步链路定义一个 INSERT INTO 语句。假如用户的 MySQL 实例中甚至有上千张的业务表，用户就要写上千个 INSERT INTO 语句。每一个INSERT INTO 任务都会创建至少一个数据库连接，读取一次 Binlog 数据。千表入湖的话就需要上千个连接，上千次的 Binlog 重复读取。这就会对 MySQL 和网络造成很大的压力。本项目通过使用Dinky与Flink CDC结合解决了整库同步,千表入湖、千表入仓对Mysql造成压力的问题。</li>
+<li>基于Hudi数据湖,使用Hudi on Hive实现湖仓一体，流批一体，基于Hudi on Hive可实现湖上建仓，实现离线数仓开发。</li>
+<li>使用Flink SQL对数据进行ETL,大大降低了实时数仓的开发难度。</li>
+<li>使用Doris作为存储平台，同时 Doris拥有强大的查询性能</li>
+</ul>
+</blockquote>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="https://github.com/weiswift">Johnson Liam</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://github.com/weiswift/2023/09/14/2023.09.14/">https://github.com/weiswift/2023/09/14/2023.09.14/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Interview/">Interview</a><a class="post-meta__tags" href="/tags/Flink/">Flink</a></div><div class="post_share"><div class="social-share" data-image="https://s1.ax1x.com/2023/04/18/p9i6VDx.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> Donate</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2023/09/13/2023.09.13/" title="ClickHouse全面解析"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">ClickHouse全面解析</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2023/09/01/2023.09.05/" title="【Flink】Flink技术栈(Theory及集群部署)"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-09-01</div><div class="title">【Flink】Flink技术栈(Theory及集群部署)</div></div></a></div><div><a href="/2023/05/20/2023.05.20/" title="【Interview】Hadoop相关"><img class="cover" src="https://s1.ax1x.com/2023/05/20/p95lR1g.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-05-20</div><div class="title">【Interview】Hadoop相关</div></div></a></div><div><a href="/2023/05/22/2023.05.22-hive%E8%B0%83%E4%BC%98/" title="【Interview】Hive原理及调优"><img class="cover" src="https://s1.ax1x.com/2023/05/20/p95lR1g.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-05-22</div><div class="title">【Interview】Hive原理及调优</div></div></a></div><div><a href="/2023/05/21/2023.05.22/" title="【Interview】MapReduce和Yarn原理"><img class="cover" src="https://s1.ax1x.com/2023/05/22/p9oBGSH.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-05-21</div><div class="title">【Interview】MapReduce和Yarn原理</div></div></a></div><div><a href="/2023/05/23/2023.05.23/" title="【Interview】ZooKeeper原理"><img class="cover" src="https://s1.ax1x.com/2023/05/23/p9THulj.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-05-23</div><div class="title">【Interview】ZooKeeper原理</div></div></a></div><div><a href="/2023/05/25/2023.05.25/" title="数仓项目需求及技术架构"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-05-25</div><div class="title">数仓项目需求及技术架构</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s1.ax1x.com/2023/04/18/p9i6VDx.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Johnson Liam</div><div class="author-info__description">机器都在学习,你有什么理由不学习?</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">133</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">33</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><a id="card-info-btn" href="https://github.com/weiswift/"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/weiswift" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:1265019024@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">网站由Github服务器托管,感谢支持！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BC%A0%E7%BB%9F%E6%96%B9%E6%A1%88"><span class="toc-number">1.</span> <span class="toc-text">传统方案</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%A0%E7%BB%9F%E6%95%B0%E6%8D%AE%E9%9B%86%E6%88%90%E6%96%B9%E6%A1%88%E7%9A%84%E7%97%9B%E7%82%B9"><span class="toc-number">1.1.</span> <span class="toc-text">传统数据集成方案的痛点</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BC%98%E4%BA%AB%E5%AD%A6%E6%95%99%E8%82%B2%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%B9%B3%E5%8F%B0"><span class="toc-number">2.</span> <span class="toc-text">优享学教育大数据平台</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-0%E7%89%88%E6%9C%AC%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84%E7%AE%80%E8%A6%81%E5%88%86%E6%9E%90"><span class="toc-number">2.1.</span> <span class="toc-text">1.0版本技术架构简要分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%98%E4%BA%AB%E5%AD%A6%E6%95%99%E8%82%B2%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%B9%B3%E5%8F%B02-0%E7%89%88%E6%9C%AC%E9%80%BB%E8%BE%91%E6%9E%B6%E6%9E%84"><span class="toc-number">2.2.</span> <span class="toc-text">优享学教育大数据平台2.0版本逻辑架构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%98%E4%BA%AB%E5%AD%A6%E6%95%99%E8%82%B2%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%B9%B3%E5%8F%B02-0%E7%89%88%E6%9C%AC%E6%95%B0%E6%8D%AE%E6%B5%81%E8%BD%AC"><span class="toc-number">2.3.</span> <span class="toc-text">优享学教育大数据平台2.0版本数据流转</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AA%E6%9D%A5%E5%B1%95%E6%9C%9B"><span class="toc-number">2.3.1.</span> <span class="toc-text">未来展望</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E6%8A%80%E6%9C%AF%E9%80%89%E5%9E%8B"><span class="toc-number">3.</span> <span class="toc-text">项目技术选型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%81%E5%BC%8F%E5%A4%84%E7%90%86%E5%B9%B3%E5%8F%B0"><span class="toc-number">3.1.</span> <span class="toc-text">流式处理平台</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%A1%E7%AE%97%E5%B9%B3%E5%8F%B0"><span class="toc-number">3.2.</span> <span class="toc-text">分布式计算平台</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%B7%E9%87%8F%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8"><span class="toc-number">3.2.1.</span> <span class="toc-text">海量数据存储</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%86%E6%9E%B6%E8%BD%AF%E4%BB%B6%E7%89%88%E6%9C%AC"><span class="toc-number">3.3.</span> <span class="toc-text">框架软件版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%9E%E5%8A%9F%E8%83%BD%E6%8F%8F%E8%BF%B0"><span class="toc-number">3.4.</span> <span class="toc-text">非功能描述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%86%E6%9E%B6%E7%89%88%E6%9C%AC%E9%80%89%E5%9E%8B"><span class="toc-number">3.4.1.</span> <span class="toc-text">框架版本选型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%80%E6%9C%AF%E4%BA%AE%E7%82%B9"><span class="toc-number">3.5.</span> <span class="toc-text">技术亮点</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/14/2023.09.14/" title="【FLink教育】Flink技术选型">【FLink教育】Flink技术选型</a><time datetime="2023-09-13T17:00:00.000Z" title="Created 2023-09-14 00:00:00">2023-09-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/13/2023.09.13/" title="ClickHouse全面解析">ClickHouse全面解析</a><time datetime="2023-09-12T17:00:00.000Z" title="Created 2023-09-13 00:00:00">2023-09-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/12/2023.09.12/" title="【Flink】FlinkSQL| 状态编程| 自定义函数">【Flink】FlinkSQL| 状态编程| 自定义函数</a><time datetime="2023-09-11T17:00:00.000Z" title="Created 2023-09-12 00:00:00">2023-09-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/11/2023.09.11/" title="【Flink】Flink水印机制与快照机制">【Flink】Flink水印机制与快照机制</a><time datetime="2023-09-10T17:00:00.000Z" title="Created 2023-09-11 00:00:00">2023-09-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/10/2023.09.10/" title="【Sql】SQL经典10题">【Sql】SQL经典10题</a><time datetime="2023-09-09T17:00:00.000Z" title="Created 2023-09-10 00:00:00">2023-09-10</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Johnson Liam</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Welcome to 小威の <a target="_blank" rel="noopener" href="https://www.cnblogs.com/liam-sliversucks/">Blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><canvas class="fireworks" mobile="true"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = true;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="true"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
