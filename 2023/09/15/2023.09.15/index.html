@@ -1,0 +1,584 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>【FLink教育】FlinkCDC | SilverSucks</title><meta name="author" content="Johnson Liam"><meta name="copyright" content="Johnson Liam"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="之前已经聊过了目前市面上常用的一些架构及技术选型。  传统数据入仓 - 离线方向 MySQL→Sqoop→HDFS→Hive 传统数据入仓架构 1.0，主要使用 DataX 或 Sqoop 全量同步到 HDFS，再围绕 Hive 做数仓。 此方案存在诸多缺陷：容易影响业务稳定性，因为每天都需要从业"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://github.com/weiswift/2023/09/15/2023.09.15/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '【FLink教育】FlinkCDC',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-09-15 20:09:02'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css"> <script src="/live2d-widget/autoload.js"></script><script src="/live2d-widget/autoload.js"> </script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s1.ax1x.com/2023/04/18/p9i6VDx.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">134</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">33</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Links</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-gamepad"></i><span> Games</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/mikutap/"><i class="fa-fw fa fa-music"></i><span> MikuTap 初音未来</span></a></li><li><a class="site-page child" href="/starbattle/"><i class="fa-fw fa fa-space-shuttle"></i><span> StartBattle 星际大战</span></a></li><li><a class="site-page child" href="/2048/"><i class="fa-fw fa fa-flag"></i><span> 2048 经典游戏</span></a></li><li><a class="site-page child" href="/battlecity/"><i class="fa-fw fa fa-arrow-circle-left"></i><span> BattleCity 坦克大战</span></a></li><li><a class="site-page child" href="/pacman/"><i class="fa-fw fa fa-bolt"></i><span> PacMan  吃豆人</span></a></li><li><a class="site-page child" href="/tetris/"><i class="fa-fw fa fa-arrows-alt"></i><span> Tetris 俄罗斯方块</span></a></li><li><a class="site-page child" href="/smallcat/"><i class="fa-fw fa fa-paw"></i><span> CatchCat 困住小猫</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-leaf"></i><span> Moments</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/diary/"><i class="fa-fw fas fa-bookmark"></i><span> Diary</span></a></li><li><a class="site-page child" href="/gallery/"><i class="fa-fw fa fa-hourglass-half"></i><span> Gallery</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-podcast"></i><span> More</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags标签</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About关于</span></a></li><li><a class="site-page child" href="/messageboard/"><i class="fa-fw fas fa-bookmark"></i><span> Messageboard留言板</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s1.ax1x.com/2023/04/18/p9i6u5D.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="SilverSucks"><span class="site-name">SilverSucks</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Links</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-gamepad"></i><span> Games</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/mikutap/"><i class="fa-fw fa fa-music"></i><span> MikuTap 初音未来</span></a></li><li><a class="site-page child" href="/starbattle/"><i class="fa-fw fa fa-space-shuttle"></i><span> StartBattle 星际大战</span></a></li><li><a class="site-page child" href="/2048/"><i class="fa-fw fa fa-flag"></i><span> 2048 经典游戏</span></a></li><li><a class="site-page child" href="/battlecity/"><i class="fa-fw fa fa-arrow-circle-left"></i><span> BattleCity 坦克大战</span></a></li><li><a class="site-page child" href="/pacman/"><i class="fa-fw fa fa-bolt"></i><span> PacMan  吃豆人</span></a></li><li><a class="site-page child" href="/tetris/"><i class="fa-fw fa fa-arrows-alt"></i><span> Tetris 俄罗斯方块</span></a></li><li><a class="site-page child" href="/smallcat/"><i class="fa-fw fa fa-paw"></i><span> CatchCat 困住小猫</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-leaf"></i><span> Moments</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/diary/"><i class="fa-fw fas fa-bookmark"></i><span> Diary</span></a></li><li><a class="site-page child" href="/gallery/"><i class="fa-fw fa fa-hourglass-half"></i><span> Gallery</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-podcast"></i><span> More</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags标签</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About关于</span></a></li><li><a class="site-page child" href="/messageboard/"><i class="fa-fw fas fa-bookmark"></i><span> Messageboard留言板</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">【FLink教育】FlinkCDC</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2023-09-14T17:00:00.000Z" title="Created 2023-09-15 00:00:00">2023-09-15</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-09-15T13:09:02.000Z" title="Updated 2023-09-15 20:09:02">2023-09-15</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="【FLink教育】FlinkCDC"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><blockquote>
+<p>之前已经聊过了目前市面上常用的一些架构及技术选型。</p>
+<ul>
+<li>传统数据入仓 - 离线方向<ul>
+<li>MySQL→Sqoop→HDFS→Hive</li>
+<li>传统数据入仓架构 1.0，主要使用 DataX 或 Sqoop 全量同步到 HDFS，再围绕 Hive 做数仓。<ul>
+<li>此方案存在诸多缺陷：容易影响业务稳定性，因为每天都需要从业务表里查询数据；天级别的产出导致时效性差，延迟高；如果将调度间隔调成几分钟一次，则会对源库造成非常大的压力；扩展性差，业务规模扩大后极易出现性能瓶颈。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>传统数仓2.0 - 增加实时方向(Canal、dataX实时采集增量数据到Kafka上再Sink到HDFS上，最后增量全量做合并，最终还是围绕Hive)<ul>
+<li>分为实时和离线两条链路，实时链路做增量同步，比如通过 Canal 同步到 Kafka 后再做实时回流；</li>
+<li>全量同步一般只做一次，与每天的增量在 HDFS 上做定时合并，最后导入到 Hive 数仓里。<ul>
+<li>此方式只做一次全量同步，因此基本不影响业务稳定性，但是增量同步有定时回流，一般只能保持在小时和天级别，因此它的时效性也比较低。同时，全量与增量两条链路是割裂的，意味着链路多，需要维护的组件也多，系统的可维护性会比较差。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>传统数仓集成方案3.0<ul>
+<li>MySQL&#x2F;PostgreSQL→Canal&#x2F;Debezium→Kafka→Flink&#x2F;Spark→Ck&#x2F;Hudi&#x2F;Doris</li>
+<li>通过 Debezium、Canal 等工具采集 CDC 数据后，写入消息队列，再使用计算引擎做计算清洗，最终传输到下游存储，完成实时数仓、数据湖的构建<ul>
+<li>传统 CDC ETL 分析里引入了很多组件比如 Debezium、Canal，都需要部署和维护， Kafka 消息队列集群也需要维护。Debezium 的缺陷在于它虽然支持全量加增量，但它的单并发模型无法很好地应对海量数据场景。而 Canal 只能读增量，需要 DataX 与 Sqoop 配合才能读取全量，相当于需要两条链路，需要维护的组件也增加。因此，传统 CDC ETL 分析的痛点是单并发性能差，全量增量割裂，依赖的组件较多。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<ul>
+<li>CDC方案比较</li>
+</ul>
+<p><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/blog/image-20230424164502042.png"></p>
+<h1 id="CDC-方案选择"><a href="#CDC-方案选择" class="headerlink" title="CDC 方案选择"></a><font size='5' face='华文楷体' color='red' >CDC 方案选择</font></h1><h2 id="传统CDC-方案"><a href="#传统CDC-方案" class="headerlink" title="传统CDC 方案"></a><font size=5 color='orange' face='华文楷体'>传统CDC 方案</font></h2><blockquote>
+<p>传统 CDC ETL架构。通过 Debezium、Canal 等工具采集 CDC 数据后，写入消息队列，再使用计算引擎做计算清洗，最终传输到下游存储，完成实时数仓、数据湖的构建。</p>
+</blockquote>
+<p><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/blog/image-20230424165712311.png"></p>
+<p>官方一直在思考是否可以使用 <strong>Flink CDC</strong> 去替换上图中虚线框内的采集组件和消息队列，从而简化分析链路，降低维护成本。同时更少的组件也意味着数据时效性能够进一步提高。答案是可以的，于是就有了基于 Flink CDC 的 ETL 分析流程。</p>
+<h2 id="FlinkCDC-方案"><a href="#FlinkCDC-方案" class="headerlink" title="FlinkCDC 方案"></a><font size=5 color='orange' face='华文楷体'>FlinkCDC 方案</font></h2><p><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/blog/image-20230424165843984.png"></p>
+<blockquote>
+<p><code>FlinkCDC 是一个纯SQL的方案，使用CDC实时读取业务数据库中的binlog日志，实现增量数据捕获。但是需要主要FlinkCDC并不能捕获到表的Schema信息发生变化的情况。表的Schema变化后，相对应的SQL也需要变更。</code></p>
+<p>与此同时，用户也可以利用 Flink SQL 提供的丰富语法进行数据清洗、分析和聚合。此外，利用 Flink SQL 双流 JOIN、维表 JOIN、UDTF 语法可以非常容易地完成数据打宽，以及各种业务逻辑加工。</p>
+</blockquote>
+<h1 id="FlinkCDC-介绍"><a href="#FlinkCDC-介绍" class="headerlink" title="FlinkCDC 介绍"></a><font size='5' face='华文楷体' color='red' >FlinkCDC 介绍</font></h1><h2 id="FlinkCDC概述"><a href="#FlinkCDC概述" class="headerlink" title="FlinkCDC概述"></a><font size=5 color='orange' face='华文楷体'>FlinkCDC概述</font></h2><blockquote>
+<p>Flink社区开发了<code> flink-cdc-connectors</code> 组件，这是一个可以直接从 MySQL、PostgreSQL 等数据库直接读取全量数据和增量变更数据的 source 组件。目前也已开源，开源地址：<a href="https://github.com/ververica/flink-cdc-connectors">https://github.com/ververica/flink-cdc-connectors</a></p>
+<p>Flink CDC 基于数据库日志的 Change Data Caputre 技术，实现了全量和增量的一体化读取能力，并借助 Flink 优秀的管道能力和丰富的上下游生态，支持捕获多种数据库的变更，并将这些变更实时同步到下游存储。</p>
+</blockquote>
+<h2 id="FlinkCDC原理※"><a href="#FlinkCDC原理※" class="headerlink" title="FlinkCDC原理※"></a><font size=5 color='orange' face='华文楷体'>FlinkCDC原理※</font></h2><blockquote>
+<p>Flink SQL CDC 内置了 <code>Debezium </code>引擎，利用其抽取日志获取变更的能力，将<code>changelog</code>转换为 Flink SQL 认识的<code>RowData</code>数据。</p>
+<p><code>主要是通过Debezium采集BinLog日志，得到类似于Json格式的字符串，JSON字符串里面有before，after，Source，op跟FlinkCDC维护的元数据信息RowKind包含的enum对象的属性刚好对应。</code></p>
+<p>Flink CDC 技术的核心是支持将表中的全量数据和增量数据做实时一致性的同步与加工，让用户可以方便地获每张表的<code>实时一致性快照</code>。</p>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">show</span> binlog events <span class="keyword">in</span> <span class="string">&#x27;mysql-bin.000001&#x27;</span>;</span><br><span class="line"><span class="operator">+</span><span class="comment">------------------+------+-------------+-----------+-------------+-----------------------------------------------------------+</span></span><br><span class="line"><span class="operator">|</span> Log_name         <span class="operator">|</span> Pos  <span class="operator">|</span> Event_type  <span class="operator">|</span> Server_id <span class="operator">|</span> End_log_pos <span class="operator">|</span> Info                                                      <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">------------------+------+-------------+-----------+-------------+-----------------------------------------------------------+</span></span><br><span class="line"><span class="operator">|</span> mysql<span class="operator">-</span>bin<span class="number">.000001</span> <span class="operator">|</span>    <span class="number">4</span> <span class="operator">|</span> Format_desc <span class="operator">|</span>       <span class="number">195</span> <span class="operator">|</span>         <span class="number">106</span> <span class="operator">|</span> Server ver: <span class="number">5.1</span><span class="number">.73</span><span class="operator">-</span>log, Binlog ver: <span class="number">4</span>                     <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> mysql<span class="operator">-</span>bin<span class="number">.000001</span> <span class="operator">|</span>  <span class="number">106</span> <span class="operator">|</span> Query       <span class="operator">|</span>       <span class="number">195</span> <span class="operator">|</span>         <span class="number">198</span> <span class="operator">|</span> use `hadoop`; <span class="keyword">delete</span> <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">where</span> id<span class="operator">=</span><span class="number">3</span>                 <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> mysql<span class="operator">-</span>bin<span class="number">.000001</span> <span class="operator">|</span>  <span class="number">198</span> <span class="operator">|</span> Intvar      <span class="operator">|</span>       <span class="number">195</span> <span class="operator">|</span>         <span class="number">226</span> <span class="operator">|</span> INSERT_ID<span class="operator">=</span><span class="number">4</span>                                               <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> mysql<span class="operator">-</span>bin<span class="number">.000001</span> <span class="operator">|</span>  <span class="number">226</span> <span class="operator">|</span> Query       <span class="operator">|</span>       <span class="number">195</span> <span class="operator">|</span>         <span class="number">332</span> <span class="operator">|</span> use `hadoop`; <span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="keyword">user</span> (id,name)<span class="keyword">VALUES</span> (<span class="keyword">NULL</span>,<span class="number">1</span>)   <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> mysql<span class="operator">-</span>bin<span class="number">.000001</span> <span class="operator">|</span>  <span class="number">332</span> <span class="operator">|</span> Query       <span class="operator">|</span>       <span class="number">195</span> <span class="operator">|</span>         <span class="number">424</span> <span class="operator">|</span> use `hadoop`; <span class="keyword">delete</span> <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">where</span> id<span class="operator">=</span><span class="number">3</span>                 <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> mysql<span class="operator">-</span>bin<span class="number">.000001</span> <span class="operator">|</span>  <span class="number">424</span> <span class="operator">|</span> Intvar      <span class="operator">|</span>       <span class="number">195</span> <span class="operator">|</span>         <span class="number">452</span> <span class="operator">|</span> INSERT_ID<span class="operator">=</span><span class="number">5</span>                                               <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> mysql<span class="operator">-</span>bin<span class="number">.000001</span> <span class="operator">|</span>  <span class="number">452</span> <span class="operator">|</span> Query       <span class="operator">|</span>       <span class="number">195</span> <span class="operator">|</span>         <span class="number">560</span> <span class="operator">|</span> use `hadoop`; <span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="keyword">user</span> (id,name)<span class="keyword">VALUES</span> (<span class="keyword">NULL</span>,<span class="number">222</span>) <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> mysql<span class="operator">-</span>bin<span class="number">.000001</span> <span class="operator">|</span>  <span class="number">560</span> <span class="operator">|</span> Query       <span class="operator">|</span>       <span class="number">195</span> <span class="operator">|</span>         <span class="number">660</span> <span class="operator">|</span> use `hadoop`; <span class="keyword">DELETE</span> <span class="keyword">FROM</span> `<span class="keyword">user</span>` <span class="keyword">WHERE</span> (`id`<span class="operator">=</span><span class="string">&#x27;1&#x27;</span>)         <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> mysql<span class="operator">-</span>bin<span class="number">.000001</span> <span class="operator">|</span>  <span class="number">660</span> <span class="operator">|</span> Intvar      <span class="operator">|</span>       <span class="number">195</span> <span class="operator">|</span>         <span class="number">688</span> <span class="operator">|</span> INSERT_ID<span class="operator">=</span><span class="number">6</span>                                               <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> mysql<span class="operator">-</span>bin<span class="number">.000001</span> <span class="operator">|</span>  <span class="number">688</span> <span class="operator">|</span> Query       <span class="operator">|</span>       <span class="number">195</span> <span class="operator">|</span>         <span class="number">795</span> <span class="operator">|</span> use `hadoop`; <span class="keyword">INSERT</span> <span class="keyword">INTO</span> `<span class="keyword">user</span>` (`name`) <span class="keyword">VALUES</span> (<span class="string">&#x27;555&#x27;</span>)  <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> mysql<span class="operator">-</span>bin<span class="number">.000001</span> <span class="operator">|</span>  <span class="number">795</span> <span class="operator">|</span> Intvar      <span class="operator">|</span>       <span class="number">195</span> <span class="operator">|</span>         <span class="number">823</span> <span class="operator">|</span> INSERT_ID<span class="operator">=</span><span class="number">7</span>                                               <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> mysql<span class="operator">-</span>bin<span class="number">.000001</span> <span class="operator">|</span>  <span class="number">823</span> <span class="operator">|</span> Query       <span class="operator">|</span>       <span class="number">195</span> <span class="operator">|</span>         <span class="number">930</span> <span class="operator">|</span> use `hadoop`; <span class="keyword">INSERT</span> <span class="keyword">INTO</span> `<span class="keyword">user</span>` (`name`) <span class="keyword">VALUES</span> (<span class="string">&#x27;555&#x27;</span>)  <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> mysql<span class="operator">-</span>bin<span class="number">.000001</span> <span class="operator">|</span>  <span class="number">930</span> <span class="operator">|</span> Intvar      <span class="operator">|</span>       <span class="number">195</span> <span class="operator">|</span>         <span class="number">958</span> <span class="operator">|</span> INSERT_ID<span class="operator">=</span><span class="number">8</span>                                               <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> mysql<span class="operator">-</span>bin<span class="number">.000001</span> <span class="operator">|</span>  <span class="number">958</span> <span class="operator">|</span> Query       <span class="operator">|</span>       <span class="number">195</span> <span class="operator">|</span>        <span class="number">1065</span> <span class="operator">|</span> use `hadoop`; <span class="keyword">INSERT</span> <span class="keyword">INTO</span> `<span class="keyword">user</span>` (`name`) <span class="keyword">VALUES</span> (<span class="string">&#x27;555&#x27;</span>)  <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> mysql<span class="operator">-</span>bin<span class="number">.000001</span> <span class="operator">|</span> <span class="number">1065</span> <span class="operator">|</span> Intvar      <span class="operator">|</span>       <span class="number">195</span> <span class="operator">|</span>        <span class="number">1093</span> <span class="operator">|</span> INSERT_ID<span class="operator">=</span><span class="number">9</span>                                               <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> mysql<span class="operator">-</span>bin<span class="number">.000001</span> <span class="operator">|</span> <span class="number">1093</span> <span class="operator">|</span> Query       <span class="operator">|</span>       <span class="number">195</span> <span class="operator">|</span>        <span class="number">1200</span> <span class="operator">|</span> use `hadoop`; <span class="keyword">INSERT</span> <span class="keyword">INTO</span> `<span class="keyword">user</span>` (`name`) <span class="keyword">VALUES</span> (<span class="string">&#x27;555&#x27;</span>)  <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> mysql<span class="operator">-</span>bin<span class="number">.000001</span> <span class="operator">|</span> <span class="number">1200</span> <span class="operator">|</span> Query       <span class="operator">|</span>       <span class="number">195</span> <span class="operator">|</span>        <span class="number">1300</span> <span class="operator">|</span> use `hadoop`; <span class="keyword">DELETE</span> <span class="keyword">FROM</span> `<span class="keyword">user</span>` <span class="keyword">WHERE</span> (`id`<span class="operator">=</span><span class="string">&#x27;9&#x27;</span>)         <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> mysql<span class="operator">-</span>bin<span class="number">.000001</span> <span class="operator">|</span> <span class="number">1300</span> <span class="operator">|</span> Query       <span class="operator">|</span>       <span class="number">195</span> <span class="operator">|</span>        <span class="number">1400</span> <span class="operator">|</span> use `hadoop`; <span class="keyword">DELETE</span> <span class="keyword">FROM</span> `<span class="keyword">user</span>` <span class="keyword">WHERE</span> (`id`<span class="operator">=</span><span class="string">&#x27;8&#x27;</span>)         <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> mysql<span class="operator">-</span>bin<span class="number">.000001</span> <span class="operator">|</span> <span class="number">1400</span> <span class="operator">|</span> Query       <span class="operator">|</span>       <span class="number">195</span> <span class="operator">|</span>        <span class="number">1500</span> <span class="operator">|</span> use `hadoop`; <span class="keyword">DELETE</span> <span class="keyword">FROM</span> `<span class="keyword">user</span>` <span class="keyword">WHERE</span> (`id`<span class="operator">=</span><span class="string">&#x27;7&#x27;</span>)         <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> mysql<span class="operator">-</span>bin<span class="number">.000001</span> <span class="operator">|</span> <span class="number">1500</span> <span class="operator">|</span> Query       <span class="operator">|</span>       <span class="number">195</span> <span class="operator">|</span>        <span class="number">1600</span> <span class="operator">|</span> use `hadoop`; <span class="keyword">DELETE</span> <span class="keyword">FROM</span> `<span class="keyword">user</span>` <span class="keyword">WHERE</span> (`id`<span class="operator">=</span><span class="string">&#x27;4&#x27;</span>)         <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> mysql<span class="operator">-</span>bin<span class="number">.000001</span> <span class="operator">|</span> <span class="number">1600</span> <span class="operator">|</span> Query       <span class="operator">|</span>       <span class="number">195</span> <span class="operator">|</span>        <span class="number">1700</span> <span class="operator">|</span> use `hadoop`; <span class="keyword">DELETE</span> <span class="keyword">FROM</span> `<span class="keyword">user</span>` <span class="keyword">WHERE</span> (`id`<span class="operator">=</span><span class="string">&#x27;5&#x27;</span>)         <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> mysql<span class="operator">-</span>bin<span class="number">.000001</span> <span class="operator">|</span> <span class="number">1700</span> <span class="operator">|</span> Query       <span class="operator">|</span>       <span class="number">195</span> <span class="operator">|</span>        <span class="number">1800</span> <span class="operator">|</span> use `hadoop`; <span class="keyword">DELETE</span> <span class="keyword">FROM</span> `<span class="keyword">user</span>` <span class="keyword">WHERE</span> (`id`<span class="operator">=</span><span class="string">&#x27;6&#x27;</span>)         <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> mysql<span class="operator">-</span>bin<span class="number">.000001</span> <span class="operator">|</span> <span class="number">1800</span> <span class="operator">|</span> Intvar      <span class="operator">|</span>       <span class="number">195</span> <span class="operator">|</span>        <span class="number">1828</span> <span class="operator">|</span> INSERT_ID<span class="operator">=</span><span class="number">10</span>                                              <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> mysql<span class="operator">-</span>bin<span class="number">.000001</span> <span class="operator">|</span> <span class="number">1828</span> <span class="operator">|</span> Query       <span class="operator">|</span>       <span class="number">195</span> <span class="operator">|</span>        <span class="number">1935</span> <span class="operator">|</span> use `hadoop`; <span class="keyword">INSERT</span> <span class="keyword">INTO</span> `<span class="keyword">user</span>` (`name`) <span class="keyword">VALUES</span> (<span class="string">&#x27;555&#x27;</span>)  <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> mysql<span class="operator">-</span>bin<span class="number">.000001</span> <span class="operator">|</span> <span class="number">1935</span> <span class="operator">|</span> Intvar      <span class="operator">|</span>       <span class="number">195</span> <span class="operator">|</span>        <span class="number">1963</span> <span class="operator">|</span> INSERT_ID<span class="operator">=</span><span class="number">11</span>                                              <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> mysql<span class="operator">-</span>bin<span class="number">.000001</span> <span class="operator">|</span> <span class="number">1963</span> <span class="operator">|</span> Query       <span class="operator">|</span>       <span class="number">195</span> <span class="operator">|</span>        <span class="number">2070</span> <span class="operator">|</span> use `hadoop`; <span class="keyword">INSERT</span> <span class="keyword">INTO</span> `<span class="keyword">user</span>` (`name`) <span class="keyword">VALUES</span> (<span class="string">&#x27;666&#x27;</span>)  <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> mysql<span class="operator">-</span>bin<span class="number">.000001</span> <span class="operator">|</span> <span class="number">2070</span> <span class="operator">|</span> Intvar      <span class="operator">|</span>       <span class="number">195</span> <span class="operator">|</span>        <span class="number">2098</span> <span class="operator">|</span> INSERT_ID<span class="operator">=</span><span class="number">12</span>                                              <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> mysql<span class="operator">-</span>bin<span class="number">.000001</span> <span class="operator">|</span> <span class="number">2098</span> <span class="operator">|</span> Query       <span class="operator">|</span>       <span class="number">195</span> <span class="operator">|</span>        <span class="number">2205</span> <span class="operator">|</span> use `hadoop`; <span class="keyword">INSERT</span> <span class="keyword">INTO</span> `<span class="keyword">user</span>` (`name`) <span class="keyword">VALUES</span> (<span class="string">&#x27;777&#x27;</span>)  <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">------------------+------+-------------+-----------+-------------+-----------------------------------------------------------+</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="官方解释"><a href="#官方解释" class="headerlink" title="官方解释"></a><font size=5 color='purple' face='华文楷体'>官方解释</font></h3><blockquote>
+<p>在Flink中RowData 代表了一行的数据，在 RowData 上面会有一个元数据的信息 RowKind，RowKind里面包括了插入(+I)、更新前(-U)、更新后(+U)、删除(-D)，这样和数据库里面的 binlog 概念十分类似。</p>
+<p>通过 Debezium 采集的数据，也有一个类似的元数据 op 字段， op 字段的取值也有四种，分别是 c、u、d、r，各自对应 create、update、delete、read。对于代表更新操作的 u，其数据部分同时包含了前镜像 (before) 和后镜像 (after)。</p>
+</blockquote>
+<h2 id="FlinkCDC特性"><a href="#FlinkCDC特性" class="headerlink" title="FlinkCDC特性"></a><font size=5 color='orange' face='华文楷体'>FlinkCDC特性</font></h2><blockquote>
+<ul>
+<li>支持数据库级别的快照，读取全量数据，2.0版本可以支持不加锁的方式读取</li>
+<li>支持 binlog，捕获增量数据</li>
+<li>支持Exactly-Once</li>
+<li>支持 Flink DataStream API</li>
+<li>支持 Flink Table&#x2F;SQL API，可使用 SQL DDL 来创建 CDC Source 表，并对表中的数据进行查询。</li>
+</ul>
+</blockquote>
+<h1 id="FlinkCDC部署及练习"><a href="#FlinkCDC部署及练习" class="headerlink" title="FlinkCDC部署及练习"></a><font size='5' face='华文楷体' color='red' >FlinkCDC部署及练习</font></h1><h2 id="开始前准备"><a href="#开始前准备" class="headerlink" title="开始前准备"></a><font size=5 color='orange' face='华文楷体'>开始前准备</font></h2><h3 id="了解与-Flink-版本的对应关系"><a href="#了解与-Flink-版本的对应关系" class="headerlink" title="了解与 Flink 版本的对应关系"></a><font size=5 color='purple' face='华文楷体'><strong>了解与 Flink 版本的对应关系</strong></font></h3><blockquote>
+<p>不同的Flink版本支持的FlinkCDC版本也不一样，最好是2.0以后的版本，2.2都行。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th><strong>Flink CDC 版本</strong></th>
+<th><strong>Flink 版本</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1.0.0</td>
+<td>1.11.*</td>
+</tr>
+<tr>
+<td>1.1.0</td>
+<td>1.11.*</td>
+</tr>
+<tr>
+<td>1.2.0</td>
+<td>1.12.*</td>
+</tr>
+<tr>
+<td>1.3.0</td>
+<td>1.12.*</td>
+</tr>
+<tr>
+<td>1.4.0</td>
+<td>1.13.*</td>
+</tr>
+<tr>
+<td>2.0.*</td>
+<td>1.13.*</td>
+</tr>
+<tr>
+<td>2.1.*</td>
+<td>1.13.*</td>
+</tr>
+<tr>
+<td>2.2.*</td>
+<td>1.13.* , 1.14.*</td>
+</tr>
+<tr>
+<td>2.3.*</td>
+<td>1.13.*, 1.14.*, 1.15.*, 1.16.0</td>
+</tr>
+</tbody></table>
+<h3 id="编译源码"><a href="#编译源码" class="headerlink" title="编译源码"></a><font size=5 color='purple' face='华文楷体'>编译源码</font></h3><blockquote>
+<p>一般来说，源码编译是不需要的，用户可以直接在 Flink CDC 官网下载官方编译好的二进制包或者在 pom.xml 文件中添加相关依赖即可。</p>
+<p>以下几种情况需要进行源码编译：</p>
+<p>➢ 用户对 Flink CDC 源码进行了修改</p>
+<p>➢ Flink CDC 某依赖项的版本与运行环境不一致</p>
+<p>➢ 官方未提供最新版本 Flink CDC 二进制安装包</p>
+<p>比如，官方最新的 Flink CDC 二进制安装包是2.2版本的，而源代码已经到2.3版本了，如果想要使用2.3版本的 Flink CDC， 那么就需要自行编译了。</p>
+<p>下面将介绍 <strong>Flink CDC 2.2</strong> 版本的编译。</p>
+</blockquote>
+<h3 id="下载源码"><a href="#下载源码" class="headerlink" title="下载源码"></a><font size=5 color='purple' face='华文楷体'>下载源码</font></h3><p>在Linux上是有yum安装Git，非常简单，只需要一行命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install git</span><br></pre></td></tr></table></figure>
+
+<p>输入 git –version查看Git是否安装完成以及查看其版本号</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git --version</span><br></pre></td></tr></table></figure>
+
+<p>下载flink cdc源码</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://gitee.com/zoomake/flink-cdc-connectors-master.git</span><br></pre></td></tr></table></figure>
+
+<h3 id="修改-pom-xml"><a href="#修改-pom-xml" class="headerlink" title="修改 pom.xml"></a><font size=5 color='purple' face='华文楷体'>修改 pom.xml</font></h3><p>在 pom.xml 中找到这一项：<strong>flink.version</strong>。修改 flink 版本号为：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">flink.version</span>&gt;</span>1.14.5<span class="tag">&lt;/<span class="name">flink.version</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="编译"><a href="#编译" class="headerlink" title="编译"></a><font size=5 color='purple' face='华文楷体'>编译</font></h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /root/flink-cdc-connectors</span><br><span class="line">mvn clean package -DskipTests</span><br></pre></td></tr></table></figure>
+
+<p>如果 maven 下载速度慢，可以在 pom.xml 文件加入这一段</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">repositories</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">repository</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">id</span>&gt;</span>tbds<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">url</span>&gt;</span>https://maven.aliyun.com/repository/public<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">snapshots</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">enabled</span>&gt;</span>true<span class="tag">&lt;/<span class="name">enabled</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">updatePolicy</span>&gt;</span>always<span class="tag">&lt;/<span class="name">updatePolicy</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">snapshots</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">releases</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">enabled</span>&gt;</span>true<span class="tag">&lt;/<span class="name">enabled</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">updatePolicy</span>&gt;</span>always<span class="tag">&lt;/<span class="name">updatePolicy</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">releases</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">repository</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">repositories</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="DataStream-方式的应用"><a href="#DataStream-方式的应用" class="headerlink" title="DataStream 方式的应用"></a><font size=5 color='orange' face='华文楷体'><strong>DataStream 方式的应用</strong></font></h2><h3 id="Mysq准备工作"><a href="#Mysq准备工作" class="headerlink" title="Mysq准备工作"></a><font size=5 color='purple' face='华文楷体'>Mysq准备工作</font></h3><p>在 <strong>node1</strong> 下开启 <strong>binlog</strong> 日志，操作步骤如下:</p>
+<ol>
+<li>登录mysql之后使用下面的命令查看是否开启binlog,代码如下:</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show variables like &#x27;%log_bin%&#x27;;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>编辑配置文件:</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/my.cnf</span><br><span class="line">在[mysqld]下面加入如下代码:</span><br><span class="line">server_id=1</span><br><span class="line">log_bin = mysql-bin</span><br><span class="line">binlog_format = ROW</span><br><span class="line">expire_logs_days = 30</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>重启mysql服务</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart mysqld</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>进入mysql使用1)中的命令验证结果如图:</li>
+</ol>
+<p><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/blog/2023-09-15_18-11-51.png"></p>
+<ol start="5">
+<li>准备测试数据,执行如下代码:</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Drop</span> database if <span class="keyword">exists</span> test;</span><br><span class="line"><span class="keyword">CREATE</span> DATABASE test <span class="keyword">DEFAULT</span> <span class="type">CHARACTER</span> <span class="keyword">SET</span> <span class="operator">=</span> utf8 <span class="keyword">COLLATE</span> <span class="operator">=</span> utf8_general_ci;</span><br><span class="line">Use test;</span><br><span class="line"><span class="comment">-- 建表语句：</span></span><br><span class="line"><span class="comment">-- 建表</span></span><br><span class="line"><span class="comment">-- 学生表</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> `Student`(</span><br><span class="line">     `s_id` <span class="type">VARCHAR</span>(<span class="number">20</span>),</span><br><span class="line">     `s_name` <span class="type">VARCHAR</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">     `s_birth` <span class="type">VARCHAR</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">     `s_sex` <span class="type">VARCHAR</span>(<span class="number">10</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">     <span class="keyword">PRIMARY</span> KEY(`s_id`)</span><br><span class="line">);</span><br><span class="line"><span class="comment">-- 成绩表</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> `Score`(</span><br><span class="line">   `s_id` <span class="type">VARCHAR</span>(<span class="number">20</span>),</span><br><span class="line">   `c_id` <span class="type">VARCHAR</span>(<span class="number">20</span>),</span><br><span class="line">   `s_score` <span class="type">INT</span>(<span class="number">3</span>),</span><br><span class="line">   <span class="keyword">PRIMARY</span> KEY(`s_id`,`c_id`)</span><br><span class="line">);</span><br><span class="line"><span class="comment">-- 插入学生表测试数据</span></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> Student <span class="keyword">values</span>(<span class="string">&#x27;01&#x27;</span> , <span class="string">&#x27;赵雷&#x27;</span> , <span class="string">&#x27;1990-01-01&#x27;</span> , <span class="string">&#x27;男&#x27;</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> Student <span class="keyword">values</span>(<span class="string">&#x27;02&#x27;</span> , <span class="string">&#x27;钱电&#x27;</span> , <span class="string">&#x27;1990-12-21&#x27;</span> , <span class="string">&#x27;男&#x27;</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> Student <span class="keyword">values</span>(<span class="string">&#x27;03&#x27;</span> , <span class="string">&#x27;孙风&#x27;</span> , <span class="string">&#x27;1990-05-20&#x27;</span> , <span class="string">&#x27;男&#x27;</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> Student <span class="keyword">values</span>(<span class="string">&#x27;04&#x27;</span> , <span class="string">&#x27;李云&#x27;</span> , <span class="string">&#x27;1990-08-06&#x27;</span> , <span class="string">&#x27;男&#x27;</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> Student <span class="keyword">values</span>(<span class="string">&#x27;05&#x27;</span> , <span class="string">&#x27;周梅&#x27;</span> , <span class="string">&#x27;1991-12-01&#x27;</span> , <span class="string">&#x27;女&#x27;</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> Student <span class="keyword">values</span>(<span class="string">&#x27;06&#x27;</span> , <span class="string">&#x27;吴兰&#x27;</span> , <span class="string">&#x27;1992-03-01&#x27;</span> , <span class="string">&#x27;女&#x27;</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> Student <span class="keyword">values</span>(<span class="string">&#x27;07&#x27;</span> , <span class="string">&#x27;郑竹&#x27;</span> , <span class="string">&#x27;1989-07-01&#x27;</span> , <span class="string">&#x27;女&#x27;</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> Student <span class="keyword">values</span>(<span class="string">&#x27;08&#x27;</span> , <span class="string">&#x27;王菊&#x27;</span> , <span class="string">&#x27;1990-01-20&#x27;</span> , <span class="string">&#x27;女&#x27;</span>);</span><br><span class="line"><span class="comment">-- 成绩表测试数据</span></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> Score <span class="keyword">values</span>(<span class="string">&#x27;01&#x27;</span> , <span class="string">&#x27;01&#x27;</span> , <span class="number">80</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> Score <span class="keyword">values</span>(<span class="string">&#x27;01&#x27;</span> , <span class="string">&#x27;02&#x27;</span> , <span class="number">90</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> Score <span class="keyword">values</span>(<span class="string">&#x27;01&#x27;</span> , <span class="string">&#x27;03&#x27;</span> , <span class="number">99</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> Score <span class="keyword">values</span>(<span class="string">&#x27;02&#x27;</span> , <span class="string">&#x27;01&#x27;</span> , <span class="number">70</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> Score <span class="keyword">values</span>(<span class="string">&#x27;02&#x27;</span> , <span class="string">&#x27;02&#x27;</span> , <span class="number">60</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> Score <span class="keyword">values</span>(<span class="string">&#x27;02&#x27;</span> , <span class="string">&#x27;03&#x27;</span> , <span class="number">80</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> Score <span class="keyword">values</span>(<span class="string">&#x27;03&#x27;</span> , <span class="string">&#x27;01&#x27;</span> , <span class="number">80</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> Score <span class="keyword">values</span>(<span class="string">&#x27;03&#x27;</span> , <span class="string">&#x27;02&#x27;</span> , <span class="number">80</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> Score <span class="keyword">values</span>(<span class="string">&#x27;03&#x27;</span> , <span class="string">&#x27;03&#x27;</span> , <span class="number">80</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> Score <span class="keyword">values</span>(<span class="string">&#x27;04&#x27;</span> , <span class="string">&#x27;01&#x27;</span> , <span class="number">50</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> Score <span class="keyword">values</span>(<span class="string">&#x27;04&#x27;</span> , <span class="string">&#x27;02&#x27;</span> , <span class="number">30</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> Score <span class="keyword">values</span>(<span class="string">&#x27;04&#x27;</span> , <span class="string">&#x27;03&#x27;</span> , <span class="number">20</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> Score <span class="keyword">values</span>(<span class="string">&#x27;05&#x27;</span> , <span class="string">&#x27;01&#x27;</span> , <span class="number">76</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> Score <span class="keyword">values</span>(<span class="string">&#x27;05&#x27;</span> , <span class="string">&#x27;02&#x27;</span> , <span class="number">87</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> Score <span class="keyword">values</span>(<span class="string">&#x27;06&#x27;</span> , <span class="string">&#x27;01&#x27;</span> , <span class="number">31</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> Score <span class="keyword">values</span>(<span class="string">&#x27;06&#x27;</span> , <span class="string">&#x27;03&#x27;</span> , <span class="number">34</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> Score <span class="keyword">values</span>(<span class="string">&#x27;07&#x27;</span> , <span class="string">&#x27;02&#x27;</span> , <span class="number">89</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> Score <span class="keyword">values</span>(<span class="string">&#x27;07&#x27;</span> , <span class="string">&#x27;03&#x27;</span> , <span class="number">98</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="导入依赖"><a href="#导入依赖" class="headerlink" title="导入依赖"></a><font size=5 color='purple' face='华文楷体'><strong>导入依赖</strong></font></h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">maven.compiler.source</span>&gt;</span>8<span class="tag">&lt;/<span class="name">maven.compiler.source</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">maven.compiler.target</span>&gt;</span>8<span class="tag">&lt;/<span class="name">maven.compiler.target</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">java.version</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">java.version</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">flink.version</span>&gt;</span>1.14.5<span class="tag">&lt;/<span class="name">flink.version</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">scala.version</span>&gt;</span>2.12<span class="tag">&lt;/<span class="name">scala.version</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">hadoop.version</span>&gt;</span>3.1.3<span class="tag">&lt;/<span class="name">hadoop.version</span>&gt;</span></span><br><span class="line">       <span class="comment">&lt;!--provided/compile--&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">scopeFlag</span>&gt;</span>compile<span class="tag">&lt;/<span class="name">scopeFlag</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.flink<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>flink-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;flink.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">scope</span>&gt;</span>$&#123;scopeFlag&#125;<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.flink<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>flink-streaming-java_$&#123;scala.version&#125;<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;flink.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">scope</span>&gt;</span>$&#123;scopeFlag&#125;<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.flink<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>flink-clients_$&#123;scala.version&#125;<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;flink.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">scope</span>&gt;</span>$&#123;scopeFlag&#125;<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.flink<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>flink-table-planner_$&#123;scala.version&#125;<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;flink.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">scope</span>&gt;</span>$&#123;scopeFlag&#125;<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">       <span class="comment">&lt;!--如果保存检查点到hdfs上，需要引入此依赖--&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.hadoop<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>hadoop-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;hadoop.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"> </span><br><span class="line">       <span class="comment">&lt;!-- flink-cdc-mysql 连接器--&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.ververica<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>flink-connector-mysql-cdc<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.3.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="编写代码"><a href="#编写代码" class="headerlink" title="编写代码"></a><font size=5 color='purple' face='华文楷体'><strong>编写代码</strong></font></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.ververica.cdc.connectors.mysql.source.MySqlSource;</span><br><span class="line"><span class="keyword">import</span> com.ververica.cdc.connectors.mysql.table.StartupOptions; </span><br><span class="line"><span class="keyword">import</span> com.ververica.cdc.debezium.JsonDebeziumDeserializationSchema; </span><br><span class="line"><span class="keyword">import</span> org.apache.flink.api.common.eventtime.WatermarkStrategy;</span><br><span class="line"><span class="keyword">import</span> org.apache.flink.api.common.restartstrategy.RestartStrategies; </span><br><span class="line"><span class="keyword">import</span> org.apache.flink.runtime.state.hashmap.HashMapStateBackend;</span><br><span class="line"><span class="keyword">import</span> org.apache.flink.runtime.state.storage.FileSystemCheckpointStorage;</span><br><span class="line"><span class="keyword">import</span> org.apache.flink.streaming.api.CheckpointingMode;</span><br><span class="line"><span class="keyword">import</span> org.apache.flink.streaming.api.datastream.DataStreamSource;</span><br><span class="line"><span class="keyword">import</span> org.apache.flink.streaming.api.environment.CheckpointConfig;</span><br><span class="line"><span class="keyword">import</span> org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">FlinkCDC</span> &#123;</span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">       <span class="comment">//1.创建执行环境</span></span><br><span class="line">       <span class="type">StreamExecutionEnvironment</span> <span class="variable">env</span> <span class="operator">=</span> StreamExecutionEnvironment.getExecutionEnvironment();</span><br><span class="line">       env.setParallelism(<span class="number">1</span>);</span><br><span class="line">       <span class="comment">//2.Flink-CDC 将读取 binlog 的位置信息以状态的方式保存在 CK,如果想要做到断点续传, 需要从 Checkpoint 或者 Savepoint 启动程序</span></span><br><span class="line">       <span class="comment">//2.1 开启 Checkpoint,每隔 5 秒钟做一次 CK</span></span><br><span class="line">       env.enableCheckpointing(<span class="number">5000L</span>);</span><br><span class="line">       <span class="comment">//2.2 指定 CK 的一致性语义</span></span><br><span class="line">       env.getCheckpointConfig().setCheckpointingMode(CheckpointingMode.EXACTLY_ONCE);</span><br><span class="line">       <span class="comment">//2.3 设置任务取消时保留CK</span></span><br><span class="line">       env.getCheckpointConfig().setExternalizedCheckpointCleanup(CheckpointConfig.ExternalizedCheckpointCleanup.RETAIN_ON_CANCELLATION);</span><br><span class="line">       <span class="comment">//2.4 指定从 CK 自动重启策略</span></span><br><span class="line">       env.setRestartStrategy(RestartStrategies.fixedDelayRestart(<span class="number">3</span>, <span class="number">2000L</span>));</span><br><span class="line">       <span class="comment">//2.5 设置状态后端</span></span><br><span class="line">       env.setStateBackend(<span class="keyword">new</span> <span class="title class_">HashMapStateBackend</span>());</span><br><span class="line">       env.getCheckpointConfig().setCheckpointStorage(<span class="keyword">new</span> <span class="title class_">FileSystemCheckpointStorage</span>(<span class="string">&quot;hdfs://flinknode0:8020/flink/checkpoints/FlinkCDC&quot;</span>));</span><br><span class="line">       <span class="comment">//2.6 设置访问 HDFS 的用户名</span></span><br><span class="line">       System.setProperty(<span class="string">&quot;HADOOP_USER_NAME&quot;</span>, <span class="string">&quot;root&quot;</span>);</span><br><span class="line">       </span><br><span class="line">		       <span class="comment">//3.创建 Flink-MySQL-CDC 的 Source</span></span><br><span class="line">       <span class="comment">//initial (default): Performs an initial snapshot on the monitored database tables upon first startup, and continue to read the latest binlog.</span></span><br><span class="line">       <span class="comment">//latest-offset: Never to perform snapshot on the monitored database tables upon first startup, just read from the end of the binlog which means only have the changes since th connector was started.</span></span><br><span class="line">       <span class="comment">//timestamp: Never to perform snapshot on the monitored database tables upon first startup, and directly read binlog from the specified timestamp.The consumer will traverse th binlog from the beginning and ignore change events whose timestamp is smaller than th specified timestamp.</span></span><br><span class="line">       <span class="comment">//specific-offset: Never to perform snapshot on the monitored database tables upon first startup, and directly read binlog from the specified offset.</span></span><br><span class="line">       MySqlSource&lt;String&gt; mySqlSource = MySqlSource.&lt;String&gt;builder()</span><br><span class="line">               .hostname(<span class="string">&quot;flinknode0&quot;</span>)</span><br><span class="line">               .port(<span class="number">3306</span>)</span><br><span class="line">               .username(<span class="string">&quot;root&quot;</span>)</span><br><span class="line">               .password(<span class="string">&quot;123456&quot;</span>)</span><br><span class="line">               .databaseList(<span class="string">&quot;test&quot;</span>)</span><br><span class="line">               .tableList(<span class="string">&quot;test.Student&quot;</span>) <span class="comment">//可选配置项,如果不指定该参数,则会读取上一个配置下的所有表的数据，注意：指定的时候需要使用&quot;db.table&quot;的方式</span></span><br><span class="line">               .startupOptions(StartupOptions.initial())</span><br><span class="line">               .deserializer(<span class="keyword">new</span> <span class="title class_">JsonDebeziumDeserializationSchema</span>())</span><br><span class="line">               .build();</span><br><span class="line">     </span><br><span class="line">       <span class="comment">//4.使用 CDC Source 从 MySQL 读取数据</span></span><br><span class="line">       DataStreamSource&lt;String&gt; mysqlDS = env.fromSource(mySqlSource, WatermarkStrategy.noWatermarks(), <span class="string">&quot;MySQLSource&quot;</span>);</span><br><span class="line">       <span class="comment">//5.打印数据</span></span><br><span class="line">       mysqlDS.print();</span><br><span class="line">       <span class="comment">//6.执行任务</span></span><br><span class="line">       env.execute();</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="观察程序捕获数据的变更"><a href="#观察程序捕获数据的变更" class="headerlink" title="观察程序捕获数据的变更"></a>观察程序捕获数据的变更</h3><p>在mysql的test数据库对Student表的数据，分别增删改，会观察到终端打印数据的实时变动:</p>
+<h4 id="增删改"><a href="#增删改" class="headerlink" title="增删改"></a>增删改</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 新增数据</span></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> Student <span class="keyword">values</span>(<span class="string">&#x27;09&#x27;</span> , <span class="string">&#x27;董冬&#x27;</span> , <span class="string">&#x27;1997-04-22&#x27;</span> , <span class="string">&#x27;男&#x27;</span>);</span><br><span class="line"><span class="comment">-- Student表修改刚刚增加一行数据，在终端会看到迅速更新1条数据:</span></span><br><span class="line"><span class="keyword">UPDATE</span> test.Student t <span class="keyword">SET</span> t.s_birth <span class="operator">=</span> <span class="string">&#x27;1987-04-22&#x27;</span> <span class="keyword">WHERE</span> t.s_id <span class="keyword">LIKE</span> <span class="string">&#x27;09&#x27;</span>;</span><br><span class="line"><span class="comment">-- Student表删除最后一行数据,在终端会看到迅速更新1条数据:</span></span><br><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> test.Student <span class="keyword">WHERE</span> s_id <span class="keyword">LIKE</span> <span class="string">&#x27;09&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="FlinkSQL-方式的应用"><a href="#FlinkSQL-方式的应用" class="headerlink" title="FlinkSQL 方式的应用"></a><font size=5 color='orange' face='华文楷体'><strong>FlinkSQL 方式的应用</strong></font></h2><p>向3台服务器(测试节点)的Flink的lib目标下添加jar包(参见flink的 flink-lib的jar包目录)</p>
+<ol>
+<li>将涉及Flink CDC的相关jar包（<strong>flink-sql-connector-mysql-cdc-2.2.1.jar</strong>、commons-cli-1.4）放到Flink的lib目录下.</li>
+</ol>
+<p><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/blog/2023-09-15_19-50-36.png"></p>
+<ol start="2">
+<li>启动 Flink-Cluster</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/export/server/flink/bin/<span class="built_in">start-cluster</span>.sh</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>启动HDFS</li>
+</ol>
+<p>因为 flink 集群配置的 checkpoint 存储地址在 hdfs 上，所以需要启动HDFS</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">start-dfs</span>.sh</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>启动 FlinkSQL-Client</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /export/server/flink/</span><br><span class="line">bin/sql-client.sh</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>设置表格模式（table mode），在内存中实体化结果，并将结果用规则的分页表格可视化展示出来。执行如下命令启用：</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span> <span class="keyword">sql</span><span class="operator">-</span>client.execution.result<span class="operator">-</span>mode <span class="operator">=</span> tableau;</span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>在FlinkSQL-Client,执行创建表 mysql_cdc_to_test_Student，代码：</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> if <span class="keyword">not</span> <span class="keyword">exists</span> mysql_cdc_to_test_Student (</span><br><span class="line">    s_id     STRING,</span><br><span class="line">    s_name   STRING,</span><br><span class="line">    s_birth  STRING,</span><br><span class="line">    s_sex    STRING,</span><br><span class="line">    <span class="keyword">PRIMARY</span> KEY (`s_id`) <span class="keyword">NOT</span> ENFORCED</span><br><span class="line">) <span class="keyword">WITH</span> (</span><br><span class="line">   <span class="string">&#x27;connector&#x27;</span><span class="operator">=</span> <span class="string">&#x27;mysql-cdc&#x27;</span>,</span><br><span class="line">   <span class="string">&#x27;hostname&#x27;</span><span class="operator">=</span> <span class="string">&#x27;192.168.88.161&#x27;</span>,</span><br><span class="line">   <span class="string">&#x27;port&#x27;</span><span class="operator">=</span> <span class="string">&#x27;3306&#x27;</span>,</span><br><span class="line">   <span class="string">&#x27;username&#x27;</span><span class="operator">=</span> <span class="string">&#x27;root&#x27;</span>,</span><br><span class="line">   <span class="string">&#x27;password&#x27;</span><span class="operator">=</span><span class="string">&#x27;123456&#x27;</span>,</span><br><span class="line">   <span class="string">&#x27;server-time-zone&#x27;</span><span class="operator">=</span> <span class="string">&#x27;Asia/Shanghai&#x27;</span>,</span><br><span class="line">   <span class="string">&#x27;scan.startup.mode&#x27;</span><span class="operator">=</span><span class="string">&#x27;initial&#x27;</span>,</span><br><span class="line">   <span class="string">&#x27;database-name&#x27;</span><span class="operator">=</span> <span class="string">&#x27;test&#x27;</span>,</span><br><span class="line">   <span class="string">&#x27;table-name&#x27;</span><span class="operator">=</span> <span class="string">&#x27;Student&#x27;</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<ol start="7">
+<li>查询数据，实时同步mysql的对应表的数据：</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> mysql_cdc_to_test_Student;</span><br></pre></td></tr></table></figure>
+
+<ol start="8">
+<li>在mysql的test数据库对Student表的数据，分别增删改，会观察到FlinkSQL-Client数据的实时变动:</li>
+</ol>
+<h3 id="观察控制台捕获数据的变更"><a href="#观察控制台捕获数据的变更" class="headerlink" title="观察控制台捕获数据的变更"></a><font size=5 color='purple' face='华文楷体'>观察控制台捕获数据的变更</font></h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- Student表增加一行数据,在FlinkSQL-Client会看到迅速更新1条数据：</span></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> Student <span class="keyword">values</span>(<span class="string">&#x27;09&#x27;</span> , <span class="string">&#x27;董冬&#x27;</span> , <span class="string">&#x27;1997-04-22&#x27;</span> , <span class="string">&#x27;男&#x27;</span>);</span><br><span class="line"><span class="comment">-- Student表修改刚刚修改一行数据，在FlinkSQL-Client会看到迅速更新2条数据:(+U/-U)</span></span><br><span class="line"><span class="keyword">UPDATE</span> test.Student t <span class="keyword">SET</span> t.s_birth <span class="operator">=</span> <span class="string">&#x27;1987-04-22&#x27;</span> <span class="keyword">WHERE</span> t.s_id <span class="keyword">LIKE</span> <span class="string">&#x27;09&#x27;</span>;</span><br><span class="line"><span class="comment">-- Student表删除最后一行数据,在FlinkSQL-Client会看到迅速更新1条数据:</span></span><br><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> test.Student <span class="keyword">WHERE</span> s_id <span class="keyword">LIKE</span> <span class="string">&#x27;09&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<ol start="9">
+<li>查询学习 01 课程的学生及考试情况。</li>
+</ol>
+<p>先创建mysql_cdc_to_test_Score表如下：</p>
+<blockquote>
+<p>Flink CDC MySQL Connector 可通过参数 scan.startup.mode 配置启动模式。启动模式有两种：initial 和 latest-offset</p>
+<ul>
+<li>initial: 在首次启动时，对数据库的表执行初始快照，快照数据读取完成后继续读取 binlog 数据。这个模式可以得到历史到现在的所有数据。initial 是默认的启动模式。</li>
+<li>latest-offset: 首次启动时不执行快照，只读取 binlog 的最新数据。</li>
+<li>使用场景: <ul>
+<li>如果需要读取全量的数据，包括历史数据和 binlog 数据则选用 initial 模式。</li>
+<li>如果只需要最新的 binlog 数据，则选用 latest-offset。</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> if <span class="keyword">not</span> <span class="keyword">exists</span> mysql_cdc_to_test_Score (</span><br><span class="line">  `s_id`   STRING,</span><br><span class="line">  `c_id`   STRING,</span><br><span class="line">  `s_score` <span class="type">INT</span>,</span><br><span class="line">  <span class="keyword">PRIMARY</span> KEY (`s_id`) <span class="keyword">NOT</span> ENFORCED</span><br><span class="line">) <span class="keyword">WITH</span> (</span><br><span class="line">   <span class="string">&#x27;connector&#x27;</span><span class="operator">=</span> <span class="string">&#x27;mysql-cdc&#x27;</span>,</span><br><span class="line">   <span class="string">&#x27;hostname&#x27;</span><span class="operator">=</span> <span class="string">&#x27;192.168.88.161&#x27;</span>,</span><br><span class="line">   <span class="string">&#x27;port&#x27;</span><span class="operator">=</span> <span class="string">&#x27;3306&#x27;</span>,</span><br><span class="line">   <span class="string">&#x27;username&#x27;</span><span class="operator">=</span> <span class="string">&#x27;root&#x27;</span>,</span><br><span class="line">   <span class="string">&#x27;password&#x27;</span><span class="operator">=</span><span class="string">&#x27;123456&#x27;</span>,</span><br><span class="line">   <span class="string">&#x27;server-time-zone&#x27;</span><span class="operator">=</span> <span class="string">&#x27;Asia/Shanghai&#x27;</span>,</span><br><span class="line">   <span class="string">&#x27;scan.startup.mode&#x27;</span><span class="operator">=</span><span class="string">&#x27;initial&#x27;</span>,</span><br><span class="line">   <span class="string">&#x27;database-name&#x27;</span><span class="operator">=</span> <span class="string">&#x27;test&#x27;</span>,</span><br><span class="line">   <span class="string">&#x27;table-name&#x27;</span><span class="operator">=</span> <span class="string">&#x27;Score&#x27;</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<ol start="10">
+<li>计算结果（Flink SQL）:</li>
+</ol>
+<p>查询学习 01 课程的学生及考试情况。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 尝试自行修改 Mysql test 数据库中的 Score 表或 Student 表的数据，会在 FlinkSQL-Client 观察到查询结果的动态变化。</span></span><br><span class="line"><span class="keyword">SELECT</span> t.<span class="operator">*</span>,s.s_name,s.s_sex</span><br><span class="line"><span class="keyword">FROM</span> mysql_cdc_to_test_Score <span class="keyword">AS</span> t</span><br><span class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> mysql_cdc_to_test_Student <span class="keyword">AS</span> s</span><br><span class="line">   <span class="keyword">ON</span> t.s_id <span class="operator">=</span> s.s_id</span><br><span class="line"><span class="keyword">Where</span> t.c_id <span class="operator">=</span> <span class="string">&#x27;01&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Flink-CDC-MySQL-Connector-常用参数"><a href="#Flink-CDC-MySQL-Connector-常用参数" class="headerlink" title="Flink CDC MySQL Connector 常用参数"></a><font size=5 color='orange' face='华文楷体'><strong>Flink CDC MySQL Connector 常用参数</strong></font></h2><h3 id="参数名及含义"><a href="#参数名及含义" class="headerlink" title="参数名及含义"></a><font size=5 color='purple' face='华文楷体'><strong>参数名及含义</strong></font></h3><table>
+<thead>
+<tr>
+<th><strong>参数名</strong></th>
+<th><strong>必填</strong></th>
+<th><strong>默认值</strong></th>
+<th><strong>类型</strong></th>
+<th><strong>参数描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>connector</td>
+<td>是</td>
+<td>无</td>
+<td>String</td>
+<td>指定connector，这里填 mysql-cdc</td>
+</tr>
+<tr>
+<td>hostname</td>
+<td>是</td>
+<td>无</td>
+<td>String</td>
+<td>MySql server 的主机名或者 IP 地址</td>
+</tr>
+<tr>
+<td>username</td>
+<td>是</td>
+<td>无</td>
+<td>String</td>
+<td>连接 MySQL 数据库的用户名</td>
+</tr>
+<tr>
+<td>password</td>
+<td>是</td>
+<td>无</td>
+<td>String</td>
+<td>连接 MySQL 数据库的密码</td>
+</tr>
+<tr>
+<td>database-name</td>
+<td>是</td>
+<td>无</td>
+<td>String</td>
+<td>需要监控的数据库名,支持正则表达式</td>
+</tr>
+<tr>
+<td>table-name</td>
+<td>是</td>
+<td>无</td>
+<td>String</td>
+<td>需要监控的表名,支持正则表达式</td>
+</tr>
+<tr>
+<td>port</td>
+<td>是</td>
+<td>3306</td>
+<td>Integer</td>
+<td>MySQL 服务的端口号</td>
+</tr>
+<tr>
+<td>server-id</td>
+<td>否</td>
+<td>无</td>
+<td>Integer</td>
+<td>当开启scan.incremental.snapshot.enabled时，建议指定server-id;server-id 可以是单个值，如5400; 也可以提供数值范围，如5400-5408</td>
+</tr>
+<tr>
+<td>scan.incremental.snapshot.enabled</td>
+<td>否</td>
+<td>true</td>
+<td>Boolean</td>
+<td>增量快照是读取表快照的新机制；和旧的快照读相比有以下优点：1. 并行读取 2. 支持checkpoint 3. 不需要锁表；当需要并行读取时，server-id需要设置数值范围，如5400-5408</td>
+</tr>
+<tr>
+<td>scan.incremental.snapshot.chunk.size</td>
+<td>否</td>
+<td>8096</td>
+<td>Integer</td>
+<td>当读取表的快照时，表快照捕获的表的块大小(行数)</td>
+</tr>
+<tr>
+<td>scan.snapshot.fetch.size</td>
+<td>否</td>
+<td>1024</td>
+<td>Integer</td>
+<td>每次读表时最多拉取的记录数</td>
+</tr>
+<tr>
+<td>scan.startup.mode</td>
+<td>否</td>
+<td>initial</td>
+<td>String</td>
+<td>MySQL CDC 启动模式，有效值：initial 和 latest-offset</td>
+</tr>
+<tr>
+<td>connect.timeout</td>
+<td>否</td>
+<td>30s</td>
+<td>Duration</td>
+<td>connector 连接 MySQL 服务的最长等待超时时间</td>
+</tr>
+<tr>
+<td>connect.max-retries</td>
+<td>否</td>
+<td>3</td>
+<td>Integer</td>
+<td>connector 创建 MySQL 连接的重试次数</td>
+</tr>
+<tr>
+<td>connection.pool.size</td>
+<td>否</td>
+<td>20</td>
+<td>Integer</td>
+<td>连接池的大小</td>
+</tr>
+</tbody></table>
+<h1 id="Flink-CDC-2-0-详解"><a href="#Flink-CDC-2-0-详解" class="headerlink" title="Flink CDC 2.0 详解"></a><font size='5' face='华文楷体' color='red' ><strong>Flink CDC 2.0 详解</strong></font></h1><h2 id="Flink-CDC-1-X-痛点"><a href="#Flink-CDC-1-X-痛点" class="headerlink" title="Flink CDC 1.X 痛点"></a><font size=5 color='orange' face='华文楷体'><strong>Flink CDC</strong> <strong>1.X</strong> <strong>痛点</strong></font></h2><blockquote>
+<p>MySQL CDC 是 Flink CDC 中使用最多也是最重要的 Connector，本文下述章节描述 Flink CDC Connector 均为 MySQL CDC Connector。</p>
+<p>总结一下 FlinkCDC1.X痛点: </p>
+<ul>
+<li>一致性通过加锁来保证</li>
+<li>不支持水平拓展, 只支持单并发</li>
+<li>全量阶段不支持断点续传(没有CheckPoint机制)</li>
+</ul>
+</blockquote>
+<ol>
+<li><p>全量 + 增量读取的过程需要保证所有数据的一致性，因此需要通过全局锁保证，但是加锁容易对在线业务造成影响，且 DBA 一般不给锁权限。 </p>
+</li>
+<li><p>不支持水平扩展，因为 Flink CDC 底层是基于 Debezium，其架构是单节点，所以 Flink CDC 的数据源只支持单并发。在全量阶段读取阶段，如果表非常大 (亿级别)，读取时间在小时甚至天 级别，用户无法通过增加资源去提升作业速度。 </p>
+</li>
+<li><p>全量读取阶段不支持 checkpoint：CDC 读取分为两个阶段，全量读取和增量读取，目前全量读取阶段是不支持 checkpoint 的，因此会存在一个问题：当我们同步全量数据时，假设需要 5 个小时，当同步了 4 小时的时候作业失败，这时候就需要重新开始，再读取 5 个小时。</p>
+</li>
+</ol>
+<h2 id="Debezium-锁分析"><a href="#Debezium-锁分析" class="headerlink" title="Debezium 锁分析"></a><font size=5 color='orange' face='华文楷体'><strong>Debezium 锁分析</strong></font></h2><blockquote>
+<p>由于Flink CDC 底层封装了 Debezium, 想要深入了解FlinkCDC的痛点, 就必须知道Debezium的锁的机制.</p>
+<p> Debezium 同步一张表分为两个阶段：</p>
+<ul>
+<li><ol>
+<li>全量阶段：查询当前表中所有记录；</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>增量阶段：从 binlog 消费变更数据。</li>
+</ol>
+</li>
+</ul>
+</blockquote>
+<p><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/blog/2023-09-15_20-38-18.png"></p>
+<blockquote>
+<p>以全局锁为例，首先是获取一个锁，然后再去开启可重复读的事务。这里加锁范围是读取binlog 的当前位点和当前表的 schema。这样做的目的是保证 binlog 的起始位置和读取到的当前schema 是可以对应上的，因为表的 schema 是会改变的，比如删除列或者增加列。在读取这两个信息后，SnapshotReader 会在可重复读事务里读取全量数据，在全量数据读取完成后，会启动binlogReader从读取的 binlog 起始位置开始增量读取，从而保证全量数据 + 增量数据的无缝衔接。</p>
+<p>表锁是全局锁的退化版，因为全局锁的权限会比较高，因此在某些场景，用户可能没有全局锁的权限，但是有表锁的权限。不过表锁的加锁时间会更长，因为表锁有个特征：锁提前释放了可重复读的事务默认会提交，所以锁需要等到全量数据读完后才能释放。</p>
+</blockquote>
+<p><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/blog/2023-09-15_20-52-46.png"></p>
+<p>Flink CDC 1.x 可以不加锁，能够满足大部分场景，但牺牲了一定的数据准确性。Flink CDC 1.x 默认加全局锁，虽然能保证数据一致性，但存在上述<strong>数据库无响应(hang住)故障</strong>的风险。</p>
+<h2 id="Flink-CDC-2-X-设计目标-以-MySQL-为例"><a href="#Flink-CDC-2-X-设计目标-以-MySQL-为例" class="headerlink" title="Flink CDC 2.X 设计目标 (以 MySQL 为例)"></a><font size=5 color='orange' face='华文楷体'><strong>Flink CDC 2.X</strong> 设计目标 <strong>(以 MySQL 为例)</strong></font></h2><p>通过上面的分析，可以知道 2.0 的设计方案核心要解决上述的三个问题，即支持无锁读取、水平扩展、checkpoint。</p>
+<p><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/blog/2023-09-15_20-54-19.png"></p>
+<p>左边是 Chunk 的切分算法描述，Chunk 的切分算法其实和很多数据库的分库分表原理类似，通过表的主键对表中的数据进行分片。假设每个 Chunk 的步长为 10，按照这个规则进行切分，只需要把这些 Chunk 的区间做成左开右闭或者左闭右开的区间，保证衔接后的区间能够等于表的主键区间即可。 </p>
+<p>右边是每个 Chunk 的无锁读算法描述，该算法的核心思想是在划分了 Chunk 后，对于每个 Chunk 的全量读取和增量读取，在不用锁的条件下完成一致性的合并。</p>
+<h2 id="Flink-CDC-2-X设计实现"><a href="#Flink-CDC-2-X设计实现" class="headerlink" title="Flink CDC 2.X设计实现"></a><font size=5 color='orange' face='华文楷体'><strong>Flink CDC 2.X设计实现</strong></font></h2><blockquote>
+<p><strong>对于大部分用户来讲，其实无需过于关注如何无锁算法和分片的细节，了解整体的流程就好。</strong></p>
+<p>在对于<strong>有主键的表</strong>做初始化模式，整体的流程主要分为 5 个阶段：</p>
+<ol>
+<li><p>Chunk 切分；</p>
+</li>
+<li><p>Chunk 分配； （<strong>实现并行读取数据&amp;CheckPoint</strong>）</p>
+</li>
+<li><p>Chunk 读取； （<strong>实现无锁读取</strong>）</p>
+</li>
+<li><p>Chunk 汇报；</p>
+</li>
+<li><p>Chunk 分配。</p>
+</li>
+</ol>
+</blockquote>
+<p><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/blog/2023-09-15_20-56-26.png"></p>
+<blockquote>
+<p>整体流程可以概括为：首先通过主键对表进行 Snapshot Chunk 划分（<strong>第一步：Chunk 切分</strong>），再将 Snapshot Chunk 分发给多个 SourceReader（<strong>第二步：Chunk</strong> <strong>分配</strong>），每个 Snapshot Chunk 读取时通过算法实现无锁条件下的一致性读（<strong>第三步：Chunk 读取</strong>）， SourceReader 读取时支持 chunk 粒度的 checkpoint， 在 Snapshot Chunk 读取完成之后，有一个汇报的流程，即 SourceReader 需要将 Snapshot Chunk 完成信息汇报给 SourceEnumerator（<strong>第四步：Chunk</strong> <strong>汇报</strong>），在所有 Snapshot Chunk 读取完成后， 下发一个 binlog chunk 进行增量部分的 binlog 读取（<strong>第五步：Chunk</strong> <strong>分配</strong>），这便是 Flink CDC 2.0 的整体流程。</p>
+</blockquote>
+<h3 id="官方测试效果"><a href="#官方测试效果" class="headerlink" title="官方测试效果:"></a><font size=5 color='purple' face='华文楷体'><strong>官方测试效果:</strong></font></h3><p>用 TPC-DS 数据集中的 customer 表进行了测试，Flink 版本是 1.13.1，customer 表的数据量是 6500 万条，Source 并发为 8，全量读取阶段：Flink CDC 2.0 用时 13 分钟；Flink CDC 1.4 用时 89 分钟；读取性能提升 6.8 倍</p>
+<h2 id="使用JDBC注意事项"><a href="#使用JDBC注意事项" class="headerlink" title="使用JDBC注意事项"></a><font size=5 color='orange' face='华文楷体'>使用JDBC注意事项</font></h2><blockquote>
+<p>● 在mysql-cdc 2.x中默认开启了scan.incremental.snapshot.enabled， 如果表没有主键，则会导致增量快照读（ incremental snapshot reading）失败，则需要将scan.incremental.snapshot.enabled设置为false</p>
+<p>● 快照数据块分割采用的算法是：chunk reading algorithm ，块切分采用固定的步长，由参数scan.incremental.snapshot.chunk.size确定，默认值是：8096（行数）</p>
+<ul>
+<li><p>针对自增的数字，则按主键从小到大进行切换</p>
+</li>
+<li><p>针对其它主键，则按SELECT MAX(STR_ID) AS chunk_high FROM (SELECT * FROM TestTable WHERE STR_ID &gt; ‘uuid-001’ limit 25) 获取切换的范围</p>
+</li>
+<li><p>每个chunk reader执行Offset Signal Algorithm以获得快照块的最终一致输出</p>
+</li>
+</ul>
+<p>● 如果需要并行运行，每个并行Reader应该有一个唯一的服务器id，所以’ server-id ‘必须是’ 5400-6400 ‘这样的范围，并且范围必须大于并行度 (并行度通过 <strong>SET ‘parallelism.default’ &#x3D; 8;</strong> 设置）。</p>
+</blockquote>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="https://github.com/weiswift">Johnson Liam</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://github.com/weiswift/2023/09/15/2023.09.15/">https://github.com/weiswift/2023/09/15/2023.09.15/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Flink/">Flink</a></div><div class="post_share"><div class="social-share" data-image="https://s1.ax1x.com/2023/04/18/p9i6VDx.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> Donate</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2023/09/14/2023.09.14/" title="【FLink教育】Flink技术选型"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">【FLink教育】Flink技术选型</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2023/09/01/2023.09.05/" title="【Flink】Flink技术栈(Theory及集群部署)"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-09-01</div><div class="title">【Flink】Flink技术栈(Theory及集群部署)</div></div></a></div><div><a href="/2023/09/06/2023.09.06/" title="【Flink】Flink作业提交流程及Java编程模型之WordCount"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-09-06</div><div class="title">【Flink】Flink作业提交流程及Java编程模型之WordCount</div></div></a></div><div><a href="/2023/09/07/2023.09.07/" title="【Flink】Flink算子及分区概念"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-09-07</div><div class="title">【Flink】Flink算子及分区概念</div></div></a></div><div><a href="/2023/09/08/2023.09.08/" title="【Flink】FlinkSQL及Flink四大基石"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-09-08</div><div class="title">【Flink】FlinkSQL及Flink四大基石</div></div></a></div><div><a href="/2023/09/11/2023.09.11/" title="【Flink】Flink水印机制与快照机制"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-09-11</div><div class="title">【Flink】Flink水印机制与快照机制</div></div></a></div><div><a href="/2023/09/12/2023.09.12/" title="【Flink】FlinkSQL| 状态编程| 自定义函数"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-09-12</div><div class="title">【Flink】FlinkSQL| 状态编程| 自定义函数</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s1.ax1x.com/2023/04/18/p9i6VDx.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Johnson Liam</div><div class="author-info__description">机器都在学习,你有什么理由不学习?</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">134</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">33</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><a id="card-info-btn" href="https://github.com/weiswift/"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/weiswift" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:1265019024@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">网站由Github服务器托管,感谢支持！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#CDC-%E6%96%B9%E6%A1%88%E9%80%89%E6%8B%A9"><span class="toc-number">1.</span> <span class="toc-text">CDC 方案选择</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%A0%E7%BB%9FCDC-%E6%96%B9%E6%A1%88"><span class="toc-number">1.1.</span> <span class="toc-text">传统CDC 方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FlinkCDC-%E6%96%B9%E6%A1%88"><span class="toc-number">1.2.</span> <span class="toc-text">FlinkCDC 方案</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FlinkCDC-%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.</span> <span class="toc-text">FlinkCDC 介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#FlinkCDC%E6%A6%82%E8%BF%B0"><span class="toc-number">2.1.</span> <span class="toc-text">FlinkCDC概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FlinkCDC%E5%8E%9F%E7%90%86%E2%80%BB"><span class="toc-number">2.2.</span> <span class="toc-text">FlinkCDC原理※</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%98%E6%96%B9%E8%A7%A3%E9%87%8A"><span class="toc-number">2.2.1.</span> <span class="toc-text">官方解释</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FlinkCDC%E7%89%B9%E6%80%A7"><span class="toc-number">2.3.</span> <span class="toc-text">FlinkCDC特性</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FlinkCDC%E9%83%A8%E7%BD%B2%E5%8F%8A%E7%BB%83%E4%B9%A0"><span class="toc-number">3.</span> <span class="toc-text">FlinkCDC部署及练习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%A7%8B%E5%89%8D%E5%87%86%E5%A4%87"><span class="toc-number">3.1.</span> <span class="toc-text">开始前准备</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%86%E8%A7%A3%E4%B8%8E-Flink-%E7%89%88%E6%9C%AC%E7%9A%84%E5%AF%B9%E5%BA%94%E5%85%B3%E7%B3%BB"><span class="toc-number">3.1.1.</span> <span class="toc-text">了解与 Flink 版本的对应关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E6%BA%90%E7%A0%81"><span class="toc-number">3.1.2.</span> <span class="toc-text">编译源码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD%E6%BA%90%E7%A0%81"><span class="toc-number">3.1.3.</span> <span class="toc-text">下载源码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9-pom-xml"><span class="toc-number">3.1.4.</span> <span class="toc-text">修改 pom.xml</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E8%AF%91"><span class="toc-number">3.1.5.</span> <span class="toc-text">编译</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DataStream-%E6%96%B9%E5%BC%8F%E7%9A%84%E5%BA%94%E7%94%A8"><span class="toc-number">3.2.</span> <span class="toc-text">DataStream 方式的应用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Mysq%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-number">3.2.1.</span> <span class="toc-text">Mysq准备工作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%BC%E5%85%A5%E4%BE%9D%E8%B5%96"><span class="toc-number">3.2.2.</span> <span class="toc-text">导入依赖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E5%86%99%E4%BB%A3%E7%A0%81"><span class="toc-number">3.2.3.</span> <span class="toc-text">编写代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%82%E5%AF%9F%E7%A8%8B%E5%BA%8F%E6%8D%95%E8%8E%B7%E6%95%B0%E6%8D%AE%E7%9A%84%E5%8F%98%E6%9B%B4"><span class="toc-number">3.2.4.</span> <span class="toc-text">观察程序捕获数据的变更</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A2%9E%E5%88%A0%E6%94%B9"><span class="toc-number">3.2.4.1.</span> <span class="toc-text">增删改</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FlinkSQL-%E6%96%B9%E5%BC%8F%E7%9A%84%E5%BA%94%E7%94%A8"><span class="toc-number">3.3.</span> <span class="toc-text">FlinkSQL 方式的应用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%82%E5%AF%9F%E6%8E%A7%E5%88%B6%E5%8F%B0%E6%8D%95%E8%8E%B7%E6%95%B0%E6%8D%AE%E7%9A%84%E5%8F%98%E6%9B%B4"><span class="toc-number">3.3.1.</span> <span class="toc-text">观察控制台捕获数据的变更</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Flink-CDC-MySQL-Connector-%E5%B8%B8%E7%94%A8%E5%8F%82%E6%95%B0"><span class="toc-number">3.4.</span> <span class="toc-text">Flink CDC MySQL Connector 常用参数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E6%95%B0%E5%90%8D%E5%8F%8A%E5%90%AB%E4%B9%89"><span class="toc-number">3.4.1.</span> <span class="toc-text">参数名及含义</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Flink-CDC-2-0-%E8%AF%A6%E8%A7%A3"><span class="toc-number">4.</span> <span class="toc-text">Flink CDC 2.0 详解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Flink-CDC-1-X-%E7%97%9B%E7%82%B9"><span class="toc-number">4.1.</span> <span class="toc-text">Flink CDC 1.X 痛点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Debezium-%E9%94%81%E5%88%86%E6%9E%90"><span class="toc-number">4.2.</span> <span class="toc-text">Debezium 锁分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Flink-CDC-2-X-%E8%AE%BE%E8%AE%A1%E7%9B%AE%E6%A0%87-%E4%BB%A5-MySQL-%E4%B8%BA%E4%BE%8B"><span class="toc-number">4.3.</span> <span class="toc-text">Flink CDC 2.X 设计目标 (以 MySQL 为例)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Flink-CDC-2-X%E8%AE%BE%E8%AE%A1%E5%AE%9E%E7%8E%B0"><span class="toc-number">4.4.</span> <span class="toc-text">Flink CDC 2.X设计实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%98%E6%96%B9%E6%B5%8B%E8%AF%95%E6%95%88%E6%9E%9C"><span class="toc-number">4.4.1.</span> <span class="toc-text">官方测试效果:</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8JDBC%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">4.5.</span> <span class="toc-text">使用JDBC注意事项</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/15/2023.09.15/" title="【FLink教育】FlinkCDC">【FLink教育】FlinkCDC</a><time datetime="2023-09-14T17:00:00.000Z" title="Created 2023-09-15 00:00:00">2023-09-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/14/2023.09.14/" title="【FLink教育】Flink技术选型">【FLink教育】Flink技术选型</a><time datetime="2023-09-13T17:00:00.000Z" title="Created 2023-09-14 00:00:00">2023-09-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/13/2023.09.13/" title="ClickHouse全面解析">ClickHouse全面解析</a><time datetime="2023-09-12T17:00:00.000Z" title="Created 2023-09-13 00:00:00">2023-09-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/12/2023.09.12/" title="【Flink】FlinkSQL| 状态编程| 自定义函数">【Flink】FlinkSQL| 状态编程| 自定义函数</a><time datetime="2023-09-11T17:00:00.000Z" title="Created 2023-09-12 00:00:00">2023-09-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/11/2023.09.11/" title="【Flink】Flink水印机制与快照机制">【Flink】Flink水印机制与快照机制</a><time datetime="2023-09-10T17:00:00.000Z" title="Created 2023-09-11 00:00:00">2023-09-11</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Johnson Liam</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Welcome to 小威の <a target="_blank" rel="noopener" href="https://www.cnblogs.com/liam-sliversucks/">Blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><canvas class="fireworks" mobile="true"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = true;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="true"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
