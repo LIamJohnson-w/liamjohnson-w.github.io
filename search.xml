@@ -4,6 +4,63 @@
   
     
     <entry>
+      <title>【MongoDB】MongoDB基本操作</title>
+      <link href="/2024/03/23/2024.03.23/"/>
+      <url>/2024/03/23/2024.03.23/</url>
+      
+        <content type="html"><![CDATA[<h1 id="MongoDB常用操作"><a href="#MongoDB常用操作" class="headerlink" title="MongoDB常用操作"></a>MongoDB常用操作</h1><blockquote><p>和所有的关系型数据库不同，MongoDB属于是文档类型的数据库，如果你看MongoDB内部数据的时候，就会发现MongoDB的数据存储结构为键值对(KV)形式。特别类似于Json，形同Python中的dict，Java中的set集合。</p><p>需要注意的是：MongoDB中的表对应的是Collection。</p></blockquote><h2 id="BasicOperation"><a href="#BasicOperation" class="headerlink" title="BasicOperation"></a>BasicOperation</h2><blockquote><p>使用场景：Linux服务器命令行</p><ul><li><code>mongo -port</code><ul><li>进入MongoDB</li><li>另一种方式进入MongoDB：<ul><li><code>mongo -port 25000 -u root -p admin -authenticationDatabase ods_sys</code></li><li>使用root 密码admin 登录25000端口的mongoDB，库为ods_sys</li><li>不过这种命令有时候不太好使</li></ul></li></ul></li><li>show dbs;<ul><li>查看MongoDB中的所有库</li></ul></li><li>use ods_sys;<ul><li>使用ods_sys库</li></ul></li><li>show collections;<ul><li>查看当前库中所有的表</li></ul></li><li>db.flow_security.stats();<ul><li>查看表的状态，有没有具体的字段我也不太清楚</li></ul></li><li>db.flow_security.find();<ul><li>查看表flow_security 中的所有数据</li></ul></li></ul></blockquote><h1 id="MongoDB-DDL"><a href="#MongoDB-DDL" class="headerlink" title="MongoDB-DDL"></a>MongoDB-DDL</h1><h2 id="创建数据库，表"><a href="#创建数据库，表" class="headerlink" title="创建数据库，表"></a>创建数据库，表</h2><ul><li>use DATABASE_NAME<ul><li>如果没有该库会自动创建</li></ul></li><li>db.createCollection(“runoob”) <ul><li>创建表runoob</li></ul></li></ul><h2 id="删除数据库，表"><a href="#删除数据库，表" class="headerlink" title="删除数据库，表"></a>删除数据库，表</h2><ul><li>use runoob<ul><li>创建&#x2F;切换到该库</li></ul></li><li>db.dropDatabase()<ul><li>当前使用的是哪个库，就会删掉哪个库</li></ul></li><li>db.表名.drop()<ul><li>删除指定表名的表</li></ul></li></ul><p>后续的一些操作，以后用到时再做记录，可能不用以后也会生疏。</p><h1 id="MongoDB-DML"><a href="#MongoDB-DML" class="headerlink" title="MongoDB-DML"></a>MongoDB-DML</h1><h1 id="MongoDB-DQL"><a href="#MongoDB-DQL" class="headerlink" title="MongoDB-DQL"></a>MongoDB-DQL</h1>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> MongoDB </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>【Python】Python依赖安装方式整理</title>
+      <link href="/2024/03/23/2024.03.24/"/>
+      <url>/2024/03/23/2024.03.24/</url>
+      
+        <content type="html"><![CDATA[<blockquote><p>Python的依赖一直是一个比较棘手的问题，如果是在线的环境还好说，直接pip install 包名就OK了，但是如果在内网环境中的话，需要下包然后导进去安装。但是对于不同的包的安装方式也不相同。</p></blockquote><h1 id="pip命令相关"><a href="#pip命令相关" class="headerlink" title="pip命令相关"></a>pip命令相关</h1><blockquote><p>通过<code>pip list</code> 可以产看当前的环境中装了多少包，以及包的版本号，当然不一定是pip list，也有可能是pip3 list</p></blockquote><h2 id="在线安装Package"><a href="#在线安装Package" class="headerlink" title="在线安装Package"></a>在线安装Package</h2><ul><li>如果手里有requirements.txt文件的话<ul><li><code>pip install -r requirements.txt</code></li></ul></li><li>将当前环境中安装包版本信息导入到requireents.txt文件中，注意 –all 参数，加上此参数会将setuptools、urllib3包进行打包；如果不加，这两个不会打包<ul><li><code>pip freeze --all &gt; requirements.txt</code></li></ul></li><li>指定版本号安装<ul><li><code>pip install scapy==2.5.0</code></li></ul></li><li>指定国内镜像源进行安装<ul><li><code>pip install scrapy -i  https://pypi.tuna.tsinghua.edu.cn/simple</code></li></ul></li></ul><h2 id="离线安装Package"><a href="#离线安装Package" class="headerlink" title="离线安装Package"></a>离线安装Package</h2><h3 id="使用whl文件安装"><a href="#使用whl文件安装" class="headerlink" title="使用whl文件安装"></a>使用whl文件安装</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install xlrd-<span class="number">1.2</span><span class="number">.0</span>-py2.py3-none-<span class="built_in">any</span>.whl</span><br></pre></td></tr></table></figure><h3 id="tar-gz-安装"><a href="#tar-gz-安装" class="headerlink" title="tar.gz 安装"></a>tar.gz 安装</h3><blockquote><p>一般这种包都需要解压，而且解压完成之后会生成一个setup.py的文件。</p></blockquote><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python setup.py install</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> Python </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>【工具篇】Wireshark网络分析工具</title>
+      <link href="/2024/03/22/2024.03.22/"/>
+      <url>/2024/03/22/2024.03.22/</url>
+      
+        <content type="html"><![CDATA[<blockquote><p>用了很长时间的Wireshark网络流量分析工具，不敢说自己掌握的有多么深刻，但是一些常用的基本操作还是信手拈来的，时间久了之后难免会忘记，在这里就记录一下。</p></blockquote><h1 id="过滤器"><a href="#过滤器" class="headerlink" title="过滤器"></a>过滤器</h1><blockquote><p>没有使用过过滤器&#x3D;&#x3D;没有使用过Wireshark(为什么两个&#x3D;，众所周知，一个&#x3D;是赋值^_^)。</p></blockquote><h2 id="过滤IP※"><a href="#过滤IP※" class="headerlink" title="过滤IP※"></a>过滤IP※</h2><ul><li><p><code>ip.src ==112.53.42.42 </code></p><ul><li>显示源地址为112.53.42.42的数据包列表</li></ul></li><li><p><code>ip.dst==112.53.42.42</code></p><ul><li>显示目标地址为112.53.42.42的数据包列表</li></ul></li><li><p><code>ip.addr == 112.53.42.42</code></p><ul><li>显示源IP地址或目标IP地址为112.53.42.42的数据包列表</li></ul></li></ul><h2 id="过滤协议※"><a href="#过滤协议※" class="headerlink" title="过滤协议※"></a>过滤协议※</h2><blockquote><p>比较简单，直接在Filter框中直接输入协议名即可。</p></blockquote><ul><li><p>tcp，只显示TCP协议的数据包列表</p></li><li><p>http，只查看HTTP协议的数据包列表</p></li><li><p>icmp，只显示ICMP协议的数据包列表</p></li></ul><p><strong>注意：协议名称需要输入小写。</strong></p><h2 id="过滤端口"><a href="#过滤端口" class="headerlink" title="过滤端口"></a>过滤端口</h2><ul><li><p>tcp.port &#x3D;&#x3D;80</p><ul><li>显示源主机或者目的主机端口为80的数据包列表。</li></ul></li><li><p>tcp.srcport &#x3D;&#x3D; 80</p><ul><li>只显示TCP协议的源主机端口为80的数据包列表。</li></ul></li><li><p>tcp.dstport &#x3D;&#x3D; 80</p><ul><li>只显示TCP协议的目的主机端口为80的数据包列表。</li></ul></li></ul><h2 id="http模式过滤"><a href="#http模式过滤" class="headerlink" title="http模式过滤"></a>http模式过滤</h2><blockquote><p>http.request.method&#x3D;&#x3D;”GET”, 只显示HTTP GET方法的。</p></blockquote><h2 id="根据数据包的内容过滤-※"><a href="#根据数据包的内容过滤-※" class="headerlink" title="根据数据包的内容过滤(※)"></a>根据数据包的内容过滤(※)</h2><blockquote><p>一开始，我使用的是<code>tcp contains &quot;api&quot;</code></p><p>意思是，过滤所有tcp报文中含有api字段的所有数据包。</p><p>但是最近看的还有更精确的过滤方式，就是<code>data contains &quot;api&quot;</code>但是我感觉上面的一种更加的全面，因为tcp报文属于传输层的协议，在封包的过程中往往会包含应用层、会话层的数据包，所以会更好一点。</p></blockquote>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 工具 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>【Java进阶】集合</title>
       <link href="/2024/02/14/2024.02.14/"/>
       <url>/2024/02/14/2024.02.14/</url>
@@ -552,9 +609,9 @@
       
         <tags>
             
-            <tag> 常用操作 </tag>
-            
             <tag> Linux </tag>
+            
+            <tag> 常用操作 </tag>
             
         </tags>
       
