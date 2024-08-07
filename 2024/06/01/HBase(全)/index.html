@@ -183,13 +183,11 @@
 </blockquote>
 <h3 id="互联网时代"><a href="#互联网时代" class="headerlink" title="互联网时代"></a>互联网时代</h3><blockquote>
 <p>RDBMS在设计和实现商业应用方面扮演了一个不可或缺的角色（至少在可预见的未来仍旧如此）。只要用户需要保留用户、产品、会话、订单等信息，就会采用一些存储后端为前端应用服务器提供持久化数据的服务。这种结构非常适合有限的数据量，但对于数据急剧增长的情况，这种结构就显得力不从心了。</p>
-</blockquote>
-<blockquote>
 <p>数据量和业务量飞速增长，出现了很多RDBMS的优化方案：</p>
 <ul>
 <li>数据分区</li>
 <li>读写分离</li>
-<li>数据仓库（不常用的东西放仓库）<code>冷热分离</code>：把冷数据和热数据分开存储,根据使用频率提供不同的方案</li>
+<li>数据仓库（不常用的东西放仓库）<code>冷热分离</code>：把冷数据和热数据分开存储,根据使用频率提供不同的方案 </li>
 </ul>
 </blockquote>
 <h3 id="大数据时代"><a href="#大数据时代" class="headerlink" title="大数据时代"></a>大数据时代</h3><blockquote>
@@ -204,8 +202,7 @@
 <li>2004年，Google发表论文：”MapReduce: Simpliied Data Processing on Large Clusters”（即：HADOOP MAPREDUCE前身）</li>
 </ul>
 </li>
-<li><p>海量数据的交互</p>
-<ul>
+<li>海量数据的交互<ul>
 <li>2006年，Google发表论文：”BigTable： A Distributed Storeage System for Structured Data” （即：HADOOP DATABASE-HBASE前身）</li>
 </ul>
 </li>
@@ -220,16 +217,13 @@
 <li>推荐画像<br>用户画像, 是一个比较大的稀疏矩阵, 蚂蚁金服的风控就是构建在Hbase之上</li>
 <li>时空数据<br>主要是轨迹, 气象网格之类, 滴滴打车的轨迹数据主要存在Hbase之中, 另外在所有大一点的数据量的车联网企业, 数据也是存储在HBase</li>
 <li>CubeDb OLAP<br>kylin 一个cube分析工具, 底层的数据就是存储在Hbase之中, 不少客户自己基于离线计算构建cube存储在hbase之中, 满足在线报表查询的需求</li>
-<li>消息&#x2F;订单<br>在电信领域、银行领域, 不少的订单查询底层的存储, 另外不少通信、消息同步的应用构建HBase之上</li>
+<li>消息/订单<br>在电信领域、银行领域, 不少的订单查询底层的存储, 另外不少通信、消息同步的应用构建HBase之上</li>
 <li>Feeds流<br>典型的应用就是xx朋友圈类型的应用, 用户可以随时发布新内容, 评论、点赞</li>
 <li>NewSQL<br>之上有Phoenix的插件, 可以满足二级索引, SQL的查询, 对接传统数据需要SQL非事务的需求</li>
 <li>其他<br>存储爬虫数据<br>海量数据备份<br>短网址<br>………..</li>
 </ul>
 </blockquote>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Use Apache HBase™ when you need random, realtime read/write access to your Big Data. </span><br><span class="line">海量数据的随机访问</span><br></pre></td></tr></table></figure>
-
-
-
 <h2 id="HBase发展"><a href="#HBase发展" class="headerlink" title="HBase发展"></a>HBase发展</h2><blockquote>
 <p>下面是一个HBase随时间发展的简短概述：</p>
 <ol>
@@ -249,19 +243,17 @@
 </blockquote>
 <h2 id="HBase的特点"><a href="#HBase的特点" class="headerlink" title="HBase的特点"></a>HBase的特点</h2><blockquote>
 <ul>
-<li><p>强一致性读&#x2F;写:  HBASE不是“最终一致的”数据存储 , 它非常适合于诸如高速计数器聚合等任务</p>
-</li>
-<li><p>自动分块: HBase表通过Region分布在集群上，随着数据的增长，区域被自动拆分和重新分布</p>
-</li>
+<li>强一致性读/写:  HBASE不是“最终一致的”数据存储 , 它非常适合于诸如高速计数器聚合等任务</li>
+<li>自动分块: HBase表通过Region分布在集群上，随着数据的增长，区域被自动拆分和重新分布</li>
 <li><p>自动RegionServer故障转移</p>
 </li>
-<li><p>Hadoop&#x2F;HDFS集成:  HBase支持HDFS开箱即用作为其分布式文件系统</p>
+<li><p>Hadoop/HDFS集成:  HBase支持HDFS开箱即用作为其分布式文件系统</p>
 </li>
 <li><p>MapReduce :  HBase通过MapReduce支持大规模并行处理，将HBase用作源和接收器</p>
 </li>
 <li><p>Java Client API: HBase支持易于使用的 Java API 进行编程访问</p>
 </li>
-<li><p>Thrift&#x2F;REST API   </p>
+<li><p>Thrift/REST API   </p>
 </li>
 <li><p>块缓存和<code>布隆过滤器</code> : HBase支持块Cache和Bloom过滤器进行大容量查询优化</p>
 </li>
@@ -278,6 +270,7 @@
 <li>HBASE本身不怎么支持ACID（原子性、一致性、持久性、隔离性）</li>
 </ul>
 </blockquote>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -286,7 +279,8 @@
 <th>RDBMS</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>结构</td>
 <td>1. 以表形式存在<br />2. 支持HDFS文件系统<br />3. 使用行键（row key）<br />4. 原生支持分布式存储、计算引擎<br />5. 使用行、列、列族和单元格</td>
 <td>1. 数据库以表的形式存在<br />2. 支持FAT、NTFS、EXT、文件系统<br />3. 使用主键（PK）<br />4. 通过外部中间件可以支持分库分表，但底层还是单机引擎<br />5. 使用行、列、单元格</td>
@@ -296,7 +290,9 @@
 <td>1. 支持向外扩展<br />2. 使用API和MapReduce、Spark、Flink来访问HBase表数据<br />3. 面向列蔟，即每一个列蔟都是一个连续的单元<br />4. 数据总量不依赖具体某台机器，而取决于机器数量HBase不支持ACID（Atomicity、Consistency、Isolation、Durability）<br />5. 适合结构化数据和非结构化数据<br />6. 一般都是分布式的<br />7. HBase不支持事务，支持的是单行数据的事务操作不支持Join</td>
 <td>1. 支持向上扩展（买更好的服务器）<br />2. 使用SQL查询<br />3. 面向行，即每一行都是一个连续单元<br />4. 数据总量依赖于服务器配置<br />5. 具有ACID支持<br />6. 适合结构化数据<br />7. 传统关系型数据库一般都是中心化的<br />8. 支持事务<br />9. 支持Join</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h3 id="HBase-vs-HDFS"><a href="#HBase-vs-HDFS" class="headerlink" title="HBase vs HDFS"></a>HBase vs HDFS</h3><p>HDFS：分布式文件存储系统</p>
 <p>HBASE：分布式数据库</p>
 <blockquote>
@@ -304,6 +300,7 @@
 <li>HBASE有自己的文件格式</li>
 </ul>
 </blockquote>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -311,12 +308,16 @@
 <th>HDFS</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>1. HBase构建在HDFS之上，并为大型表提供快速记录查找(和更新)<br />2. HBase内部将大量数据放在HDFS中名为「StoreFiles」（HFile）的索引中，以便进行高速查找<br />3. Hbase比较适合做快速查询等需求，而不适合做大规模的OLAP应用</td>
 <td>1. HDFS是一个非常适合存储大型文件的分布式文件系统<br />2. HDFS它不是一个通用的文件系统，也无法在文件中快速查询某个数据</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h3 id="HBase-vs-Hive"><a href="#HBase-vs-Hive" class="headerlink" title="HBase vs Hive"></a>HBase vs Hive</h3><p>HIVE：构建数据仓库的工具（把SQL语句转化为MAPREDUCE任务的工具）</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -324,11 +325,14 @@
 <th>Hive</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>1. 是一种面向列存储的非关系型数据库。<br />2. 用于存储结构化和非结构化的数据<br />3. 适用于单表非关系型数据的存储，不适合做关联查询，类似JOIN等操作。<br />4. 基于HDFS<br />5. 数据持久化存储的体现形式是Hfile，存放于DataNode中，被ResionServer以region的形式进行管理<br />6. 延迟较低，接入在线业务使用，面对大量的企业数据，HBase可以实现单表大量数据的存储，同时提供了高效的数据访问速度</td>
 <td>1. 数据仓库工具<br />2. Hive的本质其实就相当于将HDFS中已经存储的文件在Mysql中做了一个双射关系，以方便使用HQL去管理查询<br />3. Hive适用于离线的数据分析和清洗，延迟较高<br />4. Hive存储的数据依旧在DataNode上，编写的HQL语句终将是转换为MapReduce代码执行</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>总结一下：</p>
 <blockquote>
 <ul>
@@ -357,14 +361,16 @@
 <li>HMaster主节点</li>
 <li>HRegionServer从节点</li>
 </ul>
-<h2 id="集群规划"><a href="#集群规划" class="headerlink" title="集群规划"></a>集群规划</h2><table>
+<h2 id="集群规划"><a href="#集群规划" class="headerlink" title="集群规划"></a>集群规划</h2><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>节点</th>
 <th>进程</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>node1</td>
 <td>NameNode、DataNode、zk、Hmaster、HRegionServer</td>
 </tr>
@@ -376,55 +382,48 @@
 <td>node3</td>
 <td>DataNode zk、HRegionServer</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h2 id="安装部署"><a href="#安装部署" class="headerlink" title="安装部署"></a>安装部署</h2><p>1、上传安装程序包</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">用我们的shell客户端即可</span><br></pre></td></tr></table></figure>
-
 <p>2、解压</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf 程序包 -C /export/server</span><br></pre></td></tr></table></figure>
-
 <p>3、修改配置文件</p>
 <ul>
 <li>hbase-env.sh</li>
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">加载JDK路径</span></span><br><span class="line">export JAVA_HOME=/export/server/jdk1.8.0_241/</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">关闭自带的ZK</span></span><br><span class="line">export HBASE_MANAGES_ZK=false</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">禁止加载hadoop相关jar包，因为版本不同会冲突</span></span><br><span class="line">export HBASE_DISABLE_HADOOP_CLASSPATH_LOOKUP=true</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>hbase-site.xml</li>
 </ul>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- HBase数据在HDFS中的存放的路径 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.rootdir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">value</span>&gt;</span>hdfs://node1:8020/hbase<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- Hbase的运行模式。false是单机模式，true是分布式模式。若为false,Hbase和Zookeeper会运行在同一个JVM里面 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.cluster.distributed<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- ZooKeeper的地址 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.zookeeper.quorum<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">value</span>&gt;</span>node1,node2,node3<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- ZooKeeper快照的存储位置 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.zookeeper.property.dataDir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">value</span>&gt;</span>/export/data/zk/hbase<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--  V2.1版本，在分布式情况下, 设置为false --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.unsafe.stream.capability.enforce<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">value</span>&gt;</span>false<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
 <ul>
 <li><p>regionservers</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">增加regionserver的节点</span></span><br><span class="line">node1</span><br><span class="line">node2</span><br><span class="line">node3</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">增加regionserver的节点</span></span><br><span class="line">node1</span><br><span class="line">node2</span><br><span class="line">node3</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
 <p>4、分发安装程序和配置文件</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scp -r hbase-2.1.0/ node2:`pwd`</span><br><span class="line">scp -r hbase-2.1.0/ node3:`pwd`</span><br></pre></td></tr></table></figure>
-
 <p>5、编辑环境变量</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">注意 三个节点都需要配置</span></span><br><span class="line">vim /etc/profile</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">HBASE_HOME</span></span><br><span class="line">export HBASE_HOME=/export/server/hbase-2.1.0</span><br><span class="line">export PATH=$PATH:$HBASE_HOME/bin</span><br></pre></td></tr></table></figure>
-
 <blockquote>
 <p>注意配置完环境变量之后需要加载</p>
 </blockquote>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure>
-
 <p>6、启动</p>
 <ul>
 <li>启动zk</li>
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bin/zkServer.sh start</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">注意 三个节点都要执行</span></span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>启动HDFS</li>
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">start-all.sh</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>启动HBase</li>
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">start-hbase.sh</span><br></pre></td></tr></table></figure>
-
 <p><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/img/image-20221017162038033.png" alt="image-20221017162038033"></p>
 <p>web（默认端口16010）：</p>
 <p><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/img/image-20221017162743045.png" alt="image-20221017162743045"></p>
@@ -436,6 +435,7 @@
 <li>列式存储</li>
 </ul>
 <h2 id="行式存储"><a href="#行式存储" class="headerlink" title="行式存储"></a>行式存储</h2><p>比如：常见的关系型数据库：MySql数据库中的表、CSV、EXCEL文件</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -444,7 +444,8 @@
 <th>addr</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>yangkunlin</td>
 <td>男</td>
 <td>河南商丘</td>
@@ -459,7 +460,9 @@
 <td>男</td>
 <td>河南郑州</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>数据以行为单位进行存储，将确定的行划分到确定的文件中进行保存</p>
 <p><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/img/image-20220627195246149.png" alt="image-20220627195246149"></p>
 <h2 id="列式存储"><a href="#列式存储" class="headerlink" title="列式存储"></a>列式存储</h2><p>以列为存储单位，将不同的列划分到不同的文件中进行保存</p>
@@ -486,64 +489,68 @@
 <li>支持事务难，也是因为数据分散在不同的文件中，事务需要对整体数据进行操作，列越多，复杂度越高</li>
 </ul>
 <h2 id="HBase表结构"><a href="#HBase表结构" class="headerlink" title="HBase表结构"></a>HBase表结构</h2><p>HBase也是通过表（Table）的形式进行逻辑上组织数据的</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
-<th align="center">rowkey</th>
-<th align="center">info</th>
-<th align="center">info</th>
-<th align="center">info</th>
-<th align="center">grades</th>
-<th align="center">grades</th>
-<th align="center">grades</th>
+<th style="text-align:center">rowkey</th>
+<th style="text-align:center">info</th>
+<th style="text-align:center">info</th>
+<th style="text-align:center">info</th>
+<th style="text-align:center">grades</th>
+<th style="text-align:center">grades</th>
+<th style="text-align:center">grades</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center"></td>
-<td align="center">name</td>
-<td align="center">sex</td>
-<td align="center">age</td>
-<td align="center">Math</td>
-<td align="center">English</td>
-<td align="center">Bigdata</td>
+<tbody>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:center">name</td>
+<td style="text-align:center">sex</td>
+<td style="text-align:center">age</td>
+<td style="text-align:center">Math</td>
+<td style="text-align:center">English</td>
+<td style="text-align:center">Bigdata</td>
 </tr>
 <tr>
-<td align="center">rk001</td>
-<td align="center">张三</td>
-<td align="center">男</td>
-<td align="center">26</td>
-<td align="center">99</td>
-<td align="center">98</td>
-<td align="center">97</td>
+<td style="text-align:center">rk001</td>
+<td style="text-align:center">张三</td>
+<td style="text-align:center">男</td>
+<td style="text-align:center">26</td>
+<td style="text-align:center">99</td>
+<td style="text-align:center">98</td>
+<td style="text-align:center">97</td>
 </tr>
 <tr>
-<td align="center">rk002</td>
-<td align="center">李四</td>
-<td align="center">男</td>
-<td align="center">34</td>
-<td align="center"></td>
-<td align="center">78</td>
-<td align="center">80</td>
+<td style="text-align:center">rk002</td>
+<td style="text-align:center">李四</td>
+<td style="text-align:center">男</td>
+<td style="text-align:center">34</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">78</td>
+<td style="text-align:center">80</td>
 </tr>
 <tr>
-<td align="center">rk003</td>
-<td align="center">王五</td>
-<td align="center">女</td>
-<td align="center"></td>
-<td align="center">87</td>
-<td align="center"></td>
-<td align="center">89</td>
+<td style="text-align:center">rk003</td>
+<td style="text-align:center">王五</td>
+<td style="text-align:center">女</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">87</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">89</td>
 </tr>
 <tr>
-<td align="center">rk004</td>
-<td align="center">赵六</td>
-<td align="center"></td>
-<td align="center">25</td>
-<td align="center">67</td>
-<td align="center">65</td>
-<td align="center">56&#x2F;78</td>
+<td style="text-align:center">rk004</td>
+<td style="text-align:center">赵六</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">25</td>
+<td style="text-align:center">67</td>
+<td style="text-align:center">65</td>
+<td style="text-align:center">56/78</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <ul>
 <li>每个表由行和列组成</li>
 <li>每一行有一个行键（rowkey），每个列的值与rowkey相关联<code>HBASE中的唯一索引</code></li>
@@ -569,19 +576,12 @@
 </ul>
 </blockquote>
 <h1 id="grin-HBase的shell命令"><a href="#grin-HBase的shell命令" class="headerlink" title=":grin:HBase的shell命令"></a>:grin:HBase的shell命令</h1><h2 id="进入shell客户端"><a href="#进入shell客户端" class="headerlink" title="进入shell客户端"></a>进入shell客户端</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hbase(main):001:0&gt;hbase shell</span><br></pre></td></tr></table></figure>
-
 <h2 id="查看集群状态"><a href="#查看集群状态" class="headerlink" title="查看集群状态"></a>查看集群状态</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hbase(main):001:0&gt;status</span><br></pre></td></tr></table></figure>
-
 <h2 id="查看帮助"><a href="#查看帮助" class="headerlink" title="查看帮助"></a>查看帮助</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line">hbase(main):001:0&gt;help</span><br><span class="line"></span><br><span class="line">HBase Shell</span><br><span class="line">Use &quot;help&quot; to get list of supported commands.</span><br><span class="line">Use &quot;exit&quot; to quit this interactive shell.</span><br><span class="line">Version 2.1.0, re1673bb0bbfea21d6e5dba73e013b09b8b49b89b, Tue Jul 10 17:26:48 CST 2018</span><br><span class="line">Took 0.0029 seconds</span><br><span class="line">hbase(main):001:0&gt; status</span><br><span class="line">1 active master, 0 backup masters, 3 servers, 0 dead, 0.6667 average load</span><br><span class="line">Took 0.7155 seconds</span><br><span class="line">hbase(main):002:0&gt; help</span><br><span class="line">HBase Shell, version 2.1.0, re1673bb0bbfea21d6e5dba73e013b09b8b49b89b, Tue Jul 10 17:26:48 CST 2018</span><br><span class="line">Type &#x27;help &quot;COMMAND&quot;&#x27;, (e.g. &#x27;help &quot;get&quot;&#x27; -- the quotes are necessary) for help on a specific command.</span><br><span class="line">Commands are grouped. Type &#x27;help &quot;COMMAND_GROUP&quot;&#x27;, (e.g. &#x27;help &quot;general&quot;&#x27;) for help on a command group.</span><br><span class="line"></span><br><span class="line">COMMAND GROUPS:</span><br><span class="line">  Group name: general</span><br><span class="line">  Commands: processlist, status, table_help, version, whoami</span><br><span class="line"></span><br><span class="line">  Group name: ddl</span><br><span class="line">  Commands: alter, alter_async, alter_status, clone_table_schema, create, describe, disable, disable_all, drop, drop_all, enable, enable_all, exists, get_table, is_disabled, is_enabled, list, list_regions, locate_region, show_filters</span><br><span class="line"></span><br><span class="line">  Group name: namespace</span><br><span class="line">  Commands: alter_namespace, create_namespace, describe_namespace, drop_namespace, list_namespace, list_namespace_tables</span><br><span class="line"></span><br><span class="line">  Group name: dml</span><br><span class="line">  Commands: append, count, delete, deleteall, get, get_counter, get_splits, incr, put, scan, truncate, truncate_preserve</span><br><span class="line"></span><br><span class="line">  Group name: tools</span><br><span class="line">  Commands: assign, balance_switch, balancer, balancer_enabled, catalogjanitor_enabled, catalogjanitor_run, catalogjanitor_switch, cleaner_chore_enabled, cleaner_chore_run, cleaner_chore_switch, clear_block_cache, clear_compaction_queues, clear_deadservers, close_region, compact, compact_rs, compaction_state, flush, is_in_maintenance_mode, list_deadservers, major_compact, merge_region, move, normalize, normalizer_enabled, normalizer_switch, split, splitormerge_enabled, splitormerge_switch, stop_master, stop_regionserver, trace, unassign, wal_roll, zk_dump</span><br><span class="line"></span><br><span class="line">  Group name: replication</span><br><span class="line">  Commands: add_peer, append_peer_namespaces, append_peer_tableCFs, disable_peer, disable_table_replication, enable_peer, enable_table_replication, get_peer_config, list_peer_configs, list_peers, list_replicated_tables, remove_peer, remove_peer_namespaces, remove_peer_tableCFs, set_peer_bandwidth, set_peer_exclude_namespaces, set_peer_exclude_tableCFs, set_peer_namespaces, set_peer_replicate_all, set_peer_serial, set_peer_tableCFs, show_peer_tableCFs, update_peer_config</span><br><span class="line"></span><br><span class="line">  Group name: snapshots</span><br><span class="line">  Commands: clone_snapshot, delete_all_snapshot, delete_snapshot, delete_table_snapshots, list_snapshots, list_table_snapshots, restore_snapshot, snapshot</span><br><span class="line"></span><br><span class="line">  Group name: configuration</span><br><span class="line">  Commands: update_all_config, update_config</span><br><span class="line"></span><br><span class="line">  Group name: quotas</span><br><span class="line">  Commands: list_quota_snapshots, list_quota_table_sizes, list_quotas, list_snapshot_sizes, set_quota</span><br><span class="line"></span><br><span class="line">  Group name: security</span><br><span class="line">  Commands: grant, list_security_capabilities, revoke, user_permission</span><br><span class="line"></span><br><span class="line">  Group name: procedures</span><br><span class="line">  Commands: abort_procedure, list_locks, list_procedures</span><br><span class="line"></span><br><span class="line">  Group name: visibility labels</span><br><span class="line">  Commands: add_labels, clear_auths, get_auths, list_labels, set_auths, set_visibility</span><br><span class="line"></span><br><span class="line">  Group name: rsgroup</span><br><span class="line">  Commands: add_rsgroup, balance_rsgroup, get_rsgroup, get_server_rsgroup, get_table_rsgroup, list_rsgroups, move_namespaces_rsgroup, move_servers_namespaces_rsgroup, move_servers_rsgroup, move_servers_tables_rsgroup, move_tables_rsgroup, remove_rsgroup, remove_servers_rsgroup</span><br><span class="line"></span><br><span class="line">SHELL USAGE:</span><br><span class="line">Quote all names in HBase Shell such as table and column names.  Commas delimit</span><br><span class="line">command parameters.  Type &lt;RETURN&gt; after entering a command to run it.</span><br><span class="line">Dictionaries of configuration used in the creation and alteration of tables are</span><br><span class="line">Ruby Hashes. They look like this:</span><br><span class="line"></span><br><span class="line">  &#123;&#x27;key1&#x27; =&gt; &#x27;value1&#x27;, &#x27;key2&#x27; =&gt; &#x27;value2&#x27;, ...&#125;</span><br><span class="line"></span><br><span class="line">and are opened and closed with curley-braces.  Key/values are delimited by the</span><br><span class="line">&#x27;=&gt;&#x27; character combination.  Usually keys are predefined constants such as</span><br><span class="line">NAME, VERSIONS, COMPRESSION, etc.  Constants do not need to be quoted.  Type</span><br><span class="line">&#x27;Object.constants&#x27; to see a (messy) list of all constants in the environment.</span><br><span class="line"></span><br><span class="line">If you are using binary keys or values and need to enter them in the shell, use</span><br><span class="line">double-quote&#x27;d hexadecimal representation. For example:</span><br><span class="line"></span><br><span class="line">  hbase&gt; get &#x27;t1&#x27;, &quot;key\x03\x3f\xcd&quot;</span><br><span class="line">  hbase&gt; get &#x27;t1&#x27;, &quot;key\003\023\011&quot;</span><br><span class="line">  hbase&gt; put &#x27;t1&#x27;, &quot;test\xef\xff&quot;, &#x27;f1:&#x27;, &quot;\x01\x33\x40&quot;</span><br><span class="line"></span><br><span class="line">The HBase shell is the (J)Ruby IRB with the above HBase-specific commands added.</span><br><span class="line">For more on the HBase Shell, see http://hbase.apache.org/book.html</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
 <h2 id="查看所有表"><a href="#查看所有表" class="headerlink" title="查看所有表"></a>查看所有表</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hbase(main):001:0&gt; list</span><br></pre></td></tr></table></figure>
-
 <h2 id="创建表"><a href="#创建表" class="headerlink" title="创建表"></a>创建表</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">语法：create <span class="string">&#x27;表名&#x27;</span>, <span class="string">&#x27;CF1&#x27;</span>， <span class="string">&#x27;CF2&#x27;</span></span></span><br><span class="line">create &#x27;user&#x27;, &#x27;info&#x27;, &#x27;data&#x27;</span><br><span class="line">create &#x27;user&#x27;, &#123;NAME =&gt; &#x27;info&#x27;, VERSIONS =&gt; &#x27;3&#x27;&#125;，&#123;NAME =&gt; &#x27;data&#x27;&#125;</span><br><span class="line">`结尾不需要加分号`</span><br></pre></td></tr></table></figure>
-
 <h2 id="查看表信息"><a href="#查看表信息" class="headerlink" title="查看表信息"></a>查看表信息</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">desc &#x27;user&#x27;</span><br><span class="line"></span><br><span class="line">COLUMN FAMILIES DESCRIPTION</span><br><span class="line">&#123;NAME =&gt; &#x27;data&#x27;, VERSIONS =&gt; &#x27;1&#x27;, EVICT_BLOCKS_ON_CLOSE =&gt; &#x27;false&#x27;, NEW_VERSION_BEHAVIOR =&gt; &#x27;false&#x27;, KEEP_DELETED_CELLS =&gt; &#x27;FALSE&#x27;, CACHE_DATA_ON_WRITE =&gt; &#x27;fa</span><br><span class="line">lse&#x27;, DATA_BLOCK_ENCODING =&gt; &#x27;NONE&#x27;, TTL =&gt; &#x27;FOREVER&#x27;, MIN_VERSIONS =&gt; &#x27;0&#x27;, REPLICATION_SCOPE =&gt; &#x27;0&#x27;, BLOOMFILTER =&gt; &#x27;ROW&#x27;, CACHE_INDEX_ON_WRITE =&gt; &#x27;false&#x27;, I</span><br><span class="line">N_MEMORY =&gt; &#x27;false&#x27;, CACHE_BLOOMS_ON_WRITE =&gt; &#x27;false&#x27;, PREFETCH_BLOCKS_ON_OPEN =&gt; &#x27;false&#x27;, COMPRESSION =&gt; &#x27;NONE&#x27;, BLOCKCACHE =&gt; &#x27;true&#x27;, BLOCKSIZE =&gt; &#x27;65536&#x27;&#125;</span><br><span class="line">&#123;NAME =&gt; &#x27;info&#x27;, VERSIONS =&gt; &#x27;1&#x27;, EVICT_BLOCKS_ON_CLOSE =&gt; &#x27;false&#x27;, NEW_VERSION_BEHAVIOR =&gt; &#x27;false&#x27;, KEEP_DELETED_CELLS =&gt; &#x27;FALSE&#x27;, CACHE_DATA_ON_WRITE =&gt; &#x27;fa</span><br><span class="line">lse&#x27;, DATA_BLOCK_ENCODING =&gt; &#x27;NONE&#x27;, TTL =&gt; &#x27;FOREVER&#x27;, MIN_VERSIONS =&gt; &#x27;0&#x27;, REPLICATION_SCOPE =&gt; &#x27;0&#x27;, BLOOMFILTER =&gt; &#x27;ROW&#x27;, CACHE_INDEX_ON_WRITE =&gt; &#x27;false&#x27;, I</span><br><span class="line">N_MEMORY =&gt; &#x27;false&#x27;, CACHE_BLOOMS_ON_WRITE =&gt; &#x27;false&#x27;, PREFETCH_BLOCKS_ON_OPEN =&gt; &#x27;false&#x27;, COMPRESSION =&gt; &#x27;NONE&#x27;, BLOCKCACHE =&gt; &#x27;true&#x27;, BLOCKSIZE =&gt; &#x27;65536&#x27;&#125;</span><br><span class="line">2 row(s)</span><br><span class="line">Took 0.3849 seconds</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
 <h2 id="向表中插入数据"><a href="#向表中插入数据" class="headerlink" title="向表中插入数据"></a>向表中插入数据</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">语法：put <span class="string">&#x27;表名&#x27;</span>, <span class="string">&#x27;rowkey&#x27;</span>, <span class="string">&#x27;列簇：限定符&#x27;</span>, <span class="string">&#x27;待插入的值&#x27;</span></span></span><br><span class="line">put &#x27;user&#x27;, &#x27;rk001&#x27;, &#x27;info:name&#x27;, &#x27;张三&#x27;</span><br><span class="line">put &#x27;user&#x27;, &#x27;rk001&#x27;, &#x27;info:age&#x27;, 25</span><br><span class="line">put &#x27;user&#x27;, &#x27;rk001&#x27;, &#x27;data:addr&#x27;, &#x27;郑州市&#x27;</span><br><span class="line">put &#x27;user&#x27;, &#x27;rk002&#x27;, &#x27;info:name&#x27;, &#x27;李四&#x27;</span><br><span class="line">put &#x27;user&#x27;, &#x27;rk002&#x27;, &#x27;info:age&#x27;, 28</span><br><span class="line">put &#x27;user&#x27;, &#x27;rk002&#x27;, &#x27;data:addr&#x27;, &#x27;北京市&#x27;</span><br></pre></td></tr></table></figure>
-
 <blockquote>
 <p>如果对已经存在的数据（cell），重复put，那么数据会更新（追加了一条新的数据 只是时间戳是最新并没有覆盖原来数据）</p>
 </blockquote>
@@ -589,7 +589,6 @@
 <li><h4 id="通过rowkey查询"><a href="#通过rowkey查询" class="headerlink" title="通过rowkey查询"></a>通过rowkey查询</h4></li>
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">1、通过rowkey进行查询</span><br><span class="line">获取user表中rowkey为rk001的所有信息</span><br><span class="line">get &#x27;user&#x27;, &#x27;rk001&#x27;</span><br><span class="line"></span><br><span class="line">2、查看rowkey下面的某个列族的信息</span><br><span class="line">获取user表中row key为rk001，info列族的所有信息</span><br><span class="line">get &#x27;user&#x27;, &#x27;rk001&#x27;, &#x27;info&#x27;</span><br><span class="line"></span><br><span class="line">3、查看rowkey指定列族指定字段的值</span><br><span class="line">获取user表中row key为rk0001，info列族的name、age列标示符的信息</span><br><span class="line">get &#x27;user&#x27;, &#x27;rk001&#x27;, &#x27;info:name&#x27;, &#x27;info:age’</span><br><span class="line"></span><br><span class="line">4、查看rowkey指定多个列族的信息</span><br><span class="line">获取user表中row key为rk0001，info、data列族的信息</span><br><span class="line">get &#x27;user&#x27;, &#x27;rk001&#x27;, &#x27;info&#x27;, &#x27;data&#x27;</span><br><span class="line">或者</span><br><span class="line">get &#x27;user&#x27;, &#x27;rk001&#x27;, &#123;COLUMN =&gt; [&#x27;info&#x27;, &#x27;data&#x27;]&#125;</span><br><span class="line">或者</span><br><span class="line">get &#x27;user&#x27;, &#x27;rk001&#x27;, &#123;COLUMN =&gt; [&#x27;info:name&#x27;, &#x27;data:pic’]&#125;</span><br><span class="line"></span><br><span class="line">5、指定rowkey与列值查询</span><br><span class="line">获取user表中row key为rk0001，cell的值为zhangsan的信息</span><br><span class="line">get &#x27;user&#x27;, &#x27;rk001&#x27;, &#123;FILTER =&gt; &quot;ValueFilter(=, &#x27;binary:zhangsan&#x27;)&quot;&#125;</span><br><span class="line"></span><br><span class="line">6、查询所有数据 : 查询user表中的所有信息</span><br><span class="line">scan &#x27;user&#x27;</span><br><span class="line">scan &#x27;user&#x27; , &#123;FORMATTER =&gt; &#x27;toString’&#125;</span><br><span class="line">scan &#x27;user&#x27; , &#123;LIMIT =&gt; 3,FORMATTER =&gt; &#x27;toString’&#125;</span><br><span class="line"></span><br><span class="line">7、列族查询:  查询user表中列族为info的信息</span><br><span class="line">scan &#x27;user&#x27;, &#123;COLUMNS =&gt; &#x27;info&#x27;&#125;</span><br><span class="line">scan &#x27;user&#x27;, &#123;COLUMNS =&gt; &#x27;info&#x27;, RAW =&gt; true, VERSIONS =&gt; 5&#125;</span><br><span class="line">scan &#x27;user&#x27;, &#123;COLUMNS =&gt; &#x27;info&#x27;, RAW =&gt; true, VERSIONS =&gt; 3&#125;</span><br><span class="line"></span><br><span class="line">8、多列族查询: 查询user表中列族为info和data的信息</span><br><span class="line">scan &#x27;user&#x27;, &#123;COLUMNS =&gt; [&#x27;info&#x27;, &#x27;data&#x27;]&#125;</span><br><span class="line">scan &#x27;user&#x27;, &#123;COLUMNS =&gt; [&#x27;info:name&#x27;, &#x27;data:pic&#x27;]&#125;</span><br><span class="line"></span><br><span class="line">9、指定列族与某个列名查询</span><br><span class="line">查询user表中列族为info、列标示符为name的信息</span><br><span class="line">scan &#x27;user&#x27;, &#123;COLUMNS =&gt; &#x27;info:name’&#125;</span><br><span class="line"></span><br><span class="line">10、指定列族与列名以及限定版本查询</span><br><span class="line">查询user表中列族为info、列标示符为name的信息,并且版本最新的5个</span><br><span class="line">scan &#x27;user&#x27;, &#123;COLUMNS =&gt; &#x27;info:name&#x27;, VERSIONS =&gt; 5&#125;</span><br><span class="line"></span><br><span class="line">11、指定多个列族与按照数据值模糊查询</span><br><span class="line">查询user表中列族为info和data且列标示符中含有a字符的信息</span><br><span class="line">scan &#x27;user&#x27;, &#123;COLUMNS =&gt; [&#x27;info&#x27;, &#x27;data&#x27;], FILTER =&gt; &quot;(QualifierFilter(=,&#x27;substring:a&#x27;))&quot;&#125;</span><br><span class="line"></span><br><span class="line">12、rowkey的范围值查询`左闭右开`</span><br><span class="line">查询user表中列族为info，rk范围是[rk001, rk003)的数据</span><br><span class="line">scan &#x27;user&#x27;, &#123;COLUMNS =&gt; &#x27;info&#x27;, STARTROW =&gt; &#x27;rk001&#x27;, ENDROW =&gt; &#x27;rk003&#x27;&#125;</span><br><span class="line"></span><br><span class="line">13、指定rowkey模糊查询</span><br><span class="line">查询user表中row key以rk字符开头的</span><br><span class="line">scan &#x27;user&#x27;,&#123;FILTER =&gt;&quot;PrefixFilter(&#x27;rk&#x27;)&quot;&#125;</span><br><span class="line"></span><br><span class="line">14、指定数据范围值查询</span><br><span class="line">查询user表中指定范围的数据</span><br><span class="line">scan &#x27;user&#x27;, &#123;TIMERANGE =&gt; [1392368783980, 1392380169184]&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
 <blockquote>
 <p>过滤器的查询地址:<a target="_blank" rel="noopener" href="http://hbase.apache.org/2.2/devapidocs/index.html">http://hbase.apache.org/2.2/devapidocs/index.html</a></p>
 <h3 id="比较过滤器-comparison-filter"><a href="#比较过滤器-comparison-filter" class="headerlink" title="比较过滤器(comparison filter)"></a>比较过滤器(comparison filter)</h3><p>直接继承自CompareFilter类。</p>
@@ -624,16 +623,13 @@
 </blockquote>
 <p><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/img/image-20221006185121303.png" alt="image-20221006185121303"></p>
 <h2 id="更新删除数据"><a href="#更新删除数据" class="headerlink" title="更新删除数据"></a>更新删除数据</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">1、更新数据值</span><br><span class="line">更新操作同插入操作一模一样，只不过有数据就更新，没数据就添加</span><br><span class="line"></span><br><span class="line">2、更新版本号</span><br><span class="line">将user表的f1列族版本号改为5</span><br><span class="line">alter &#x27;user&#x27;, NAME =&gt; &#x27;info&#x27;, VERSIONS =&gt; 5</span><br><span class="line"></span><br><span class="line">3、指定rowkey以及列名进行删除</span><br><span class="line">删除user表row key为rk0001，列标示符为info:name的数据</span><br><span class="line">delete &#x27;user&#x27;, &#x27;rk001&#x27;, &#x27;info:name&#x27;</span><br><span class="line"></span><br><span class="line">4、指定rowkey，删除一整行数据</span><br><span class="line">deleteall &#x27;user&#x27;, &#x27;rk001’</span><br><span class="line"></span><br><span class="line">5、删除一个列族:</span><br><span class="line">alter &#x27;user&#x27;, NAME =&gt; &#x27;info&#x27;, METHOD =&gt; &#x27;delete’  或 alter &#x27;user&#x27;, &#x27;delete&#x27; =&gt; &#x27;info&#x27;</span><br></pre></td></tr></table></figure>
-
 <blockquote>
 <p> 注意:  </p>
 <p> 1、deleteall 是在 hbase 2.0版本后出现的, 在2.0版本之前, 只需要使用delete这个命令即可完成所有的删除数据工作, </p>
 <p> 2、delete删除数据时候, 只会删除最新版本的数据, 而deleteall 直接将对应数据的所有的历史版本全部删除</p>
 </blockquote>
 <h2 id="清空删除表"><a href="#清空删除表" class="headerlink" title="清空删除表"></a>清空删除表</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">清空表</span></span><br><span class="line">truncate &#x27;user&#x27;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删除表，必须先禁用</span></span><br><span class="line">disable &#x27;user&#x27;</span><br><span class="line">drop &#x27;user&#x27;</span><br></pre></td></tr></table></figure>
-
 <h2 id="管理命令"><a href="#管理命令" class="headerlink" title="管理命令"></a>管理命令</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1) status  显示服务器状态，例如：status &#x27;node01&#x27;</span><br><span class="line">2) whoami :  显示HBase当前用户</span><br><span class="line">3) list : 显示当前所有的表</span><br><span class="line">4) count: 统计指定表的记录数，例如：count &#x27;user&#x27; </span><br><span class="line">5) describe : 展示表结构信息</span><br><span class="line">6) exists: 检查表是否存在，适用于表量特别多的情况</span><br><span class="line">7) is_enabled、is_disabled: 检查表是否启用或禁用</span><br></pre></td></tr></table></figure>
-
 <h2 id="高级用法"><a href="#高级用法" class="headerlink" title="高级用法"></a>高级用法</h2><ul>
 <li><h3 id="计数器counter"><a href="#计数器counter" class="headerlink" title="计数器counter"></a>计数器counter</h3></li>
 </ul>
@@ -641,7 +637,6 @@
 <p>用户不用初始化计数器，当用户第一次使用计数器时，计数器将被自动设为0，也就是说当用户创建一个新列时，计数器的值是0.第一次增加操作会返回1，或增加设定的值。</p>
 </blockquote>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">create <span class="string">&#x27;表名&#x27;</span>, <span class="string">&#x27;列簇1&#x27;</span>, <span class="string">&#x27;列簇2&#x27;</span></span></span><br><span class="line">hbase(main):001:0&gt; create &#x27;counters&#x27;,&#x27;daily&#x27;,&#x27;weekly&#x27;,&#x27;monthly&#x27;</span><br><span class="line">0 row(s)in 1.1930 seconds</span><br><span class="line">hbase(main):002:0&gt; incr &#x27;counters&#x27;,&#x27;20110101&#x27;,&#x27;daily:hits&#x27;,1 COUNTER VALUE = 1</span><br><span class="line">hbase(main):003:0&gt; incr &#x27;counters&#x27;,&#x27;20110101&#x27;,&#x27;daily:hits&#x27;,1 COUNTER VALUE = 2</span><br><span class="line">hbase(main):004:0&gt; get_counter &#x27;counters&#x27;,&#x27;20110101&#x27;,&#x27;daily:hits&#x27;</span><br><span class="line">COUNTER VALUE = 2</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">每月点击量</span></span><br><span class="line">incr &#x27;counters&#x27;,&#x27;201101&#x27;,&#x27;monthly:hits&#x27;,1 </span><br></pre></td></tr></table></figure>
-
 <ul>
 <li><h3 id="协处理器coprocesser"><a href="#协处理器coprocesser" class="headerlink" title="协处理器coprocesser"></a>协处理器coprocesser</h3></li>
 </ul>
@@ -655,8 +650,6 @@
 </li>
 <li>触发器和存储过程是一样的，但是不需要每次调用执行，根据提前设定的某个动作自动触发</li>
 </ul>
-</blockquote>
-<blockquote>
 <p>允许将一部分计算放到数据存放端（regionserver），减少网络通讯开销，提高计算性能</p>
 <ul>
 <li><strong>observer</strong><ul>
@@ -679,22 +672,18 @@
 <li>创建一个表，名称为test，有2个列族，分别是：info和data<br>info列版本设置为5，data列版本设置为3</li>
 </ol>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create &#x27;test&#x27;, &#123;NAME =&gt; &#x27;info&#x27;, VERSIONS =&gt; 5&#125;, &#123;NAME =&gt; &#x27;data&#x27;, VERSIONS =&gt; 3&#125;</span><br></pre></td></tr></table></figure>
-
 <ol>
 <li>向test表插入5条数据，rowkey以rk001开头<br>向info列族插入2个列，分别是name和age<br>向data列族插入2个列，分别是address和tel</li>
 </ol>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">put &#x27;test&#x27;, &#x27;rk001&#x27;, &#x27;info:name&#x27;, &#x27;张三&#x27;</span><br><span class="line">put &#x27;test&#x27;, &#x27;rk001&#x27;, &#x27;info:age&#x27;, &#x27;45&#x27;</span><br><span class="line">put &#x27;test&#x27;, &#x27;rk001&#x27;, &#x27;data:address&#x27;, &#x27;河南郑州&#x27;</span><br><span class="line">put &#x27;test&#x27;, &#x27;rk001&#x27;, &#x27;data:tel&#x27;, &#x27;185***55507&#x27;</span><br><span class="line">put &#x27;test&#x27;, &#x27;rk002&#x27;, &#x27;info:name&#x27;, &#x27;张三&#x27;</span><br><span class="line">put &#x27;test&#x27;, &#x27;rk002&#x27;, &#x27;info:age&#x27;, &#x27;45&#x27;</span><br><span class="line">put &#x27;test&#x27;, &#x27;rk002&#x27;, &#x27;data:address&#x27;, &#x27;河南郑州&#x27;</span><br><span class="line">put &#x27;test&#x27;, &#x27;rk002&#x27;, &#x27;data:tel&#x27;, &#x27;185***55507&#x27;</span><br><span class="line">put &#x27;test&#x27;, &#x27;rk003&#x27;, &#x27;info:name&#x27;, &#x27;张三&#x27;</span><br><span class="line">put &#x27;test&#x27;, &#x27;rk003&#x27;, &#x27;info:age&#x27;, &#x27;45&#x27;</span><br><span class="line">put &#x27;test&#x27;, &#x27;rk003&#x27;, &#x27;data:address&#x27;, &#x27;河南郑州&#x27;</span><br><span class="line">put &#x27;test&#x27;, &#x27;rk003&#x27;, &#x27;data:tel&#x27;, &#x27;185***55507&#x27;</span><br><span class="line">put &#x27;test&#x27;, &#x27;rk004&#x27;, &#x27;info:name&#x27;, &#x27;张三&#x27;</span><br><span class="line">put &#x27;test&#x27;, &#x27;rk004&#x27;, &#x27;info:age&#x27;, &#x27;45&#x27;</span><br><span class="line">put &#x27;test&#x27;, &#x27;rk004&#x27;, &#x27;data:address&#x27;, &#x27;河南郑州&#x27;</span><br><span class="line">put &#x27;test&#x27;, &#x27;rk004&#x27;, &#x27;data:tel&#x27;, &#x27;185***55507&#x27;</span><br><span class="line">put &#x27;test&#x27;, &#x27;rk005&#x27;, &#x27;info:name&#x27;, &#x27;张三&#x27;</span><br><span class="line">put &#x27;test&#x27;, &#x27;rk005&#x27;, &#x27;info:age&#x27;, &#x27;45&#x27;</span><br><span class="line">put &#x27;test&#x27;, &#x27;rk005&#x27;, &#x27;data:address&#x27;, &#x27;河南郑州&#x27;</span><br><span class="line">put &#x27;test&#x27;, &#x27;rk005&#x27;, &#x27;data:tel&#x27;, &#x27;185***55507&#x27;</span><br></pre></td></tr></table></figure>
-
 <ol>
 <li>扫描test表的全部数据以及info列族的数据（要求中文正常显示），并计算test表有多少条数据</li>
 </ol>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">scan &#x27;test&#x27;</span><br><span class="line">scan &#x27;test&#x27;, &#123;COLUMNS =&gt; &#x27;info&#x27;, FORMATTER =&gt; &#x27;toString&#x27;&#125;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">在hbase shell中进行</span></span><br><span class="line">count &#x27;test&#x27;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">退出hbase shell，使用内置mapreduce任务进行</span></span><br><span class="line">hbase org.apache.hadoop.hbase.mapreduce.RowCounter &#x27;test&#x27;</span><br></pre></td></tr></table></figure>
-
 <ol>
 <li>删除rk003的数据</li>
 </ol>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">deleteall &#x27;test&#x27;, &#x27;rk003&#x27;</span><br></pre></td></tr></table></figure>
-
 <ol>
 <li>清空、关闭并删除表</li>
 </ol>
@@ -702,14 +691,11 @@
 <li>启动HBase ThriftServer</li>
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">找到一台HBase服务器，安装相关依赖</span></span><br><span class="line">yum install automake libtool flex bison pkgconfig gcc-c++ boost-devel libevent-devel zlib-devel python-devel ruby-devel openssl-devel</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">启动HBase的ThriftServer</span></span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">HBASE_HOME/bin/hbase-daemon.sh start thrift</span> </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看ThriftServer进程</span></span><br><span class="line">netstat -anp |　grep thrift的进程号</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">thrift对外端口为9090</span></span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>安装HappyBase库</li>
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">Python操作HBase的库使用HappyBase，基于Thrift协议连接HBase的ThriftServer进行操作</span></span><br><span class="line">pip install happybase -i https://pypi.tuna.tsinghua.edu.cn/simple</span><br></pre></td></tr></table></figure>
-
 <h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding:utf-8</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">实现water_bill需求</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> happybase</span><br><span class="line"></span><br><span class="line">connection = happybase.Connection(</span><br><span class="line">    host=<span class="string">&quot;node1&quot;</span>,</span><br><span class="line">    port=<span class="number">9090</span>,</span><br><span class="line">    timeout=<span class="number">60000</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">table_name = <span class="string">b&quot;WATER_BILL&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">create_table</span>(<span class="params">conn: happybase.Connection, t_name: <span class="built_in">bytes</span></span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    创建表</span></span><br><span class="line"><span class="string">    :param conn:</span></span><br><span class="line"><span class="string">    :param t_name:</span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    tables = conn.tables()</span><br><span class="line">    <span class="keyword">if</span> t_name <span class="keyword">in</span> tables:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;表已存在：<span class="subst">&#123;t_name&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        conn.create_table(</span><br><span class="line">            <span class="comment"># 表名（字符串）</span></span><br><span class="line">            t_name.decode(encoding=<span class="string">&#x27;UTF-8&#x27;</span>),</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment"># 列族信息（要求是字典类型）</span></span><br><span class="line">                <span class="string">&#x27;C1&#x27;</span>: <span class="built_in">dict</span>(max_versions=<span class="number">10</span>),</span><br><span class="line">                <span class="comment"># &#x27;bill&#x27;: dict(max_versions=10)</span></span><br><span class="line">            &#125;</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        tables = conn.tables()</span><br><span class="line">        <span class="keyword">if</span> t_name <span class="keyword">in</span> tables:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;t_name&#125;</span>表创建成功&quot;</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;t_name&#125;</span>创建失败&quot;</span>)</span><br><span class="line">            <span class="comment"># sys.exit() 表示退出Python程序</span></span><br><span class="line">            <span class="comment"># 参数默认是0， 0 表示正常退出， 非0表示异常退出(操作系统中发送一个异常退出的信号）</span></span><br><span class="line">            sys.exit(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">insert_data</span>(<span class="params">conn: happybase.Connection, t_name: <span class="built_in">bytes</span></span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    向表中插入数据</span></span><br><span class="line"><span class="string">    :param conn:</span></span><br><span class="line"><span class="string">    :param t_name:</span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="comment"># 获取到hbase的table对象</span></span><br><span class="line">    table = conn.table(t_name.decode(encoding=<span class="string">&#x27;UTF-8&#x27;</span>))</span><br><span class="line"></span><br><span class="line">    file = <span class="built_in">open</span>(<span class="string">&#x27;./WATER_BILL.TSV&#x27;</span>, <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&#x27;UTF-8&#x27;</span>)</span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> file:</span><br><span class="line">        row = line.split(<span class="string">&#x27;\t&#x27;</span>)</span><br><span class="line">        <span class="comment"># 用户id作为rowkey</span></span><br><span class="line">        rowkey = row[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 封装每一列的数据</span></span><br><span class="line">        data = &#123;</span><br><span class="line">            <span class="string">b&#x27;C1:NAME&#x27;</span>: row[<span class="number">1</span>].encode(<span class="string">&quot;UTF-8&quot;</span>),</span><br><span class="line">            <span class="string">b&#x27;C1:ADDR&#x27;</span>: row[<span class="number">2</span>].encode(<span class="string">&quot;UTF-8&quot;</span>),</span><br><span class="line">            <span class="string">b&#x27;C1:SEX&#x27;</span>: row[<span class="number">3</span>].encode(<span class="string">&quot;UTF-8&quot;</span>),</span><br><span class="line">            <span class="string">b&#x27;C1:PAY_TIME&#x27;</span>: row[<span class="number">4</span>].encode(<span class="string">&quot;UTF-8&quot;</span>),</span><br><span class="line">            <span class="string">b&#x27;C1:THIS_COUNT&#x27;</span>: row[<span class="number">5</span>].encode(<span class="string">&quot;UTF-8&quot;</span>),</span><br><span class="line">            <span class="string">b&#x27;C1:LAST_COUNT&#x27;</span>: row[<span class="number">6</span>].encode(<span class="string">&quot;UTF-8&quot;</span>),</span><br><span class="line">            <span class="string">b&#x27;C1:USAGE&#x27;</span>: row[<span class="number">7</span>].encode(<span class="string">&quot;UTF-8&quot;</span>),</span><br><span class="line">            <span class="string">b&#x27;C1:SUM_MONEY&#x27;</span>: row[<span class="number">8</span>].encode(<span class="string">&quot;UTF-8&quot;</span>),</span><br><span class="line">            <span class="string">b&#x27;C1:CHECK_DATE&#x27;</span>: row[<span class="number">9</span>].encode(<span class="string">&quot;UTF-8&quot;</span>),</span><br><span class="line">            <span class="string">b&#x27;C1:LATEST_DATE&#x27;</span>: row[<span class="number">10</span>].encode(<span class="string">&quot;UTF-8&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 插入数据</span></span><br><span class="line">        table.put(rowkey, data)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># insert_data(connection, table_name)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">query_data</span>(<span class="params">conn: happybase.Connection, t_name: <span class="built_in">bytes</span></span>) -&gt; <span class="built_in">dict</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    根据rowkey查询数据</span></span><br><span class="line"><span class="string">    :param conn:</span></span><br><span class="line"><span class="string">    :param t_name:</span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="comment"># 获取table对象</span></span><br><span class="line">    table = conn.table(t_name.decode(encoding=<span class="string">&quot;UTF-8&quot;</span>))</span><br><span class="line">    row = table.row(<span class="string">&#x27;9054826&#x27;</span>)</span><br><span class="line">    <span class="keyword">for</span> column <span class="keyword">in</span> row:</span><br><span class="line">        value = <span class="built_in">str</span>(row[column], encoding=<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;rowkey:9054826&quot;</span>, <span class="built_in">str</span>(column, encoding=<span class="string">&#x27;utf-8&#x27;</span>), <span class="string">f&quot;value: <span class="subst">&#123;value&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> row</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># print(f&quot;返回数据：&#123;query_data(connection, table_name)&#125;&quot;)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">delete_data</span>(<span class="params">conn: happybase.Connection, t_name: <span class="built_in">bytes</span>, rowkey: <span class="built_in">bytes</span></span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    根据rowkey删除数据</span></span><br><span class="line"><span class="string">    :param rowkey:</span></span><br><span class="line"><span class="string">    :param conn:</span></span><br><span class="line"><span class="string">    :param t_name:</span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="comment"># 获取table对象</span></span><br><span class="line">    table = conn.table(<span class="built_in">str</span>(t_name, encoding=<span class="string">&quot;utf-8&quot;</span>))</span><br><span class="line">    <span class="comment"># 删除数据</span></span><br><span class="line">    table.delete(rowkey)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;rowkey:<span class="subst">&#123;rowkey&#125;</span>, 删除成功&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># delete_data(connection, table_name, b&#x27;9054826&#x27;)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># print(f&quot;返回数据：&#123;query_data(connection, table_name)&#125;&quot;)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">delete_table</span>(<span class="params">conn: happybase.Connection, t_name: <span class="built_in">bytes</span></span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    删除表</span></span><br><span class="line"><span class="string">    :param conn:</span></span><br><span class="line"><span class="string">    :param t_name:</span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="comment"># 先关闭表</span></span><br><span class="line">    conn.disable_table(t_name.decode(<span class="string">&#x27;utf-8&#x27;</span>))</span><br><span class="line">    <span class="comment"># 再删除表</span></span><br><span class="line">    conn.delete_table(t_name.decode(<span class="string">&#x27;utf-8&#x27;</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">delete_table(connection, table_name)</span><br><span class="line">create_table(connection, table_name)</span><br><span class="line">insert_data(connection, table_name)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">connection.close()</span><br></pre></td></tr></table></figure>
-
 <h1 id="grin-HBase批量操作数据"><a href="#grin-HBase批量操作数据" class="headerlink" title=":grin:HBase批量操作数据"></a>:grin:HBase批量操作数据</h1><blockquote>
 <p>HBASE集群之间数据的迁移、备份</p>
 <p><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/img/image-20221018145942304.png" alt="image-20221018145942304"></p>
@@ -718,7 +704,6 @@
 <li>用法</li>
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hbase org.apache.hadoop.hbase.mapreduce.Import &#x27;表名&#x27; HDFS数据文件路径</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">注意HDFS路径需要加上 hdfs://node1:8020/文件目录</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">提前启动YARN集群</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">带schema,列簇要能对应上</span></span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>文件</li>
 </ul>
@@ -734,28 +719,20 @@
 <li>创建目录</li>
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">hadoop fs -<span class="built_in">mkdir</span> -p /data/hbase/import</span></span><br><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">hadoop fs -put  part-m-00000_10w /data/hbase/import</span></span><br></pre></td></tr></table></figure>
-
 <p>2、表要存在,且列簇信息要一致</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">create <span class="string">&#x27;WATER_BILL&#x27;</span>, <span class="string">&#x27;C1&#x27;</span></span></span><br></pre></td></tr></table></figure>
-
 <p>3、因为生成mapreduce任务，所以必须启动Yarn集群</p>
 </blockquote>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">执行import导入数据</span></span><br><span class="line">hbase org.apache.hadoop.hbase.mapreduce.Import &#x27;WATER_BILL&#x27; hdfs://node1:8020/data/hbase/import</span><br></pre></td></tr></table></figure>
-
-
-
 <h2 id="Export数据导出"><a href="#Export数据导出" class="headerlink" title="Export数据导出"></a>Export数据导出</h2><ul>
 <li>用法</li>
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hbase org.apache.hadoop.hbase.mapreduce.Export &#x27;表名&#x27; HDFS路径</span><br></pre></td></tr></table></figure>
-
 <blockquote>
 <p>1、创建HDFS目录</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop fs -mkdir -p  /data/hbase/export</span><br></pre></td></tr></table></figure>
-
 <p>2、执行命令</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hbase org.apache.hadoop.hbase.mapreduce.Export &#x27;WATER_BILL&#x27; hdfs://node1:8020/data/hbase/export/output_10w_export</span><br></pre></td></tr></table></figure>
-
 <p><code>注意：导出数据时文件目录不可以提前创建</code></p>
 </blockquote>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>Import与Export是一对命令，需要配合使用，常用于HBase数据库的备份、迁移：</p>
@@ -780,13 +757,11 @@
 <li>用法</li>
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">hbase org.apache.hadoop.hbase.mapreduce.ImportTsv -Dimporttsv.separator=<span class="string">&quot;分隔符&quot;</span> -Dimporttsv.columns=列映射 <span class="string">&#x27;表名&#x27;</span> HDFS路径</span></span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>案例</li>
 </ul>
 <p><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/img/image-20220630145051589.png" alt="image-20220630145051589"></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">样例数据</span></span><br><span class="line">e9831cbd-eae3-459c-ad6a-2bcc17b2a50b,FaeeJPw2JMHX,6225541737752966,长安银行,纵丽珍,7950898987887352,单于志鹏,老婆，节日快乐,手机银行,电子银行转账,转账完成,2020-5-13 21:06:62,5794.0</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li><p>表设计</p>
 <ul>
@@ -799,18 +774,15 @@
 <li>创建表</li>
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create &#x27;BANK_RECORD&#x27;, &#x27;C1&#x27;</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>上传文件至HDFS</li>
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">创建目录</span></span><br><span class="line">hadoop fs -mkdir -p /data／hbase/bank_record</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">上传文件</span></span><br><span class="line">hadoop fs -put bank_record.csv /data/hbase/bank_record</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">执行导入操作</span></span><br><span class="line">hbase org.apache.hadoop.hbase.mapreduce.ImportTsv -Dimporttsv.separator=&quot;,&quot; -Dimporttsv.columns=HBASE_ROW_KEY,C1:code,C1:rec_account,C1:rec_bank_name,C1:rec_name,C1:pay_account,C1:pay_name,C1:pay_comments,C1:pay_channel,C1:pay_way,C1:status,C1:timestamp,C1:money &#x27;BANK_RECORD&#x27; hdfs://node1:8020/data/hbase/bank_record</span><br><span class="line"></span><br><span class="line">-前置命令 hbase org.apache.hadoop.hbase.mapreduce.ImportTsv</span><br><span class="line">-分隔符 -Dimporttsv.separator=&quot;,&quot;</span><br><span class="line">-列映射 -Dimporttsv.columns rowkey对应哪一列，就在哪个位置填HBASE_ROW_KEY</span><br></pre></td></tr></table></figure>
-
 <h3 id="作业-1"><a href="#作业-1" class="headerlink" title="作业"></a>作业</h3></li>
 <li><p>使用ImportTsv，将课程资料中的：<code>WATER_BILL.TSV</code>导入到HBase，WATER_BILL表中</p>
 </li>
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">如果是制表符文件（分隔符是\t）-Dimporttsv.separator参数默认不需要写，如果写了-Dimporttsv.separator=&quot;\t&quot;就会报错</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>使用Export工具，将BANK_RECORD表，导出到HDFS作为数据文件</li>
 <li>使用Import工具，将第二步导出的数据文件，导入到HBase，BANK_RECORD2中</li>
@@ -835,23 +807,19 @@
 </blockquote>
 <h3 id="配置高可用"><a href="#配置高可用" class="headerlink" title="配置高可用"></a>配置高可用</h3><h3 id="快捷方式"><a href="#快捷方式" class="headerlink" title="快捷方式"></a>快捷方式</h3><p>高可用可以不做任何配置，直接找一台机器启动master即可</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">启动master</span></span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">HBASE_HOME/bin/hbase-daemon.sh start master</span></span><br></pre></td></tr></table></figure>
-
 <h3 id="配置文件方式"><a href="#配置文件方式" class="headerlink" title="配置文件方式"></a>配置文件方式</h3><blockquote>
 <ul>
 <li>在conf文件夹下创建backup-masters 文件</li>
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /export/server/hbase-2.1.0/conf</span><br><span class="line">touch backup-masters</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>将备用的master节点添加进行</li>
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vim backup-masters</span><br><span class="line">node2</span><br><span class="line">node3</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>将backup-masters分发到其它节点</li>
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scp backup-masters node2:`pwd`</span><br><span class="line">scp backup-masters node3:`pwd`</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>重新启动HBase</li>
 </ul>
@@ -861,22 +829,18 @@
 <li>监控RegionServer , 处理RegionServer故障转移</li>
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">regionserver是有可能出现故障的，当rs出现故障时，master会将原rs的任务转移到新的rs</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>处理元数据的变更 , 处理region的分配或移除</li>
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">master会与zk保持通信，时刻更新元数据信息</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>在空闲时间进行数据的负载均衡</li>
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">平衡regionserver间的工作</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>通过Zookeeper发布自己的位置给客户端</li>
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">维护自己与临时节点的关系，告诉zk我还活着呢，如果默认时间内（默认是15s可配置），zk就认为master已宕机</span><br></pre></td></tr></table></figure>
-
 <h3 id="RegionServer的作用：大头兵"><a href="#RegionServer的作用：大头兵" class="headerlink" title="RegionServer的作用：大头兵"></a>RegionServer的作用：大头兵</h3><ul>
 <li>处理分配给它的Region , 负责存储HBase的实际数据</li>
 <li>刷新缓存到HDFS , 维护HLog（WAL）</li>
@@ -926,6 +890,7 @@
 <p>region5：600~无穷大</p>
 </blockquote>
 <p>数据：</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -935,7 +900,8 @@
 <th>所在region</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>133</td>
 <td>张三</td>
 <td>一班</td>
@@ -959,15 +925,16 @@
 <td>二班</td>
 <td>region2</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <blockquote>
 <p>注意：</p>
 <p>HBase中排序是根据字符顺序比较的：从左至右依次比较</p>
 <p>300&lt;36790&lt;400</p>
 <p>rk360这个应该在什么范围，根据ASCII编码应该落在大于600区间</p>
 </blockquote>
-<h4 id="补充：字符串比较是根据ASCII编码进行比较的"><a href="#补充：字符串比较是根据ASCII编码进行比较的" class="headerlink" title="补充：字符串比较是根据ASCII编码进行比较的"></a>补充：字符串比较是根据ASCII编码进行比较的</h4><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/img/image-20220704101353229.png" alt="image-20220704101353229" style="zoom: 33%;" />
-
+<h4 id="补充：字符串比较是根据ASCII编码进行比较的"><a href="#补充：字符串比较是根据ASCII编码进行比较的" class="headerlink" title="补充：字符串比较是根据ASCII编码进行比较的"></a>补充：字符串比较是根据ASCII编码进行比较的</h4><p><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/img/image-20220704101353229.png" alt="image-20220704101353229" style="zoom: 33%;" /></p>
 <h3 id="Store"><a href="#Store" class="headerlink" title="Store"></a>Store</h3><blockquote>
 <ul>
 <li>每个region中包含多个store</li>
@@ -1024,13 +991,10 @@
 <li>手动执行</li>
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">可以操作表、region</span></span><br><span class="line">flush &#x27;表名&#x27;</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>当memstore中的数据达到阈值（默认128Mb或1小时）时，会将数据flush到硬盘中</li>
 </ul>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.hregion.memstore.flush.size<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>134217728<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">source</span>&gt;</span>hbase-default.xml<span class="tag">&lt;/<span class="name">source</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.hregionserver.optionalcacheflushinterval<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>3600000<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">source</span>&gt;</span>hbase-default.xml<span class="tag">&lt;/<span class="name">source</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-
 </blockquote>
 <h3 id="文件合并"><a href="#文件合并" class="headerlink" title="文件合并"></a>文件合并</h3><ul>
 <li>minor合并（小合并）</li>
@@ -1044,7 +1008,6 @@
 </ul>
 </blockquote>
 <h5 id="触发条件："><a href="#触发条件：" class="headerlink" title="触发条件："></a><code>触发条件：</code></h5><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">1、在打开Region或者MemStore时会自动检测是否需要进行Compact（包括Minor、Major）</span><br><span class="line"></span><br><span class="line">2、minFilesToCompact由hbase.hstore.compaction.min控制，默认值为3即Store下面的StoreFile数量减去正在compaction的数量 &gt;=3时，需要做compaction</span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.hregion.compaction.min<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>3<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">final</span>&gt;</span>false<span class="tag">&lt;/<span class="name">final</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">source</span>&gt;</span>hbase-default.xml<span class="tag">&lt;/<span class="name">source</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">3、手动执行</span><br><span class="line"># minor 小合并</span><br><span class="line">compact &#x27;表名&#x27;</span><br></pre></td></tr></table></figure>
-
 <h4 id="major合并"><a href="#major合并" class="headerlink" title="major合并"></a>major合并</h4><blockquote>
 <ul>
 <li>Major Compaction操作是对Region中每个Store下的所有StoreFile执行合并操作，最终的结果是整理合并出一个文件</li>
@@ -1053,7 +1016,6 @@
 </ul>
 </blockquote>
 <h5 id="触发条件：-1"><a href="#触发条件：-1" class="headerlink" title="触发条件："></a><code>触发条件：</code></h5><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">1、手动触发：可以自动执行，但是一般手动执行较多</span><br><span class="line"># major 大合并</span><br><span class="line">major_compact &#x27;表名&#x27;</span><br><span class="line"></span><br><span class="line">2、如果所有的StoreFile中，最老（时间戳最小）的那个StoreFile的时间间隔大于Major Compaction的时间间隔（默认7天）</span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.hregion.majorcompaction<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>604800000<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">source</span>&gt;</span>hbase-default.xml<span class="tag">&lt;/<span class="name">source</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
 <h4 id="In-Memory合并"><a href="#In-Memory合并" class="headerlink" title="In-Memory合并"></a>In-Memory合并</h4><p>HBase2.0之后新增的特性</p>
 <blockquote>
 <p>主要解决：</p>
@@ -1093,15 +1055,12 @@
 <h5 id="触发条件"><a href="#触发条件" class="headerlink" title="触发条件"></a><code>触发条件</code></h5><blockquote>
 <p>1、自动分区<br>当store file的大小大于如下公式得出的值的时候就会split，公式如下:<br>Min (R^2 * “hbase.hregion.memstore.flush.size”, “hbase.hregion.max.filesize”) R为一个table在同一个region server中region的个数。</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.hregion.max.filesize<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line"> 	<span class="tag">&lt;<span class="name">value</span>&gt;</span>10737418240<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"> 	<span class="tag">&lt;<span class="name">final</span>&gt;</span>false<span class="tag">&lt;/<span class="name">final</span>&gt;</span></span><br><span class="line"> 	<span class="tag">&lt;<span class="name">source</span>&gt;</span>hbase-default.xml<span class="tag">&lt;/<span class="name">source</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
 <ul>
-<li>如果初始时R&#x3D;1,那么Min(128MB,10GB)&#x3D;128MB,也就是说在第一个flush的时候就会触发分裂操作</li>
-<li>当R&#x3D;2的时候Min(512MB,10GB)&#x3D;512MB ,当某个store file大小达到512MB的时候，就会触发分裂</li>
-<li>如此类推，当R&#x3D;9的时候，store file 达到10GB的时候就会分裂，也就是说当R&gt;&#x3D;9的时候，store file 达到10GB的时候就会分裂</li>
+<li>如果初始时R=1,那么Min(128MB,10GB)=128MB,也就是说在第一个flush的时候就会触发分裂操作</li>
+<li>当R=2的时候Min(512MB,10GB)=512MB ,当某个store file大小达到512MB的时候，就会触发分裂</li>
+<li>如此类推，当R=9的时候，store file 达到10GB的时候就会分裂，也就是说当R&gt;=9的时候，store file 达到10GB的时候就会分裂</li>
 </ul>
 <p><code>split 点都位于region中row key范围的中间点</code></p>
-</blockquote>
-<blockquote>
 <p>2、手动分区</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">指定分区</span></span><br><span class="line">create &#x27;t1&#x27;, &#x27;c1&#x27;, &#123;SPLITS =&gt; [&#x27;10&#x27;, &#x27;20&#x27;, &#x27;30&#x27;, &#x27;40&#x27;, &#x27;50&#x27;, &#x27;60&#x27;, &#x27;70&#x27;, &#x27;80&#x27;, &#x27;90&#x27;, &#x27;100&#x27;]&#125;</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">根据16进制字符进行划分，从0至f进行30等分</span></span><br><span class="line">create &#x27;t2&#x27;, &#x27;c1&#x27;, &#123;NUMREGIONS =&gt; 30, SPLITALGO =&gt; &#x27;HexStringSplit&#x27;&#125;</span><br></pre></td></tr></table></figure>
 </blockquote>
@@ -1113,12 +1072,11 @@
 </blockquote>
 <h4 id="上线"><a href="#上线" class="headerlink" title="上线"></a>上线</h4><blockquote>
 <ul>
-<li><p>regionserver上线时会在zookeeper上（&#x2F;hbase&#x2F;rs）的目录内注册代表自己的znode</p>
+<li><p>regionserver上线时会在zookeeper上（/hbase/rs）的目录内注册代表自己的znode</p>
 </li>
 <li><p>master与zookeeper通信发现新上线的regionserver，并获取regionserver的信息（IP、主机名、内部region的信息等）</p>
 </li>
-<li><p>regionserver待master分配工作</p>
-</li>
+<li>regionserver待master分配工作</li>
 </ul>
 </blockquote>
 <h4 id="下线"><a href="#下线" class="headerlink" title="下线"></a>下线</h4><blockquote>
@@ -1166,17 +1124,13 @@
 </li>
 </ul>
 <h3 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1. 创建命名空间 : create_namespace ‘DAY02_SPACE’</span><br><span class="line">2. 查看命名空间列表 : list_namespace</span><br><span class="line">3. 查看命名空间:  describe_namespace ‘DAY02_SPACE’</span><br><span class="line">4. 命名空间创建表:  create ‘DAY02_SPACE:MSG’,’C1’</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">注意: 带有命名空间的表, 使用冒号将命名空间和表名连接到一起</span></span><br><span class="line">5. 删除命名空间: drop_namespace ‘DAY02_SPACE’</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">注意: 删除命名空间, 命名空间中必须没有表, 否则无法删除</span></span><br></pre></td></tr></table></figure>
-
 <blockquote>
 <p>注意：</p>
 <p>hbase没有像mysql那样use ‘数据库’的概念，如果使用自建的namespace，在操作该表时必须使用全称，比如’DAY02_SPACE:MSG’和’MSG’，后者是在’default’命名空间下</p>
 </blockquote>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">创建命名空间</span></span><br><span class="line">create_namespace &#x27;my_nm&#x27;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">创建表</span></span><br><span class="line">create &#x27;my_nm:test&#x27;, &#x27;c1&#x27;</span><br></pre></td></tr></table></figure>
-
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">插入数据</span></span><br><span class="line">put &#x27;my_nm:test&#x27;, &#x27;rk001&#x27;, &#x27;c1:info&#x27;, &#x27;yangkunlin&#x27;</span><br></pre></td></tr></table></figure>
-
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">禁用表</span></span><br><span class="line">disable &#x27;my_nm:test&#x27;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删除表</span></span><br><span class="line">drop &#x27;my_nm:test&#x27;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删除命名空间</span></span><br><span class="line">drop_namespace &#x27;my_nm&#x27;</span><br></pre></td></tr></table></figure>
-
 <h2 id="HBase列簇的设计"><a href="#HBase列簇的设计" class="headerlink" title="HBase列簇的设计"></a>HBase列簇的设计</h2><ul>
 <li>列簇的数量越少越好</li>
 <li>多列簇对应多个文件，会带来更多的文件合并，更多的IO开销</li>
@@ -1188,6 +1142,7 @@
 <li>节省网络传输的成本（大数据领域最后的瓶颈往往都在IO上）</li>
 </ul>
 <p>常用的三种压缩算法：</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -1197,30 +1152,32 @@
 <th><strong>解压缩</strong></th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td><strong>GZIP</strong></td>
 <td>13.4%</td>
-<td>21 MB&#x2F;s</td>
-<td>118 MB&#x2F;s</td>
+<td>21 MB/s</td>
+<td>118 MB/s</td>
 </tr>
 <tr>
 <td><strong>LZO</strong></td>
 <td>20.5%</td>
-<td>135 MB&#x2F;s</td>
-<td>410 MB&#x2F;s</td>
+<td>135 MB/s</td>
+<td>410 MB/s</td>
 </tr>
 <tr>
-<td><strong>Zippy&#x2F;Snappy</strong></td>
+<td><strong>Zippy/Snappy</strong></td>
 <td>22.2%</td>
-<td>172 MB&#x2F;s</td>
-<td>409 MB&#x2F;s</td>
+<td>172 MB/s</td>
+<td>409 MB/s</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h4 id="操作-1"><a href="#操作-1" class="headerlink" title="操作"></a>操作</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看压缩算法信息</span></span><br><span class="line">desc &#x27;表名&#x27;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">创建新的表，并指定数据压缩算法 :</span> </span><br><span class="line">create &quot;DAY02_SPACE:MSG&quot;, &#123;NAME =&gt; &quot;C1&quot;, COMPRESSION =&gt; &quot;GZ&quot;&#125;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">修改已有的表，并指定数据压缩算法 :</span> </span><br><span class="line">alter &quot;DAY02_SPACE :MSG&quot;, &#123;NAME =&gt; &quot;C1&quot;, COMPRESSION =&gt; &quot;GZ&quot;&#125;</span><br></pre></td></tr></table></figure>
-
 <h2 id="rowkey设计"><a href="#rowkey设计" class="headerlink" title="rowkey设计"></a>rowkey设计</h2><h5 id="官方建议原则："><a href="#官方建议原则：" class="headerlink" title="官方建议原则："></a><code>官方建议原则：</code></h5><blockquote>
 <ul>
-<li>使用递增行键&#x2F;时序数据（<code>不建议</code>）<br>如果ROWKEY设计的都是按照顺序递增（例如：时间戳），这样会有很多的数据写入时，负载都在一台机器上。我们尽量应当将写入大压力均衡到各个RegionServer</li>
+<li>使用递增行键/时序数据（<code>不建议</code>）<br>如果ROWKEY设计的都是按照顺序递增（例如：时间戳），这样会有很多的数据写入时，负载都在一台机器上。我们尽量应当将写入大压力均衡到各个RegionServer</li>
 <li>避免rowkey和列的长度过大<br>在HBase中，要访问一个Cell（单元格），需要有ROWKEY、列蔟、列名，如果ROWKEY、列名太大，就会占用较大内存空间。所以ROWKEY和列的长度应该尽量短小<br>ROWKEY的最大长度是64KB，建议越短越好</li>
 <li>使用Long等类型比String类型更省空间<br>long类型为8个字节，8个字节可以保存非常大的无符号整数，例如：18446744073709551615。如果是字符串，是按照一个字节一个字符方式保存，需要快3倍的字节数存储</li>
 <li>保证ROWKEY的唯一性<br>设计ROWKEY时，必须保证RowKey的唯一性<br>由于在HBase中数据存储是Key-Value形式，若向HBase中同一张表插入相同RowKey的数据，则原先存在的数据会被新的数据覆盖。</li>
@@ -1240,7 +1197,6 @@
 <p>场景1：我的rowkey全是数字，问怎么分区</p>
 <p>按数字分[1,2,3,4,5,6,7,8,9]</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create &#x27;t2&#x27;, &#x27;c1&#x27;, &#123;SPLITS =&gt; [&#x27;1&#x27;, &#x27;2&#x27;,&#x27;24&#x27;,&#x27;26&#x27;, &#x27;27&#x27;, &#x27;3&#x27;, &#x27;4&#x27;, &#x27;5&#x27;, &#x27;6&#x27;, &#x27;7&#x27;, &#x27;8&#x27;, &#x27;9&#x27;]&#125;</span><br></pre></td></tr></table></figure>
-
 <p>场景2：我的rowkey全是小写字母，问怎么分区</p>
 <p>按小写字母分[a,b,c,…..,z]</p>
 <p>场景3：我的rowkey是手机号，问怎么分区</p>
@@ -1281,12 +1237,12 @@
 </ol>
 <h2 id="Linux系统"><a href="#Linux系统" class="headerlink" title="Linux系统"></a>Linux系统</h2><ol>
 <li><p>开启文件系统的预读缓存可以提高读取速    </p>
-<p>sudo blockdev –setra 32768 &#x2F;dev&#x2F;sda   （尖叫提示：ra是readahead的缩写）</p>
-<p>&#x2F;dev&#x2F;sda 就是你用的硬盘的盘号，根据你系统的硬盘去做动态修改</p>
+<p>sudo blockdev —setra 32768 /dev/sda   （尖叫提示：ra是readahead的缩写）</p>
+<p>/dev/sda 就是你用的硬盘的盘号，根据你系统的硬盘去做动态修改</p>
 </li>
 <li><p>最大限度使用物理内存       </p>
-<p>sudo sysctl -w vm.swappiness&#x3D;0swappiness，Linux内核参数，控制换出运行时内存的相对权重</p>
-<p>swappiness参数值可设置范围在0到100之间，低参数值会让内核尽量少用交换，更高参数值会使内核更多的去使用交换空间默认值为60（当剩余物理内存低于40%（40&#x3D;100-60）时，开始使用交换空间）对于大多数操作系统，</p>
+<p>sudo sysctl -w vm.swappiness=0swappiness，Linux内核参数，控制换出运行时内存的相对权重</p>
+<p>swappiness参数值可设置范围在0到100之间，低参数值会让内核尽量少用交换，更高参数值会使内核更多的去使用交换空间默认值为60（当剩余物理内存低于40%（40=100-60）时，开始使用交换空间）对于大多数操作系统，</p>
 <p>设置为100可能会影响整体性能，而设置为更低值（甚至为0）则可能减少响应延迟</p>
 </li>
 <li><p>调整ulimit上限, 默认值为比较小的数字      </p>
@@ -1295,22 +1251,22 @@
 </li>
 </ol>
 <h2 id="HDFS调优"><a href="#HDFS调优" class="headerlink" title="HDFS调优"></a>HDFS调优</h2><p>1.dfs.namenode.handler.count，默认10</p>
-<p>​	NameNode处理的线程数量，默认10是保守使用</p>
-<p>​	在企业中，可以根据服务器的真实CPU核心数来修改</p>
-<p>​	一般建议设置为CPU核心数的1~4倍’</p>
-<p>​	比如，CPU32核，这个数值可以设置为：32~128</p>
+<p>​    NameNode处理的线程数量，默认10是保守使用</p>
+<p>​    在企业中，可以根据服务器的真实CPU核心数来修改</p>
+<p>​    一般建议设置为CPU核心数的1~4倍’</p>
+<p>​    比如，CPU32核，这个数值可以设置为：32~128</p>
 <p>2.dfs.replication HDFS的副本数量 默认是3,</p>
-<p>​	3是确保性能和安全一个比较稳妥的数值</p>
-<p>​	为了安全可以加高</p>
-<p>​	为了性能可以降低（最低建议是2，如果降低到2HDFS性能会提升很多，建议在有数据备份的情况下设置为2）</p>
+<p>​    3是确保性能和安全一个比较稳妥的数值</p>
+<p>​    为了安全可以加高</p>
+<p>​    为了性能可以降低（最低建议是2，如果降低到2HDFS性能会提升很多，建议在有数据备份的情况下设置为2）</p>
 <p>3.dfs.blocksize HDFS的block块大小</p>
-<p>​	<code>如果，是HBase专用的HDFS</code>，那么这个块的大小，建议比：Memstore的刷新上限大小，大1MB即可</p>
-<p>​	比如Memstore的刷新上线是128MB，我们这个参数可以设置为130MB</p>
-<p>​	可以确保一个HFile可以吃满一个block（尽量减少block的数量）</p>
-<p>​	也就是尽量不让HFile跨越多个Block存在。</p>
+<p>​    <code>如果，是HBase专用的HDFS</code>，那么这个块的大小，建议比：Memstore的刷新上限大小，大1MB即可</p>
+<p>​    比如Memstore的刷新上线是128MB，我们这个参数可以设置为130MB</p>
+<p>​    可以确保一个HFile可以吃满一个block（尽量减少block的数量）</p>
+<p>​    也就是尽量不让HFile跨越多个Block存在。</p>
 <p>4.dfs.datanode.max.transfer.threads DataNode最大的可操作性文件数</p>
-<p>​	HBase一般会操作较多的文件，可以适当改大一点，默认4096 可以改2倍 改10000可</p>
-<ol start="5">
+<p>​    HBase一般会操作较多的文件，可以适当改大一点，默认4096 可以改2倍 改10000可</p>
+<ol>
 <li><p>dfs.image.transfer.timeout 操作数据的延迟超时时间</p>
 <p>大量负载下，相应缓慢，就有可能超过timeout被宕机，被封杀掉socket通讯</p>
 <p>适当改大点</p>
@@ -1319,8 +1275,8 @@
 <p>mapreduce.map.output.compress.codec</p>
 </li>
 </ol>
-<p>​	MapReduce开启压缩的参数</p>
-<p>​	可以优化我们在执行HBase 的 IMport、Export、ImportTsv等MR任务的性能。</p>
+<p>​    MapReduce开启压缩的参数</p>
+<p>​    可以优化我们在执行HBase 的 IMport、Export、ImportTsv等MR任务的性能。</p>
 <p><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/img/20220606170839.png" alt="image-20220606170838916"></p>
 <p><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/img/20220606171025.png" alt="image-20220606171025158"></p>
 <h3 id="内存调优"><a href="#内存调优" class="headerlink" title="内存调优"></a>内存调优</h3><p><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/img/image-20221008000126113.png" alt="image-20221008000126113"></p>
@@ -1332,5 +1288,40 @@
 <p>包括RegionServer也会受到这个时间的限制。</p>
 </li>
 </ul>
-<p>​	可以在高负载下，设置的大一些，比如1分钟，2分钟</p>
-</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="http://example.com">JohnsonLiam</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2024/06/01/HBase(%E5%85%A8)/">http://example.com/2024/06/01/HBase(%E5%85%A8)/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/HBase/">HBase</a></div><div class="post_share"><div class="social-share" data-image="https://wei-blog.oss-cn-beijing.aliyuncs.com/img/pic.webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/06/02/2024.06.02_%E5%89%AF%E6%9C%AC/" title="【Linux】FTP服务器搭建"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">【Linux】FTP服务器搭建</div></div></a></div><div class="next-post pull-right"><a href="/2024/05/01/2024.05.01/" title="Document"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Document</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/img/pic.webp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">JohnsonLiam</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">77</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">25</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">What seems to us as bitter trials are often blessings in disguise.</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#happy-%E5%AE%9E%E6%97%B6%E8%AE%A1%E7%AE%97%E5%9F%BA%E7%A1%80"><span class="toc-number">1.</span> <span class="toc-text">:happy:实时计算基础</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#happy-HBase%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9"><span class="toc-number">2.</span> <span class="toc-text">:happy:HBase基础内容</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#HBase%E4%BA%A7%E7%94%9F%E8%83%8C%E6%99%AF"><span class="toc-number">2.1.</span> <span class="toc-text">HBase产生背景</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%97%B6%E4%BB%A3"><span class="toc-number">2.1.1.</span> <span class="toc-text">计算机时代</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%92%E8%81%94%E7%BD%91%E6%97%B6%E4%BB%A3"><span class="toc-number">2.1.2.</span> <span class="toc-text">互联网时代</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%97%B6%E4%BB%A3"><span class="toc-number">2.1.3.</span> <span class="toc-text">大数据时代</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HBase%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">2.2.</span> <span class="toc-text">HBase应用场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HBase%E5%8F%91%E5%B1%95"><span class="toc-number">2.3.</span> <span class="toc-text">HBase发展</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HBase%E7%9A%84%E7%89%B9%E7%82%B9"><span class="toc-number">2.4.</span> <span class="toc-text">HBase的特点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HBase-vs-RDBMS"><span class="toc-number">2.4.1.</span> <span class="toc-text">HBase vs RDBMS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HBase-vs-HDFS"><span class="toc-number">2.4.2.</span> <span class="toc-text">HBase vs HDFS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HBase-vs-Hive"><span class="toc-number">2.4.3.</span> <span class="toc-text">HBase vs Hive</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#grin-HBase%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2"><span class="toc-number">3.</span> <span class="toc-text">:grin:HBase安装部署</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9B%86%E7%BE%A4%E8%A7%84%E5%88%92"><span class="toc-number">3.1.</span> <span class="toc-text">集群规划</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2"><span class="toc-number">3.2.</span> <span class="toc-text">安装部署</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#kissing-HBase%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B"><span class="toc-number">4.</span> <span class="toc-text">:kissing:HBase数据模型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%8C%E5%BC%8F%E5%AD%98%E5%82%A8"><span class="toc-number">4.1.</span> <span class="toc-text">行式存储</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%97%E5%BC%8F%E5%AD%98%E5%82%A8"><span class="toc-number">4.2.</span> <span class="toc-text">列式存储</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%8C%E5%88%97%E5%AF%B9%E6%AF%94"><span class="toc-number">4.3.</span> <span class="toc-text">行列对比</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%97%E5%BC%8F%E5%AD%98%E5%82%A8%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="toc-number">4.3.1.</span> <span class="toc-text">列式存储的优势</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%97%E5%BC%8F%E5%AD%98%E5%82%A8%E7%9A%84%E5%8A%A3%E5%8A%BF"><span class="toc-number">4.3.2.</span> <span class="toc-text">列式存储的劣势</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HBase%E8%A1%A8%E7%BB%93%E6%9E%84"><span class="toc-number">4.4.</span> <span class="toc-text">HBase表结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E8%A7%86%E5%9B%BE"><span class="toc-number">4.4.1.</span> <span class="toc-text">逻辑视图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%A9%E7%90%86%E8%A7%86%E5%9B%BE"><span class="toc-number">4.4.2.</span> <span class="toc-text">物理视图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HBase%E7%9A%84KeyValue"><span class="toc-number">4.4.3.</span> <span class="toc-text">HBase的KeyValue</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#grin-HBase%E7%9A%84shell%E5%91%BD%E4%BB%A4"><span class="toc-number">5.</span> <span class="toc-text">:grin:HBase的shell命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E5%85%A5shell%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="toc-number">5.1.</span> <span class="toc-text">进入shell客户端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E9%9B%86%E7%BE%A4%E7%8A%B6%E6%80%81"><span class="toc-number">5.2.</span> <span class="toc-text">查看集群状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E5%B8%AE%E5%8A%A9"><span class="toc-number">5.3.</span> <span class="toc-text">查看帮助</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E6%89%80%E6%9C%89%E8%A1%A8"><span class="toc-number">5.4.</span> <span class="toc-text">查看所有表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E8%A1%A8"><span class="toc-number">5.5.</span> <span class="toc-text">创建表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E8%A1%A8%E4%BF%A1%E6%81%AF"><span class="toc-number">5.6.</span> <span class="toc-text">查看表信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%91%E8%A1%A8%E4%B8%AD%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE"><span class="toc-number">5.7.</span> <span class="toc-text">向表中插入数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E6%95%B0%E6%8D%AE"><span class="toc-number">5.8.</span> <span class="toc-text">查询数据</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%9A%E8%BF%87rowkey%E6%9F%A5%E8%AF%A2"><span class="toc-number">5.8.0.1.</span> <span class="toc-text">通过rowkey查询</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AF%94%E8%BE%83%E8%BF%87%E6%BB%A4%E5%99%A8-comparison-filter"><span class="toc-number">5.8.1.</span> <span class="toc-text">比较过滤器(comparison filter)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%93%E7%94%A8%E8%BF%87%E6%BB%A4%E5%99%A8"><span class="toc-number">5.8.2.</span> <span class="toc-text">专用过滤器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%99%84%E5%8A%A0%E8%BF%87%E6%BB%A4%E5%99%A8"><span class="toc-number">5.8.3.</span> <span class="toc-text">附加过滤器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FilterList"><span class="toc-number">5.8.4.</span> <span class="toc-text">FilterList</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E8%BF%87%E6%BB%A4%E5%99%A8"><span class="toc-number">5.8.5.</span> <span class="toc-text">自定义过滤器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE"><span class="toc-number">5.9.</span> <span class="toc-text">更新删除数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B8%85%E7%A9%BA%E5%88%A0%E9%99%A4%E8%A1%A8"><span class="toc-number">5.10.</span> <span class="toc-text">清空删除表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%A1%E7%90%86%E5%91%BD%E4%BB%A4"><span class="toc-number">5.11.</span> <span class="toc-text">管理命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95"><span class="toc-number">5.12.</span> <span class="toc-text">高级用法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E6%95%B0%E5%99%A8counter"><span class="toc-number">5.12.1.</span> <span class="toc-text">计数器counter</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8F%E5%A4%84%E7%90%86%E5%99%A8coprocesser"><span class="toc-number">5.12.2.</span> <span class="toc-text">协处理器coprocesser</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%9C%E4%B8%9A"><span class="toc-number">5.13.</span> <span class="toc-text">作业</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#grin-HBase%E7%9A%84Python%E6%93%8D%E4%BD%9C"><span class="toc-number">6.</span> <span class="toc-text">:grin:HBase的Python操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-number">6.1.</span> <span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="toc-number">6.2.</span> <span class="toc-text">代码实现</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#grin-HBase%E6%89%B9%E9%87%8F%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE"><span class="toc-number">7.</span> <span class="toc-text">:grin:HBase批量操作数据</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Import%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5"><span class="toc-number">7.1.</span> <span class="toc-text">Import数据导入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Export%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%87%BA"><span class="toc-number">7.2.</span> <span class="toc-text">Export数据导出</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">7.2.1.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bulk-Load%E6%93%8D%E4%BD%9C"><span class="toc-number">7.3.</span> <span class="toc-text">Bulk Load操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%9C%E4%B8%9A-1"><span class="toc-number">7.3.1.</span> <span class="toc-text">作业</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#kissing-HBase%E9%AB%98%E7%BA%A7%E5%8E%9F%E7%90%86"><span class="toc-number">8.</span> <span class="toc-text">:kissing:HBase高级原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#HBase%E9%AB%98%E5%8F%AF%E7%94%A8"><span class="toc-number">8.1.</span> <span class="toc-text">HBase高可用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AB%98%E5%8F%AF%E7%94%A8%E7%A6%BB%E4%B8%8D%E5%BC%80ZK"><span class="toc-number">8.1.1.</span> <span class="toc-text">高可用离不开ZK</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E9%AB%98%E5%8F%AF%E7%94%A8"><span class="toc-number">8.1.2.</span> <span class="toc-text">配置高可用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BF%AB%E6%8D%B7%E6%96%B9%E5%BC%8F"><span class="toc-number">8.1.3.</span> <span class="toc-text">快捷方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E6%96%B9%E5%BC%8F"><span class="toc-number">8.1.4.</span> <span class="toc-text">配置文件方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HBase%E6%9E%B6%E6%9E%84"><span class="toc-number">8.2.</span> <span class="toc-text">HBase架构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Master%E7%9A%84%E4%BD%9C%E7%94%A8%EF%BC%9A%E7%AE%A1%E7%90%86%E8%80%85"><span class="toc-number">8.2.1.</span> <span class="toc-text">Master的作用：管理者</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RegionServer%E7%9A%84%E4%BD%9C%E7%94%A8%EF%BC%9A%E5%A4%A7%E5%A4%B4%E5%85%B5"><span class="toc-number">8.2.2.</span> <span class="toc-text">RegionServer的作用：大头兵</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Region"><span class="toc-number">8.2.3.</span> <span class="toc-text">Region</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#region%E6%80%BB%E7%BB%93%EF%BC%9A"><span class="toc-number">8.2.3.1.</span> <span class="toc-text">region总结：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%EF%BC%9A%E5%93%AA%E4%BA%9B%E6%95%B0%E6%8D%AE%E5%BA%94%E8%AF%A5%E6%94%BE%E5%88%B0%E5%93%AA%E4%B8%80%E4%B8%AAregion%E4%B8%AD"><span class="toc-number">8.2.3.2.</span> <span class="toc-text">问题：哪些数据应该放到哪一个region中</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#region%E8%8C%83%E5%9B%B4%E7%9A%84%E7%A1%AE%E5%AE%9A%E5%8E%9F%E5%88%99"><span class="toc-number">8.2.3.3.</span> <span class="toc-text">region范围的确定原则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A1%A5%E5%85%85%EF%BC%9A%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%AF%94%E8%BE%83%E6%98%AF%E6%A0%B9%E6%8D%AEASCII%E7%BC%96%E7%A0%81%E8%BF%9B%E8%A1%8C%E6%AF%94%E8%BE%83%E7%9A%84"><span class="toc-number">8.2.3.4.</span> <span class="toc-text">补充：字符串比较是根据ASCII编码进行比较的</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Store"><span class="toc-number">8.2.4.</span> <span class="toc-text">Store</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Memstore"><span class="toc-number">8.2.5.</span> <span class="toc-text">Memstore</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HFile"><span class="toc-number">8.2.6.</span> <span class="toc-text">HFile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WAL%E9%A2%84%E5%86%99%E6%97%A5%E5%BF%97"><span class="toc-number">8.2.7.</span> <span class="toc-text">WAL预写日志</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HBase%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-number">8.3.</span> <span class="toc-text">HBase的工作原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%9A%84%E8%AF%BB%E5%8F%96"><span class="toc-number">8.3.1.</span> <span class="toc-text">数据的读取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%9A%84%E5%86%99%E5%85%A5"><span class="toc-number">8.3.2.</span> <span class="toc-text">数据的写入</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%B5%81%E7%A8%8B"><span class="toc-number">8.3.2.1.</span> <span class="toc-text">客户端流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%B5%81%E7%A8%8B"><span class="toc-number">8.3.2.2.</span> <span class="toc-text">服务端流程</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E6%BA%A2%E5%86%99"><span class="toc-number">8.3.3.</span> <span class="toc-text">内存溢写</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%90%88%E5%B9%B6"><span class="toc-number">8.3.4.</span> <span class="toc-text">文件合并</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#minor%E5%90%88%E5%B9%B6"><span class="toc-number">8.3.4.1.</span> <span class="toc-text">minor合并</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%A7%A6%E5%8F%91%E6%9D%A1%E4%BB%B6%EF%BC%9A"><span class="toc-number">8.3.4.1.1.</span> <span class="toc-text">触发条件：</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#major%E5%90%88%E5%B9%B6"><span class="toc-number">8.3.4.2.</span> <span class="toc-text">major合并</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%A7%A6%E5%8F%91%E6%9D%A1%E4%BB%B6%EF%BC%9A-1"><span class="toc-number">8.3.4.2.1.</span> <span class="toc-text">触发条件：</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#In-Memory%E5%90%88%E5%B9%B6"><span class="toc-number">8.3.4.3.</span> <span class="toc-text">In-Memory合并</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Region%E5%88%86%E8%A3%82"><span class="toc-number">8.3.5.</span> <span class="toc-text">Region分裂</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%A7%A6%E5%8F%91%E6%9D%A1%E4%BB%B6"><span class="toc-number">8.3.5.0.1.</span> <span class="toc-text">触发条件</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%80%9D%E8%80%83%EF%BC%9Aregion%E8%B6%8A%E6%9D%A5%E8%B6%8A%E5%A4%9A%EF%BC%8C%E4%BC%9A%E4%B8%8D%E4%BC%9A%E5%8F%91%E7%94%9F%E6%95%B0%E6%8D%AE%E5%80%BE%E6%96%9C"><span class="toc-number">8.3.5.0.1.1.</span> <span class="toc-text">思考：region越来越多，会不会发生数据倾斜</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RegionServer%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6"><span class="toc-number">8.3.6.</span> <span class="toc-text">RegionServer工作机制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#region%E7%AE%A1%E7%90%86"><span class="toc-number">8.3.6.1.</span> <span class="toc-text">region管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8A%E7%BA%BF"><span class="toc-number">8.3.6.2.</span> <span class="toc-text">上线</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8B%E7%BA%BF"><span class="toc-number">8.3.6.3.</span> <span class="toc-text">下线</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Master%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6"><span class="toc-number">8.3.7.</span> <span class="toc-text">Master工作机制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8A%E7%BA%BF-1"><span class="toc-number">8.3.7.1.</span> <span class="toc-text">上线</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8B%E7%BA%BF-1"><span class="toc-number">8.3.7.2.</span> <span class="toc-text">下线</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#boom-HBase%E7%9A%84%E8%A1%A8%E7%BB%93%E6%9E%84%E8%AE%BE%E8%AE%A1"><span class="toc-number">9.</span> <span class="toc-text">:boom:HBase的表结构设计</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#HBase%E5%9C%A8HDFS%E4%B8%8A%E7%9A%84%E7%9B%AE%E5%BD%95"><span class="toc-number">9.1.</span> <span class="toc-text">HBase在HDFS上的目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NameSpace%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4"><span class="toc-number">9.2.</span> <span class="toc-text">NameSpace命名空间</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C"><span class="toc-number">9.2.1.</span> <span class="toc-text">操作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HBase%E5%88%97%E7%B0%87%E7%9A%84%E8%AE%BE%E8%AE%A1"><span class="toc-number">9.3.</span> <span class="toc-text">HBase列簇的设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HBase%E7%9A%84%E5%8E%8B%E7%BC%A9%E7%AE%97%E6%B3%95"><span class="toc-number">9.4.</span> <span class="toc-text">HBase的压缩算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C-1"><span class="toc-number">9.4.0.1.</span> <span class="toc-text">操作</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#rowkey%E8%AE%BE%E8%AE%A1"><span class="toc-number">9.5.</span> <span class="toc-text">rowkey设计</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%98%E6%96%B9%E5%BB%BA%E8%AE%AE%E5%8E%9F%E5%88%99%EF%BC%9A"><span class="toc-number">9.5.0.0.1.</span> <span class="toc-text">官方建议原则：</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%84%E5%88%86%E5%8C%BA%E8%AE%BE%E8%AE%A1"><span class="toc-number">9.6.</span> <span class="toc-text">预分区设计</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A6%82%E6%9E%9C%E4%B8%8D%E9%A2%84%E5%85%88%E5%88%86%E5%8C%BA%E4%BC%9A%E6%9C%89%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="toc-number">9.6.0.0.1.</span> <span class="toc-text">如果不预先分区会有什么问题？</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#cry-HBase%E7%9A%84%E8%B0%83%E4%BC%98%E5%AE%9E%E8%B7%B5"><span class="toc-number">10.</span> <span class="toc-text">:cry:HBase的调优实践</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E7%94%A8%E8%B0%83%E4%BC%98"><span class="toc-number">10.1.</span> <span class="toc-text">通用调优</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux%E7%B3%BB%E7%BB%9F"><span class="toc-number">10.2.</span> <span class="toc-text">Linux系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HDFS%E8%B0%83%E4%BC%98"><span class="toc-number">10.3.</span> <span class="toc-text">HDFS调优</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E8%B0%83%E4%BC%98"><span class="toc-number">10.3.1.</span> <span class="toc-text">内存调优</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Zookeeper%E8%B0%83%E4%BC%98"><span class="toc-number">10.3.2.</span> <span class="toc-text">Zookeeper调优</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/08/02/2024.08.02_%E5%89%AF%E6%9C%AC/" title="【Numpy】高效科学计算">【Numpy】高效科学计算</a><time datetime="2024-08-01T16:00:00.000Z" title="Created 2024-08-02 00:00:00">2024-08-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/07/31/2024.07.31_%E5%89%AF%E6%9C%AC/" title="【Matplotlib】数据可视化">【Matplotlib】数据可视化</a><time datetime="2024-07-30T16:00:00.000Z" title="Created 2024-07-31 00:00:00">2024-07-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/07/26/2024.07.26/" title="数据分析环境搭建">数据分析环境搭建</a><time datetime="2024-07-25T16:00:00.000Z" title="Created 2024-07-26 00:00:00">2024-07-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/07/20/2024.07.20/" title="Blog Deployment for MacOs">Blog Deployment for MacOs</a><time datetime="2024-07-19T16:00:00.000Z" title="Created 2024-07-20 00:00:00">2024-07-20</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/06/02/2024.06.02_%E5%89%AF%E6%9C%AC/" title="【Linux】FTP服务器搭建">【Linux】FTP服务器搭建</a><time datetime="2024-06-01T16:00:00.000Z" title="Created 2024-06-02 00:00:00">2024-06-02</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://wei-blog.oss-cn-beijing.aliyuncs.com/img/224634-171232839454f0.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By JohnsonLiam</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
+<p>​    可以在高负载下，设置的大一些，比如1分钟，2分钟</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="http://example.com">JohnsonLiam</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2024/06/01/HBase(%E5%85%A8)/">http://example.com/2024/06/01/HBase(%E5%85%A8)/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/HBase/">HBase</a></div><div class="post_share"><div class="social-share" data-image="https://wei-blog.oss-cn-beijing.aliyuncs.com/img/pic.webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/06/02/2024.06.02_%E5%89%AF%E6%9C%AC/" title="【Linux】FTP服务器搭建"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">【Linux】FTP服务器搭建</div></div></a></div><div class="next-post pull-right"><a href="/2024/05/01/2024.05.01/" title="Document"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Document</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/img/pic.webp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">JohnsonLiam</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">77</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">25</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">What seems to us as bitter trials are often blessings in disguise.</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#happy-%E5%AE%9E%E6%97%B6%E8%AE%A1%E7%AE%97%E5%9F%BA%E7%A1%80"><span class="toc-number">1.</span> <span class="toc-text">:happy:实时计算基础</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#happy-HBase%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9"><span class="toc-number">2.</span> <span class="toc-text">:happy:HBase基础内容</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#HBase%E4%BA%A7%E7%94%9F%E8%83%8C%E6%99%AF"><span class="toc-number">2.1.</span> <span class="toc-text">HBase产生背景</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%97%B6%E4%BB%A3"><span class="toc-number">2.1.1.</span> <span class="toc-text">计算机时代</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%92%E8%81%94%E7%BD%91%E6%97%B6%E4%BB%A3"><span class="toc-number">2.1.2.</span> <span class="toc-text">互联网时代</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%97%B6%E4%BB%A3"><span class="toc-number">2.1.3.</span> <span class="toc-text">大数据时代</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HBase%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">2.2.</span> <span class="toc-text">HBase应用场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HBase%E5%8F%91%E5%B1%95"><span class="toc-number">2.3.</span> <span class="toc-text">HBase发展</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HBase%E7%9A%84%E7%89%B9%E7%82%B9"><span class="toc-number">2.4.</span> <span class="toc-text">HBase的特点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HBase-vs-RDBMS"><span class="toc-number">2.4.1.</span> <span class="toc-text">HBase vs RDBMS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HBase-vs-HDFS"><span class="toc-number">2.4.2.</span> <span class="toc-text">HBase vs HDFS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HBase-vs-Hive"><span class="toc-number">2.4.3.</span> <span class="toc-text">HBase vs Hive</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#grin-HBase%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2"><span class="toc-number">3.</span> <span class="toc-text">:grin:HBase安装部署</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9B%86%E7%BE%A4%E8%A7%84%E5%88%92"><span class="toc-number">3.1.</span> <span class="toc-text">集群规划</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2"><span class="toc-number">3.2.</span> <span class="toc-text">安装部署</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#kissing-HBase%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B"><span class="toc-number">4.</span> <span class="toc-text">:kissing:HBase数据模型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%8C%E5%BC%8F%E5%AD%98%E5%82%A8"><span class="toc-number">4.1.</span> <span class="toc-text">行式存储</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%97%E5%BC%8F%E5%AD%98%E5%82%A8"><span class="toc-number">4.2.</span> <span class="toc-text">列式存储</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%8C%E5%88%97%E5%AF%B9%E6%AF%94"><span class="toc-number">4.3.</span> <span class="toc-text">行列对比</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%97%E5%BC%8F%E5%AD%98%E5%82%A8%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="toc-number">4.3.1.</span> <span class="toc-text">列式存储的优势</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%97%E5%BC%8F%E5%AD%98%E5%82%A8%E7%9A%84%E5%8A%A3%E5%8A%BF"><span class="toc-number">4.3.2.</span> <span class="toc-text">列式存储的劣势</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HBase%E8%A1%A8%E7%BB%93%E6%9E%84"><span class="toc-number">4.4.</span> <span class="toc-text">HBase表结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E8%A7%86%E5%9B%BE"><span class="toc-number">4.4.1.</span> <span class="toc-text">逻辑视图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%A9%E7%90%86%E8%A7%86%E5%9B%BE"><span class="toc-number">4.4.2.</span> <span class="toc-text">物理视图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HBase%E7%9A%84KeyValue"><span class="toc-number">4.4.3.</span> <span class="toc-text">HBase的KeyValue</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#grin-HBase%E7%9A%84shell%E5%91%BD%E4%BB%A4"><span class="toc-number">5.</span> <span class="toc-text">:grin:HBase的shell命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E5%85%A5shell%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="toc-number">5.1.</span> <span class="toc-text">进入shell客户端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E9%9B%86%E7%BE%A4%E7%8A%B6%E6%80%81"><span class="toc-number">5.2.</span> <span class="toc-text">查看集群状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E5%B8%AE%E5%8A%A9"><span class="toc-number">5.3.</span> <span class="toc-text">查看帮助</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E6%89%80%E6%9C%89%E8%A1%A8"><span class="toc-number">5.4.</span> <span class="toc-text">查看所有表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E8%A1%A8"><span class="toc-number">5.5.</span> <span class="toc-text">创建表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E8%A1%A8%E4%BF%A1%E6%81%AF"><span class="toc-number">5.6.</span> <span class="toc-text">查看表信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%91%E8%A1%A8%E4%B8%AD%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE"><span class="toc-number">5.7.</span> <span class="toc-text">向表中插入数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E6%95%B0%E6%8D%AE"><span class="toc-number">5.8.</span> <span class="toc-text">查询数据</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%9A%E8%BF%87rowkey%E6%9F%A5%E8%AF%A2"><span class="toc-number">5.8.0.1.</span> <span class="toc-text">通过rowkey查询</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AF%94%E8%BE%83%E8%BF%87%E6%BB%A4%E5%99%A8-comparison-filter"><span class="toc-number">5.8.1.</span> <span class="toc-text">比较过滤器(comparison filter)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%93%E7%94%A8%E8%BF%87%E6%BB%A4%E5%99%A8"><span class="toc-number">5.8.2.</span> <span class="toc-text">专用过滤器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%99%84%E5%8A%A0%E8%BF%87%E6%BB%A4%E5%99%A8"><span class="toc-number">5.8.3.</span> <span class="toc-text">附加过滤器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FilterList"><span class="toc-number">5.8.4.</span> <span class="toc-text">FilterList</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E8%BF%87%E6%BB%A4%E5%99%A8"><span class="toc-number">5.8.5.</span> <span class="toc-text">自定义过滤器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE"><span class="toc-number">5.9.</span> <span class="toc-text">更新删除数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B8%85%E7%A9%BA%E5%88%A0%E9%99%A4%E8%A1%A8"><span class="toc-number">5.10.</span> <span class="toc-text">清空删除表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%A1%E7%90%86%E5%91%BD%E4%BB%A4"><span class="toc-number">5.11.</span> <span class="toc-text">管理命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95"><span class="toc-number">5.12.</span> <span class="toc-text">高级用法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E6%95%B0%E5%99%A8counter"><span class="toc-number">5.12.1.</span> <span class="toc-text">计数器counter</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8F%E5%A4%84%E7%90%86%E5%99%A8coprocesser"><span class="toc-number">5.12.2.</span> <span class="toc-text">协处理器coprocesser</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%9C%E4%B8%9A"><span class="toc-number">5.13.</span> <span class="toc-text">作业</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#grin-HBase%E7%9A%84Python%E6%93%8D%E4%BD%9C"><span class="toc-number">6.</span> <span class="toc-text">:grin:HBase的Python操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-number">6.1.</span> <span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="toc-number">6.2.</span> <span class="toc-text">代码实现</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#grin-HBase%E6%89%B9%E9%87%8F%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE"><span class="toc-number">7.</span> <span class="toc-text">:grin:HBase批量操作数据</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Import%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5"><span class="toc-number">7.1.</span> <span class="toc-text">Import数据导入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Export%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%87%BA"><span class="toc-number">7.2.</span> <span class="toc-text">Export数据导出</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">7.2.1.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bulk-Load%E6%93%8D%E4%BD%9C"><span class="toc-number">7.3.</span> <span class="toc-text">Bulk Load操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%9C%E4%B8%9A-1"><span class="toc-number">7.3.1.</span> <span class="toc-text">作业</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#kissing-HBase%E9%AB%98%E7%BA%A7%E5%8E%9F%E7%90%86"><span class="toc-number">8.</span> <span class="toc-text">:kissing:HBase高级原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#HBase%E9%AB%98%E5%8F%AF%E7%94%A8"><span class="toc-number">8.1.</span> <span class="toc-text">HBase高可用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AB%98%E5%8F%AF%E7%94%A8%E7%A6%BB%E4%B8%8D%E5%BC%80ZK"><span class="toc-number">8.1.1.</span> <span class="toc-text">高可用离不开ZK</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E9%AB%98%E5%8F%AF%E7%94%A8"><span class="toc-number">8.1.2.</span> <span class="toc-text">配置高可用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BF%AB%E6%8D%B7%E6%96%B9%E5%BC%8F"><span class="toc-number">8.1.3.</span> <span class="toc-text">快捷方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E6%96%B9%E5%BC%8F"><span class="toc-number">8.1.4.</span> <span class="toc-text">配置文件方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HBase%E6%9E%B6%E6%9E%84"><span class="toc-number">8.2.</span> <span class="toc-text">HBase架构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Master%E7%9A%84%E4%BD%9C%E7%94%A8%EF%BC%9A%E7%AE%A1%E7%90%86%E8%80%85"><span class="toc-number">8.2.1.</span> <span class="toc-text">Master的作用：管理者</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RegionServer%E7%9A%84%E4%BD%9C%E7%94%A8%EF%BC%9A%E5%A4%A7%E5%A4%B4%E5%85%B5"><span class="toc-number">8.2.2.</span> <span class="toc-text">RegionServer的作用：大头兵</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Region"><span class="toc-number">8.2.3.</span> <span class="toc-text">Region</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#region%E6%80%BB%E7%BB%93%EF%BC%9A"><span class="toc-number">8.2.3.1.</span> <span class="toc-text">region总结：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%EF%BC%9A%E5%93%AA%E4%BA%9B%E6%95%B0%E6%8D%AE%E5%BA%94%E8%AF%A5%E6%94%BE%E5%88%B0%E5%93%AA%E4%B8%80%E4%B8%AAregion%E4%B8%AD"><span class="toc-number">8.2.3.2.</span> <span class="toc-text">问题：哪些数据应该放到哪一个region中</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#region%E8%8C%83%E5%9B%B4%E7%9A%84%E7%A1%AE%E5%AE%9A%E5%8E%9F%E5%88%99"><span class="toc-number">8.2.3.3.</span> <span class="toc-text">region范围的确定原则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A1%A5%E5%85%85%EF%BC%9A%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%AF%94%E8%BE%83%E6%98%AF%E6%A0%B9%E6%8D%AEASCII%E7%BC%96%E7%A0%81%E8%BF%9B%E8%A1%8C%E6%AF%94%E8%BE%83%E7%9A%84"><span class="toc-number">8.2.3.4.</span> <span class="toc-text">补充：字符串比较是根据ASCII编码进行比较的</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Store"><span class="toc-number">8.2.4.</span> <span class="toc-text">Store</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Memstore"><span class="toc-number">8.2.5.</span> <span class="toc-text">Memstore</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HFile"><span class="toc-number">8.2.6.</span> <span class="toc-text">HFile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WAL%E9%A2%84%E5%86%99%E6%97%A5%E5%BF%97"><span class="toc-number">8.2.7.</span> <span class="toc-text">WAL预写日志</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HBase%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-number">8.3.</span> <span class="toc-text">HBase的工作原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%9A%84%E8%AF%BB%E5%8F%96"><span class="toc-number">8.3.1.</span> <span class="toc-text">数据的读取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%9A%84%E5%86%99%E5%85%A5"><span class="toc-number">8.3.2.</span> <span class="toc-text">数据的写入</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%B5%81%E7%A8%8B"><span class="toc-number">8.3.2.1.</span> <span class="toc-text">客户端流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%B5%81%E7%A8%8B"><span class="toc-number">8.3.2.2.</span> <span class="toc-text">服务端流程</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E6%BA%A2%E5%86%99"><span class="toc-number">8.3.3.</span> <span class="toc-text">内存溢写</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%90%88%E5%B9%B6"><span class="toc-number">8.3.4.</span> <span class="toc-text">文件合并</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#minor%E5%90%88%E5%B9%B6"><span class="toc-number">8.3.4.1.</span> <span class="toc-text">minor合并</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%A7%A6%E5%8F%91%E6%9D%A1%E4%BB%B6%EF%BC%9A"><span class="toc-number">8.3.4.1.1.</span> <span class="toc-text">触发条件：</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#major%E5%90%88%E5%B9%B6"><span class="toc-number">8.3.4.2.</span> <span class="toc-text">major合并</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%A7%A6%E5%8F%91%E6%9D%A1%E4%BB%B6%EF%BC%9A-1"><span class="toc-number">8.3.4.2.1.</span> <span class="toc-text">触发条件：</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#In-Memory%E5%90%88%E5%B9%B6"><span class="toc-number">8.3.4.3.</span> <span class="toc-text">In-Memory合并</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Region%E5%88%86%E8%A3%82"><span class="toc-number">8.3.5.</span> <span class="toc-text">Region分裂</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%A7%A6%E5%8F%91%E6%9D%A1%E4%BB%B6"><span class="toc-number">8.3.5.0.1.</span> <span class="toc-text">触发条件</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%80%9D%E8%80%83%EF%BC%9Aregion%E8%B6%8A%E6%9D%A5%E8%B6%8A%E5%A4%9A%EF%BC%8C%E4%BC%9A%E4%B8%8D%E4%BC%9A%E5%8F%91%E7%94%9F%E6%95%B0%E6%8D%AE%E5%80%BE%E6%96%9C"><span class="toc-number">8.3.5.0.1.1.</span> <span class="toc-text">思考：region越来越多，会不会发生数据倾斜</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RegionServer%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6"><span class="toc-number">8.3.6.</span> <span class="toc-text">RegionServer工作机制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#region%E7%AE%A1%E7%90%86"><span class="toc-number">8.3.6.1.</span> <span class="toc-text">region管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8A%E7%BA%BF"><span class="toc-number">8.3.6.2.</span> <span class="toc-text">上线</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8B%E7%BA%BF"><span class="toc-number">8.3.6.3.</span> <span class="toc-text">下线</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Master%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6"><span class="toc-number">8.3.7.</span> <span class="toc-text">Master工作机制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8A%E7%BA%BF-1"><span class="toc-number">8.3.7.1.</span> <span class="toc-text">上线</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8B%E7%BA%BF-1"><span class="toc-number">8.3.7.2.</span> <span class="toc-text">下线</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#boom-HBase%E7%9A%84%E8%A1%A8%E7%BB%93%E6%9E%84%E8%AE%BE%E8%AE%A1"><span class="toc-number">9.</span> <span class="toc-text">:boom:HBase的表结构设计</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#HBase%E5%9C%A8HDFS%E4%B8%8A%E7%9A%84%E7%9B%AE%E5%BD%95"><span class="toc-number">9.1.</span> <span class="toc-text">HBase在HDFS上的目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NameSpace%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4"><span class="toc-number">9.2.</span> <span class="toc-text">NameSpace命名空间</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C"><span class="toc-number">9.2.1.</span> <span class="toc-text">操作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HBase%E5%88%97%E7%B0%87%E7%9A%84%E8%AE%BE%E8%AE%A1"><span class="toc-number">9.3.</span> <span class="toc-text">HBase列簇的设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HBase%E7%9A%84%E5%8E%8B%E7%BC%A9%E7%AE%97%E6%B3%95"><span class="toc-number">9.4.</span> <span class="toc-text">HBase的压缩算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C-1"><span class="toc-number">9.4.0.1.</span> <span class="toc-text">操作</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#rowkey%E8%AE%BE%E8%AE%A1"><span class="toc-number">9.5.</span> <span class="toc-text">rowkey设计</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%98%E6%96%B9%E5%BB%BA%E8%AE%AE%E5%8E%9F%E5%88%99%EF%BC%9A"><span class="toc-number">9.5.0.0.1.</span> <span class="toc-text">官方建议原则：</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%84%E5%88%86%E5%8C%BA%E8%AE%BE%E8%AE%A1"><span class="toc-number">9.6.</span> <span class="toc-text">预分区设计</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A6%82%E6%9E%9C%E4%B8%8D%E9%A2%84%E5%85%88%E5%88%86%E5%8C%BA%E4%BC%9A%E6%9C%89%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="toc-number">9.6.0.0.1.</span> <span class="toc-text">如果不预先分区会有什么问题？</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#cry-HBase%E7%9A%84%E8%B0%83%E4%BC%98%E5%AE%9E%E8%B7%B5"><span class="toc-number">10.</span> <span class="toc-text">:cry:HBase的调优实践</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E7%94%A8%E8%B0%83%E4%BC%98"><span class="toc-number">10.1.</span> <span class="toc-text">通用调优</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux%E7%B3%BB%E7%BB%9F"><span class="toc-number">10.2.</span> <span class="toc-text">Linux系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HDFS%E8%B0%83%E4%BC%98"><span class="toc-number">10.3.</span> <span class="toc-text">HDFS调优</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E8%B0%83%E4%BC%98"><span class="toc-number">10.3.1.</span> <span class="toc-text">内存调优</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Zookeeper%E8%B0%83%E4%BC%98"><span class="toc-number">10.3.2.</span> <span class="toc-text">Zookeeper调优</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/08/02/2024.08.02_%E5%89%AF%E6%9C%AC/" title="【Numpy】高效科学计算">【Numpy】高效科学计算</a><time datetime="2024-08-01T16:00:00.000Z" title="Created 2024-08-02 00:00:00">2024-08-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/07/31/2024.07.31_%E5%89%AF%E6%9C%AC/" title="【Matplotlib】数据可视化">【Matplotlib】数据可视化</a><time datetime="2024-07-30T16:00:00.000Z" title="Created 2024-07-31 00:00:00">2024-07-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/07/26/2024.07.26/" title="数据分析环境搭建">数据分析环境搭建</a><time datetime="2024-07-25T16:00:00.000Z" title="Created 2024-07-26 00:00:00">2024-07-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/07/20/2024.07.20/" title="Blog Deployment for MacOs">Blog Deployment for MacOs</a><time datetime="2024-07-19T16:00:00.000Z" title="Created 2024-07-20 00:00:00">2024-07-20</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/06/02/2024.06.02_%E5%89%AF%E6%9C%AC/" title="【Linux】FTP服务器搭建">【Linux】FTP服务器搭建</a><time datetime="2024-06-01T16:00:00.000Z" title="Created 2024-06-02 00:00:00">2024-06-02</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://wei-blog.oss-cn-beijing.aliyuncs.com/img/224634-171232839454f0.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By JohnsonLiam</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script></div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
