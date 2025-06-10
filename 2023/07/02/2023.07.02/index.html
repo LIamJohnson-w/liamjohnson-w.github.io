@@ -298,7 +298,11 @@
 <blockquote>
 <p>(?P&lt;name&gt;…) 可以通过这种方式, 给() 起个别名, 起了别名之后, 就可以通过角标&#x2F;别名访问对应() 中匹配上的内容</p>
 </blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">正则表达式--&gt; A(match方法)</span><br><span class="line">A--&gt;Match是从头开始匹配的,如果字符串的开头没有匹配上,匹配结束返回None</span><br><span class="line">正则表达式--&gt; search方法</span><br><span class="line">search方法--&gt;search会搜索整个字符串,看是否有能匹配上的内容</span><br></pre></td></tr></table></figure>
+<pre class="mermaid">graph LR
+正则表达式--> A(match方法)
+A-->Match是从头开始匹配的,如果字符串的开头没有匹配上,匹配结束返回None
+正则表达式--> search方法
+search方法-->search会搜索整个字符串,看是否有能匹配上的内容</pre>
 
 <h1 id="正则表达式处理Nginx日志对象"><a href="#正则表达式处理Nginx日志对象" class="headerlink" title="正则表达式处理Nginx日志对象"></a>正则表达式处理Nginx日志对象</h1><h2 id="Nginx系统日志格式"><a href="#Nginx系统日志格式" class="headerlink" title="Nginx系统日志格式"></a>Nginx系统日志格式</h2><p><img src="https://markdownotepic.oss-cn-hangzhou.aliyuncs.com/imgs/image-20230524125654217.png?images" alt="image-20230524125654217"></p>
 <h2 id="字段说明"><a href="#字段说明" class="headerlink" title="字段说明"></a>字段说明</h2><blockquote>
@@ -365,7 +369,31 @@
   MathJax.startup.document.state(0)
   MathJax.texReset()
   MathJax.typesetPromise()
-}</script></div><canvas class="fireworks" mobile="true"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+}</script><script>(() => {
+  const $mermaidWrap = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaidWrap.length) {
+    window.runMermaid = () => {
+      window.loadMermaid = true
+      const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? '' : ''
+
+      Array.from($mermaidWrap).forEach((item, index) => {
+        const mermaidSrc = item.firstElementChild
+        const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+        const mermaidID = 'mermaid-' + index
+        const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+        mermaid.mermaidAPI.render(mermaidID, mermaidDefinition, (svgCode) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svgCode)
+        })
+      })
+    }
+
+    const loadMermaid = () => {
+      window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaid)
+    }
+
+    window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+  }
+})()</script></div><canvas class="fireworks" mobile="true"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script defer="defer" id="fluttering_ribbon" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
 POWERMODE.shake = true;
 POWERMODE.mobile = true;
 document.body.addEventListener('input', POWERMODE);
