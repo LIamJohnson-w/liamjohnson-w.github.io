@@ -1,0 +1,260 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Fine-Tuning-Note | All wisdom begins with memory.</title><meta name="author" content="李俊泽"><meta name="copyright" content="李俊泽"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Day021、说一下LoRA的原理?LoRA假设模型在适配新任务时，其权重的更新（ΔW）具有低内在秩（intrinsic low rank），因此可以将这个更新矩阵分解为两个更小的、可学习的矩阵A和B的乘积（即 ΔW &amp;#x3D; A × B）。在微调过程中，冻结原始模型的绝大部分参数，转而在PLM"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://liamjohnson-w.github.io/2025/11/03/Fine-Tuning-Note/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Fine-Tuning-Note',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-11-03 09:52:39'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css"> <script src="/live2d-widget/autoload.js"></script><script src="/live2d-widget/autoload.js"> </script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/24-07/tx.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">241</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">58</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Links</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-gamepad"></i><span> Games</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/mikutap/"><i class="fa-fw fa fa-music"></i><span> MikuTap 初音未来</span></a></li><li><a class="site-page child" href="/starbattle/"><i class="fa-fw fa fa-space-shuttle"></i><span> StartBattle 星际大战</span></a></li><li><a class="site-page child" href="/2048/"><i class="fa-fw fa fa-flag"></i><span> 2048 经典游戏</span></a></li><li><a class="site-page child" href="/battlecity/"><i class="fa-fw fa fa-arrow-circle-left"></i><span> BattleCity 坦克大战</span></a></li><li><a class="site-page child" href="/pacman/"><i class="fa-fw fa fa-bolt"></i><span> PacMan  吃豆人</span></a></li><li><a class="site-page child" href="/tetris/"><i class="fa-fw fa fa-arrows-alt"></i><span> Tetris 俄罗斯方块</span></a></li><li><a class="site-page child" href="/smallcat/"><i class="fa-fw fa fa-paw"></i><span> CatchCat 困住小猫</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-leaf"></i><span> Moments</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/diary/"><i class="fa-fw fas fa-bookmark"></i><span> Diary</span></a></li><li><a class="site-page child" href="/gallery/"><i class="fa-fw fa fa-hourglass-half"></i><span> Gallery</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-podcast"></i><span> More</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags标签</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About关于</span></a></li><li><a class="site-page child" href="/messageboard/"><i class="fa-fw fas fa-bookmark"></i><span> Messageboard留言板</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://wei-blog.oss-cn-beijing.aliyuncs.com/24-07/cat111.png')"><nav id="nav"><span id="blog-info"><a href="/" title="All wisdom begins with memory."><span class="site-name">All wisdom begins with memory.</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Links</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-gamepad"></i><span> Games</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/mikutap/"><i class="fa-fw fa fa-music"></i><span> MikuTap 初音未来</span></a></li><li><a class="site-page child" href="/starbattle/"><i class="fa-fw fa fa-space-shuttle"></i><span> StartBattle 星际大战</span></a></li><li><a class="site-page child" href="/2048/"><i class="fa-fw fa fa-flag"></i><span> 2048 经典游戏</span></a></li><li><a class="site-page child" href="/battlecity/"><i class="fa-fw fa fa-arrow-circle-left"></i><span> BattleCity 坦克大战</span></a></li><li><a class="site-page child" href="/pacman/"><i class="fa-fw fa fa-bolt"></i><span> PacMan  吃豆人</span></a></li><li><a class="site-page child" href="/tetris/"><i class="fa-fw fa fa-arrows-alt"></i><span> Tetris 俄罗斯方块</span></a></li><li><a class="site-page child" href="/smallcat/"><i class="fa-fw fa fa-paw"></i><span> CatchCat 困住小猫</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-leaf"></i><span> Moments</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/diary/"><i class="fa-fw fas fa-bookmark"></i><span> Diary</span></a></li><li><a class="site-page child" href="/gallery/"><i class="fa-fw fa fa-hourglass-half"></i><span> Gallery</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-podcast"></i><span> More</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags标签</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About关于</span></a></li><li><a class="site-page child" href="/messageboard/"><i class="fa-fw fas fa-bookmark"></i><span> Messageboard留言板</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Fine-Tuning-Note</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2025-11-02T16:00:00.000Z" title="Created 2025-11-03 00:00:00">2025-11-03</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2025-11-03T01:52:39.597Z" title="Updated 2025-11-03 09:52:39">2025-11-03</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Fine-Tuning-Note"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Day02"><a href="#Day02" class="headerlink" title="Day02"></a>Day02</h1><h2 id="1、说一下LoRA的原理"><a href="#1、说一下LoRA的原理" class="headerlink" title="1、说一下LoRA的原理?"></a>1、说一下LoRA的原理?</h2><p>LoRA假设模型在适配新任务时，其权重的更新（ΔW）具有低内在秩（intrinsic low rank），因此可以将这个更新矩阵分解为两个更小的、可学习的矩阵A和B的乘积（即 ΔW &#x3D; A × B）。在微调过程中，冻结原始模型的绝大部分参数，转而在PLM的特定线性层（如自注意力机制中的 Q、K、V 投影层和前馈网络）旁边，并行地注入一对小的、可训练的低秩分解矩阵。通过只训练这些低秩矩阵，LoRA就能让模型学习到新任务的知识，同时保持了原始模型的强大泛化能力，并极大地节省了计算资源和存储开销。</p>
+<p><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/24-07/image-20251103095106429.png" alt="image-20251103095106429"></p>
+<h2 id="2、说一下LoRA的优缺点"><a href="#2、说一下LoRA的优缺点" class="headerlink" title="2、说一下LoRA的优缺点"></a>2、说一下LoRA的优缺点</h2><ul>
+<li>优点：<ul>
+<li>只训练极少参数，相对全量微调的存储和训练成本低。</li>
+<li>效果接近全参数微调，且保留原模型能力。</li>
+<li>不同任务的 LoRA 模块可插拔，便于多任务部署。</li>
+</ul>
+</li>
+<li>缺点：<ul>
+<li>LoRA 本质是用低秩分解逼近权重更新矩阵，这对参数空间的表达能力有限制，可能无法拟合某些复杂任务所需的高秩变化。</li>
+<li>LoRA 通常加在 attention 的投影矩阵（Wq&#x2F;Wv）上，但不同任务可能对位置敏感，选择不好会影响性能。</li>
+<li>相对来说，如果预训练模型的参数较大，则微调的门槛依然很高。</li>
+</ul>
+</li>
+</ul>
+<h2 id="3、说一下QLoRA的原理？"><a href="#3、说一下QLoRA的原理？" class="headerlink" title="3、说一下QLoRA的原理？"></a>3、说一下QLoRA的原理？</h2><p><code>核心思想</code>：通过对预训练语言模型（PLM）进行量化（通常是 4-bit NormalFloat），并结合 LoRA 技术进行微调，从而在极低的内存消耗下，仍然能够高效地微调巨型语言模型，同时保持甚至超越全量 16-bit LoRA 的性能。</p>
+<p><code>核心创新点</code>：</p>
+<ul>
+<li>使用专为<strong>正态分布</strong>的数据设计的<code>NF4量化</code>，使得在极低精度下仍能保持接近 FP16 的模型性能。</li>
+<li>采用<strong>双量化和分页优化器</strong>，进一步减少显存占用。</li>
+<li>在量化后的冻结PLM上，<strong>LoRA的微调机制保持不变</strong>。</li>
+</ul>
+<h2 id="4、说一下微调的数据集格式"><a href="#4、说一下微调的数据集格式" class="headerlink" title="4、说一下微调的数据集格式"></a>4、说一下微调的数据集格式</h2><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;context&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Instruction: 你现在是一个很厉害的阅读理解器，严格按照人类指令进行回答。\nInput: 找到句子中的三元组信息并输出成json给我:\n\n九玄珠是在纵横中文网连载的一部小说，作者是龙马。\nAnswer: &quot;</span><span class="punctuation">,</span> </span><br><span class="line">    <span class="attr">&quot;target&quot;</span><span class="punctuation">:</span> <span class="string">&quot;```json\n[&#123;\&quot;predicate\&quot;: \&quot;连载网站\&quot;, \&quot;object_type\&quot;: \&quot;网站\&quot;, \&quot;subject_type\&quot;: \&quot;网络小说\&quot;, \&quot;object\&quot;: \&quot;纵横中文网\&quot;, \&quot;subject\&quot;: \&quot;九玄珠\&quot;&#125;, &#123;\&quot;predicate\&quot;: \&quot;作者\&quot;, \&quot;object_type\&quot;: \&quot;人物\&quot;, \&quot;subject_type\&quot;: \&quot;图书作品\&quot;, \&quot;object\&quot;: \&quot;龙马\&quot;, \&quot;subject\&quot;: \&quot;九玄珠\&quot;&#125;]\n```&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;context&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Instruction: 你现在是一个很厉害的阅读理解器，严格按照人类指令进行回答。\nInput: 下面句子可能是一条关于什么的评论，用列表形式回答：\n\n很不错，很新鲜，快递小哥服务很好，水果也挺甜挺脆的\nAnswer: &quot;</span><span class="punctuation">,</span> </span><br><span class="line">    <span class="attr">&quot;target&quot;</span><span class="punctuation">:</span> <span class="string">&quot;[\&quot;水果\&quot;]&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>每一条数据都分为 <code>context</code> 和 <code>target</code> 两部分：</p>
+<ol>
+<li><code>context</code> 部分是接受用户的输入。2.<code> target</code> 部分用于指定模型的输出。</li>
+</ol>
+<p>在 <code>context</code> 中又包括 2 个部分：</p>
+<ol>
+<li>Instruction：用于告知模型的具体指令，当需要一个模型同时解决多个任务时可以设定不同的 Instruction 来帮助模型判别当前应当做什么任务。</li>
+<li>Input：当前用户的输入。</li>
+</ol>
+<h2 id="5、说一下GLM模型的架构原理？"><a href="#5、说一下GLM模型的架构原理？" class="headerlink" title="5、说一下GLM模型的架构原理？"></a>5、说一下GLM模型的架构原理？</h2><p>GLM（General Language Model，通用语言模型）是一种基于<code>自回归空白填充</code>（Autoregressive Blank Infilling）目标进行预训练的神经网络架构，旨在统一处理自然语言理解与生成任务。</p>
+<p>其核心原理是将输入文本中的多个连续或离散的“空白片段”（masked spans）打乱顺序后填入一个特殊的提示符序列，模型则按随机排列的顺序，自回归地预测这些空白处的内容。这种独特的预训练任务设计，使得GLM能够同时吸收和融合自回归模型（如GPT）的生成能力和自编码模型（如BERT）的双向上下文理解能力。通过一个统一的模型架构和目标，GLM在文本分类、问答、摘要、翻译等多种下游任务上均表现出强大的性能，实现了“一个模型，多种任务”的通用性。</p>
+<h2 id="6、说一下微调时数据处理的思路"><a href="#6、说一下微调时数据处理的思路" class="headerlink" title="6、说一下微调时数据处理的思路"></a>6、说一下微调时数据处理的思路</h2><p><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/24-07/image-20251103072309442.png" alt="image-20251103072309442"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="https://liamjohnson-w.github.io">李俊泽</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://liamjohnson-w.github.io/2025/11/03/Fine-Tuning-Note/">https://liamjohnson-w.github.io/2025/11/03/Fine-Tuning-Note/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Python/">Python</a><a class="post-meta__tags" href="/tags/AI/">AI</a></div><div class="post_share"><div class="social-share" data-image="https://wei-blog.oss-cn-beijing.aliyuncs.com/24-07/Pusheen191.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> Donate</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2025/11/02/Fine-Tuning/" title="Fine-Tuning"><img class="cover" src="https://wei-blog.oss-cn-beijing.aliyuncs.com/24-07/pusheen11121.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Fine-Tuning</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2025/06/03/2025.06.03/" title="OLLAMA"><img class="cover" src="https://wei-blog.oss-cn-beijing.aliyuncs.com/24-07/image-20250603132906789.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-06-03</div><div class="title">OLLAMA</div></div></a></div><div><a href="/2025/10/25/Agent/" title="Agent-Note"><img class="cover" src="https://wei-blog.oss-cn-beijing.aliyuncs.com/24-07/Pusheen1121.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-10-25</div><div class="title">Agent-Note</div></div></a></div><div><a href="/2025/10/30/Agent_all/" title="Agent"><img class="cover" src="https://wei-blog.oss-cn-beijing.aliyuncs.com/24-07/Pusheen12222.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-10-30</div><div class="title">Agent</div></div></a></div><div><a href="/2025/11/02/Fine-Tuning/" title="Fine-Tuning"><img class="cover" src="https://wei-blog.oss-cn-beijing.aliyuncs.com/24-07/pusheen11121.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-11-02</div><div class="title">Fine-Tuning</div></div></a></div><div><a href="/2025/09/28/LLM_Base/" title="LLM大模型基础"><img class="cover" src="https://wei-blog.oss-cn-beijing.aliyuncs.com/24-07/pusheen112.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-09-28</div><div class="title">LLM大模型基础</div></div></a></div><div><a href="/2025/06/22/NLP_Base/" title="NLP自然语言处理"><img class="cover" src="https://wei-blog.oss-cn-beijing.aliyuncs.com/24-07/%E7%94%9F%E6%88%90%E7%8C%AB%E5%92%AA%E5%9B%BE%E7%89%87%20(2).png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-06-22</div><div class="title">NLP自然语言处理</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/24-07/tx.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">李俊泽</div><div class="author-info__description">机器都在学习,你有什么理由不学习?</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">241</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">58</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/weiswift/"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/weiswift" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:1265019024@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">博客为本人搭建 Github托管 仅记录学习过程 不做引流 不做排名 不打广告！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Day02"><span class="toc-number">1.</span> <span class="toc-text">Day02</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81%E8%AF%B4%E4%B8%80%E4%B8%8BLoRA%E7%9A%84%E5%8E%9F%E7%90%86"><span class="toc-number">1.1.</span> <span class="toc-text">1、说一下LoRA的原理?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81%E8%AF%B4%E4%B8%80%E4%B8%8BLoRA%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-number">1.2.</span> <span class="toc-text">2、说一下LoRA的优缺点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E3%80%81%E8%AF%B4%E4%B8%80%E4%B8%8BQLoRA%E7%9A%84%E5%8E%9F%E7%90%86%EF%BC%9F"><span class="toc-number">1.3.</span> <span class="toc-text">3、说一下QLoRA的原理？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4%E3%80%81%E8%AF%B4%E4%B8%80%E4%B8%8B%E5%BE%AE%E8%B0%83%E7%9A%84%E6%95%B0%E6%8D%AE%E9%9B%86%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.4.</span> <span class="toc-text">4、说一下微调的数据集格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5%E3%80%81%E8%AF%B4%E4%B8%80%E4%B8%8BGLM%E6%A8%A1%E5%9E%8B%E7%9A%84%E6%9E%B6%E6%9E%84%E5%8E%9F%E7%90%86%EF%BC%9F"><span class="toc-number">1.5.</span> <span class="toc-text">5、说一下GLM模型的架构原理？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6%E3%80%81%E8%AF%B4%E4%B8%80%E4%B8%8B%E5%BE%AE%E8%B0%83%E6%97%B6%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="toc-number">1.6.</span> <span class="toc-text">6、说一下微调时数据处理的思路</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2025/11/03/Fine-Tuning-Note/" title="Fine-Tuning-Note"><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/24-07/Pusheen191.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Fine-Tuning-Note"/></a><div class="content"><a class="title" href="/2025/11/03/Fine-Tuning-Note/" title="Fine-Tuning-Note">Fine-Tuning-Note</a><time datetime="2025-11-02T16:00:00.000Z" title="Created 2025-11-03 00:00:00">2025-11-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/11/02/Fine-Tuning/" title="Fine-Tuning"><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/24-07/pusheen11121.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Fine-Tuning"/></a><div class="content"><a class="title" href="/2025/11/02/Fine-Tuning/" title="Fine-Tuning">Fine-Tuning</a><time datetime="2025-11-01T16:00:00.000Z" title="Created 2025-11-02 00:00:00">2025-11-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/10/30/Agent_all/" title="Agent"><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/24-07/Pusheen12222.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Agent"/></a><div class="content"><a class="title" href="/2025/10/30/Agent_all/" title="Agent">Agent</a><time datetime="2025-10-29T16:00:00.000Z" title="Created 2025-10-30 00:00:00">2025-10-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/10/25/Agent/" title="Agent-Note"><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/24-07/Pusheen1121.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Agent-Note"/></a><div class="content"><a class="title" href="/2025/10/25/Agent/" title="Agent-Note">Agent-Note</a><time datetime="2025-10-24T16:00:00.000Z" title="Created 2025-10-25 00:00:00">2025-10-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/10/21/RAG/" title="RAG"><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/24-07/pusheen3.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="RAG"/></a><div class="content"><a class="title" href="/2025/10/21/RAG/" title="RAG">RAG</a><time datetime="2025-10-20T16:00:00.000Z" title="Created 2025-10-21 00:00:00">2025-10-21</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By 李俊泽</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Welcome to 李俊泽 の <a target="_blank" rel="noopener" href="https://www.cnblogs.com/liam-sliversucks/">Blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container').forEach(node => {
+            if (node.hasAttribute('display')) {
+              btf.wrap(node, 'div', { class: 'mathjax-overflow' })
+            } else {
+              btf.wrap(node, 'span', { class: 'mathjax-overflow' })
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><script>(() => {
+  const $mermaidWrap = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaidWrap.length) {
+    window.runMermaid = () => {
+      window.loadMermaid = true
+      const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? '' : ''
+
+      Array.from($mermaidWrap).forEach((item, index) => {
+        const mermaidSrc = item.firstElementChild
+        const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+        const mermaidID = 'mermaid-' + index
+        const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+        mermaid.mermaidAPI.render(mermaidID, mermaidDefinition, (svgCode) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svgCode)
+        })
+      })
+    }
+
+    const loadMermaid = () => {
+      window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaid)
+    }
+
+    window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+  }
+})()</script></div><canvas class="fireworks" mobile="true"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = true;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="true"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
