@@ -1,0 +1,330 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>LLM2Agent | All wisdom begins with memory.</title><meta name="author" content="李俊泽"><meta name="copyright" content="李俊泽"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="什么是端到端？就是从一个业务功能设计到具体的开发环境实现，这就是端到端 AI完全替代工程师可行性包括一些数据的形式、数据体量、数据本身的数据结构 还有比如还使用到Linux这里包括：Linux的服务器型号、版本号、操作系统 数据库（Mysql、Kafka、ES、MongoDB、Redis、Hive、"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://liamjohnson-w.github.io/2025/11/22/LLM2Agent/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'LLM2Agent',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-11-22 20:37:30'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css"> <script src="/live2d-widget/autoload.js"></script><script src="/live2d-widget/autoload.js"> </script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/24-07/tx.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">243</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">59</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Links</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-gamepad"></i><span> Games</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/mikutap/"><i class="fa-fw fa fa-music"></i><span> MikuTap 初音未来</span></a></li><li><a class="site-page child" href="/starbattle/"><i class="fa-fw fa fa-space-shuttle"></i><span> StartBattle 星际大战</span></a></li><li><a class="site-page child" href="/2048/"><i class="fa-fw fa fa-flag"></i><span> 2048 经典游戏</span></a></li><li><a class="site-page child" href="/battlecity/"><i class="fa-fw fa fa-arrow-circle-left"></i><span> BattleCity 坦克大战</span></a></li><li><a class="site-page child" href="/pacman/"><i class="fa-fw fa fa-bolt"></i><span> PacMan  吃豆人</span></a></li><li><a class="site-page child" href="/tetris/"><i class="fa-fw fa fa-arrows-alt"></i><span> Tetris 俄罗斯方块</span></a></li><li><a class="site-page child" href="/smallcat/"><i class="fa-fw fa fa-paw"></i><span> CatchCat 困住小猫</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-leaf"></i><span> Moments</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/diary/"><i class="fa-fw fas fa-bookmark"></i><span> Diary</span></a></li><li><a class="site-page child" href="/gallery/"><i class="fa-fw fa fa-hourglass-half"></i><span> Gallery</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-podcast"></i><span> More</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags标签</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About关于</span></a></li><li><a class="site-page child" href="/messageboard/"><i class="fa-fw fas fa-bookmark"></i><span> Messageboard留言板</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://wei-blog.oss-cn-beijing.aliyuncs.com/24-07/%E8%83%8C%E6%99%AF%20(2).png')"><nav id="nav"><span id="blog-info"><a href="/" title="All wisdom begins with memory."><span class="site-name">All wisdom begins with memory.</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Links</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-gamepad"></i><span> Games</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/mikutap/"><i class="fa-fw fa fa-music"></i><span> MikuTap 初音未来</span></a></li><li><a class="site-page child" href="/starbattle/"><i class="fa-fw fa fa-space-shuttle"></i><span> StartBattle 星际大战</span></a></li><li><a class="site-page child" href="/2048/"><i class="fa-fw fa fa-flag"></i><span> 2048 经典游戏</span></a></li><li><a class="site-page child" href="/battlecity/"><i class="fa-fw fa fa-arrow-circle-left"></i><span> BattleCity 坦克大战</span></a></li><li><a class="site-page child" href="/pacman/"><i class="fa-fw fa fa-bolt"></i><span> PacMan  吃豆人</span></a></li><li><a class="site-page child" href="/tetris/"><i class="fa-fw fa fa-arrows-alt"></i><span> Tetris 俄罗斯方块</span></a></li><li><a class="site-page child" href="/smallcat/"><i class="fa-fw fa fa-paw"></i><span> CatchCat 困住小猫</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-leaf"></i><span> Moments</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/diary/"><i class="fa-fw fas fa-bookmark"></i><span> Diary</span></a></li><li><a class="site-page child" href="/gallery/"><i class="fa-fw fa fa-hourglass-half"></i><span> Gallery</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-podcast"></i><span> More</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags标签</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About关于</span></a></li><li><a class="site-page child" href="/messageboard/"><i class="fa-fw fas fa-bookmark"></i><span> Messageboard留言板</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">LLM2Agent</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2025-11-21T16:00:00.000Z" title="Created 2025-11-22 00:00:00">2025-11-22</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2025-11-22T12:37:30.811Z" title="Updated 2025-11-22 20:37:30">2025-11-22</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="LLM2Agent"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="什么是端到端？"><a href="#什么是端到端？" class="headerlink" title="什么是端到端？"></a>什么是端到端？</h2><p>就是从一个业务功能设计到具体的开发环境实现，这就是端到端</p>
+<h2 id="AI完全替代工程师可行性"><a href="#AI完全替代工程师可行性" class="headerlink" title="AI完全替代工程师可行性"></a>AI完全替代工程师可行性</h2><p>包括一些数据的形式、数据体量、数据本身的数据结构</p>
+<p>还有比如还使用到Linux这里包括：Linux的服务器型号、版本号、操作系统</p>
+<p>数据库（Mysql、Kafka、ES、MongoDB、Redis、Hive、Hadoop、Noe4j、Milvus、Doris）端口、数据库名、表名、字段信息、数据类型（int、float、double单双精度浮点型）</p>
+<h2 id="AI会有提示"><a href="#AI会有提示" class="headerlink" title="AI会有提示"></a>AI会有提示</h2><p>AI提示没问题，但主要是人需要知道这个东西怎么配置或者说如何使用</p>
+<p>从人驱动AI，到AI驱动人，这就会出现一个问题，不懂这个底层逻辑就会完全依赖于AI，甚至他胡编乱造你也会听。而且幻觉问题从来都没有解决过，所以AI就会欺骗你。幻觉从一开始都是缓解，并没有彻底解决。</p>
+<h2 id="工程师的竞争力在于"><a href="#工程师的竞争力在于" class="headerlink" title="工程师的竞争力在于"></a>工程师的竞争力在于</h2><p>在问题出现之后快速定位问题，并依赖AI解决问题。</p>
+<p>在于驾驭AI，如果驾驭不了AI，那么就会被AI驾驭。</p>
+<p>AI给你生成屎山代码，那么你就需要去不断地调试（可以说AI其实只是一个书呆子，他没有实际去解决过一些企业中的实际生产问题，他就没有实践）</p>
+<p>所以说AI慢慢会往Agent方向去靠</p>
+<h2 id="AI幻觉产生原因是什么？"><a href="#AI幻觉产生原因是什么？" class="headerlink" title="AI幻觉产生原因是什么？"></a>AI幻觉产生原因是什么？</h2><p>AI幻觉其实就是大语言模型的幻觉。目前主流的LLM是Decoder-Only架构的。也就是自回归（Auto-regressive）模型，根据前面的文本预测下一个词，但是每一个词其实都是基于概率分布来的。如果模型在第一步就犯了一个小错误（生成了一个不合理或事实错误的词），这个错误会成为后续预测的新上下文。模型只能基于这个错误的上下文继续生成，导致错误像雪球一样越滚越大，最终可能生成完全虚构的内容（即“幻觉”）。</p>
+<p><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/24-07/image-20251122191849822.png" alt="image-20251122191849822"></p>
+<ul>
+<li>Encoder-Only架构<ul>
+<li>代表模型：BERT, RoBERTa, DeBERTa</li>
+<li>特点：能够同时“看到”整个输入句子的上下文（双向理解），极其擅长 深度理解 。</li>
+<li>适用任务：文本分类、情感分析、命名实体识别等需要对文本进行全面理解的任务。</li>
+</ul>
+</li>
+<li>Encoder-Decoder<ul>
+<li>代表模型：T5, BART, Flan-T5</li>
+<li>特点：保留了原始 Transformer 的完整结构，适用于将一个文本序列转换为另一个文本序列的 序列到序列 任务。</li>
+<li>适用任务：机器翻译、文本摘要、问答等。</li>
+</ul>
+</li>
+<li>Decoder-Only架构<ul>
+<li>代表模型：GPT 系列, PaLM, LLaMA, ChatGPT</li>
+<li>特点：自回归（Auto-regressive）模型，根据前面的文本预测下一个词，极其擅长 内容生成 。</li>
+<li>适用任务：文章写作、聊天对话、代码生成等需要创意和流畅表达的任务。</li>
+</ul>
+</li>
+</ul>
+<h2 id="次时代模型Agent"><a href="#次时代模型Agent" class="headerlink" title="次时代模型Agent"></a>次时代模型Agent</h2><p>通过越来越强的工具调用能力和任务规划能力，模型会越来越向Agent去靠拢（理解任务、制定计划、使用工具、反思改进）。</p>
+<p>GPT-5的发布会上，OpenAI就推出了AgentKit，让开发者用一种工作流方式开发Agent，成为新一代的AI内App。</p>
+<p>但在今天之前，几乎没有任何一家基础模型公司在to C的产品中添加通用Agent能力。因为这对于模型的考验相当大，它需要真的进化成能够理解任务、制定计划、使用工具、反思改进的Agent。</p>
+<p>Gemini 3首先完成了这一跃，成了第一个在模型界面融合通用Agent能力的产品。</p>
+<p>这种自信并非毫无根据。根据Model Card，它被训练使用了强化学习技术，能够利用多步骤推理、问题解决和定理证明数据。这种能力的技术基础部分来自于改进的函数调用（function calling）能力。根据发布资料，Gemini 3的工具使用能力相比2.5 Pro提升了30%。这不仅意味着它能更准确地选择正确的工具，更重要的是，它能理解何时需要组合多个工具来完成复杂任务。</p>
+<p>有用户让Gemini 3帮助学习一门新语言。传统AI会提供学习计划和资源链接。但Gemini 3生成了一套完整的交互式学习系统：词汇卡片带有间隔重复算法，语法练习带有即时反馈，发音练习集成了语音识别，进度追踪可视化。</p>
+<h2 id="Agent有哪几种模式"><a href="#Agent有哪几种模式" class="headerlink" title="Agent有哪几种模式"></a>Agent有哪几种模式</h2><p>（1）⼯具使⽤模式</p>
+<p>允许 Agent 调用外部工具来弥补自身知识的不足。</p>
+<p>agent会自动完成工具的选择和调用，并基于工具调用结果进行最终答案生成。</p>
+<p>（2）ReAct 模式</p>
+<p>将“思考”（Reasoning）和 “行动”（Acting）紧密地结合在一起，形成一个动态的循环。这个模式让Agent不再是简单地调用工具，而是像人类一样“边想边做”，从而解决更复杂的问题。</p>
+<p>工作流程：思考——》行动——》行动输入——》观察——》循环迭代</p>
+<p>（3）反思模式</p>
+<p>Agent 在完成一个步骤或整个任务后，对其结果进行评估生成反馈【大模型自身、评估模型、调用工具、用户反馈】， 然后Agent根据反馈结果进行反思并对结果进行修正。</p>
+<p>（4）规划模式</p>
+<p>先将一个大目标分解成一个详细的、有序的计划（Plan），然后再逐一执行计划中的每个步骤（每个步骤可能是一个 ReAct 循环）。</p>
+<p>（5）多智能体模式</p>
+<p>可以设计多个具有不同角色和能力的 Agent，让它们协同工作来完成极复杂的任务。</p>
+<h1 id="AI给出的思考"><a href="#AI给出的思考" class="headerlink" title="AI给出的思考"></a>AI给出的思考</h1><h2 id="一、对“AI-一句话生成完整网页”的冷静思考"><a href="#一、对“AI-一句话生成完整网页”的冷静思考" class="headerlink" title="一、对“AI 一句话生成完整网页”的冷静思考"></a>一、对“AI 一句话生成完整网页”的冷静思考</h2><p>AI 工具在生成简单、静态或符合标准模板的网页方面确实展现了极高的效率，比如一个基于 Tailwind CSS 的企业网站或一个基本的待办事项列表。但这并不意味着前端程序员的末日，而是意味着简单重复性的工作将被自动化。</p>
+<p>AI 无法取代的核心价值：</p>
+<ol>
+<li>业务逻辑的抽象与转换： 真正的挑战不在于“如何写代码”，而在于“如何将模糊的业务需求和复杂的系统限制转化为清晰、可执行的架构”。AI 目前缺乏对公司战略、市场竞争和长期维护成本的深刻理解。</li>
+<li>系统工程与可维护性： AI 生成的代码通常是零散的、一次性的，缺乏整体的系统架构设计。对于大型、高流量、需要长期维护的企业级应用，程序员必须设计数据流、状态管理、模块化和扩展性——这些是 AI 尚无法独立完成的复杂工程任务。</li>
+<li>复杂交互与用户体验 (UX)： 优秀的交互设计往往需要对用户心理和场景进行深度共情。AI 可以实现“功能”，但难以创造出真正提升用户体验的、微妙且创新的交互方式。</li>
+<li>集成与调试能力： 当 AI 生成的代码与复杂的后端服务、遗留系统、第三方 API 或特定硬件集成时，出现问题是必然的。解决跨系统、跨层级的复杂调试问题，仍然是人类程序员的专属领域。</li>
+</ol>
+<h2 id="二、当前程序员的核心竞争力"><a href="#二、当前程序员的核心竞争力" class="headerlink" title="二、当前程序员的核心竞争力"></a>二、当前程序员的核心竞争力</h2><p>在 AI 成为通用工具的时代，程序员的核心竞争力已从“撰写代码”转向“解决问题”和“设计系统”。</p>
+<table>
+<thead>
+<tr>
+<th>核心竞争力</th>
+<th>描述</th>
+<th>应对 AI 挑战</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1. 系统架构与设计思维</td>
+<td>能够设计可扩展、高性能、高可用的软件系统，理解微服务、数据结构、设计模式等。</td>
+<td>从实现细节中脱身，专注于宏观蓝图，成为 AI 的架构师和总指挥。</td>
+</tr>
+<tr>
+<td>2. 业务洞察与需求抽象</td>
+<td>能够准确理解客户或业务方的真实需求，并将其转化为清晰、无歧义的技术规格。</td>
+<td>AI 无法理解“言外之意”和商业语境，这是人类沟通和判断的独特价值。</td>
+</tr>
+<tr>
+<td>3. 深度调试与瓶颈分析</td>
+<td>能够快速定位生产环境中的复杂 Bug、分析性能瓶颈、解决多线程竞争等底层问题。</td>
+<td>掌握工具，能深入代码库的各个角落，进行 AI 无法触及的复杂“侦查”工作。</td>
+</tr>
+<tr>
+<td>4. 学习与适应新技术能力</td>
+<td>能够快速掌握新的编程语言、框架和工具，尤其包括 AI 模型和相关工具链。</td>
+<td>将 AI 视为生产力工具，持续学习如何高效地“提示 (Prompt)”和“审核 (Audit)”AI 生成的代码。</td>
+</tr>
+<tr>
+<td>5. 软技能与领导力</td>
+<td>有效的沟通、团队协作、项目管理、指导初级成员、以及在技术决策中权衡利弊。</td>
+<td>编程工作的社会属性不会消失，工程领导力和跨职能沟通至关重要。</td>
+</tr>
+</tbody></table>
+<h2 id="三、结论：未来的角色转变"><a href="#三、结论：未来的角色转变" class="headerlink" title="三、结论：未来的角色转变"></a>三、结论：未来的角色转变</h2><p>前端程序员的角色正在从专注于 HTML&#x2F;CSS&#x2F;JavaScript 的实现者 (Implementer) 转向 前端系统架构师 (Front-end System Architect)。</p>
+<p>AI 将解放程序员，使其摆脱重复性的代码编写工作，从而有更多的时间和精力投入到高价值的决策、创新和工程挑战中。未来的程序员需要具备“与 AI 协作”的能力，学会高效地向 AI 提问、整合 AI 产出，并对最终产品的质量和可靠性负责。</p>
+<p>总而言之，AI 无法取代具备 工程化思维、业务理解力 和 系统级解决能力 的工程师。程序员的工作不是消失了，而是进化了。</p>
+<h1 id="LLM赋能小微企业-ESG-业务分析"><a href="#LLM赋能小微企业-ESG-业务分析" class="headerlink" title="LLM赋能小微企业 ESG 业务分析"></a>LLM赋能小微企业 ESG 业务分析</h1><h2 id="ESG-实践中的痛点"><a href="#ESG-实践中的痛点" class="headerlink" title="ESG 实践中的痛点"></a>ESG 实践中的痛点</h2><p>资源和成本问题（以最少得成本来最大化获取资源），也就是如何做到降本增效。目前了解到的如下：</p>
+<p>ESG报告编写比较耗费人力成本（需要一些资深的ESG分析师来编写）</p>
+<p>信息的采集：对应ESG新的ESG政策如果没有统一的信息汇总工具那么就无法很快的了解到行业的一些最新动态（包括一些上交所、深交所、港交所、北交所的一些最新的ESG政策）。</p>
+<p>再有就是内部员工需要了解ESG到底是什么东西，但是相关文件又过多，难以理解。LLM可以降低内部培训成本，提高员工对 ESG 理念的认知度和参与度。</p>
+<h2 id="Gemini如何使用"><a href="#Gemini如何使用" class="headerlink" title="Gemini如何使用"></a>Gemini如何使用</h2><p>Gemini是谷歌闭源的一款模型，微调不可能，别人拿来卖钱的。（笑）</p>
+<p>生成HTML网页、包括SVG动画这些都不用说，效果也还不错，但是这仅仅是一个demo，对于企业级的项目仅仅有前端是不够的，而且企业级的项目的工程量在这，在一个就是企业级的项目不单单是生成代码，还要根据业务去生产环境跑代码，这就涉及到很多的调试，很多的试错，怎么去定位问题，怎么去解决问题这很重要。</p>
+<p>我觉得关键不在于说Gemini或者别的大模型本身如何，而是在于我们人&#x2F;开发&#x2F;业务如何使用好这个大模型。</p>
+<p>针对于业务：写报告、分析行业最新的ESG政策</p>
+<p>对于技术：在生产环境遇到问题如何定位问题并解决问题</p>
+<h2 id="提示词技术"><a href="#提示词技术" class="headerlink" title="提示词技术"></a>提示词技术</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">你是专业的内容理解与整理专家，请按照以下步骤处理任务：</span><br><span class="line">输入数据：</span><br><span class="line">&#123;&#123;<span class="comment">#1763627802011.text#&#125;&#125;</span></span><br><span class="line">&#123;&#123;<span class="comment">#1760977742184.text#&#125;&#125;</span></span><br><span class="line"></span><br><span class="line">执行步骤：</span><br><span class="line"><span class="number">1.</span> 根据文本内容，将文本分别分割成独立的段落，并以黑色实心方块进行编号，先整理第一部分内容，再整理第二部分内容，每一个段落字数控制在<span class="number">100</span>-<span class="number">200</span>字左右</span><br><span class="line"><span class="number">2.</span> 不同日期的段落进行分开整理</span><br><span class="line"><span class="number">3.</span> 以黑色实心方块进行编号，不要出现数字编号（<span class="number">1.</span> 等），不要换行，不要出现黑色圆点</span><br><span class="line"><span class="number">4.</span> 将内容分别归类到，国内(政策与社会，投资与实践)，国外(政策与社会，投资与实践) 两大板块（段落内容严格区分国内与国外）</span><br><span class="line"><span class="number">5.</span> 严格按照一级标题（国内/国外资讯），二级标题(政策与社会，投资与实践)的标题结构进行输出</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">重要要求：</span><br><span class="line">- 所有执行必须按照顺序执行</span><br><span class="line">- 必须严格按照传入的内容整理，不要随意编造</span><br><span class="line">- 按照每一个段落中的时间进行降序排序，如果段落中没有时间，就排到最前面</span><br><span class="line">- 确保每一步完成后再进行下一步</span><br><span class="line">- 最终输出只包含完整两个一级标题，一级标题下面有政策与社会，投资与实践两个二级标题</span><br><span class="line">- 不要包含任何XML标签或标记语言</span><br><span class="line">- 输出格式为MarkDown</span><br><span class="line">- 内容中不要出现排版说明，类似的说明文字</span><br><span class="line">- 每一个二级标题下面不少于三段内容 不同分段来源于不同的内容</span><br><span class="line">- 每一个带有《》书名号的内容不要随意变动</span><br><span class="line"></span><br><span class="line">输出格式示例：</span><br><span class="line"><span class="comment"># 国内资讯</span></span><br><span class="line"><span class="comment">## 政策与社会</span></span><br><span class="line">■ 段落具体内容....</span><br><span class="line">投资与实践</span><br><span class="line">■ 段落具体内容....</span><br><span class="line"><span class="comment"># 国外资讯</span></span><br><span class="line"><span class="comment">## 政策与社会</span></span><br><span class="line">■ 段落具体内容....</span><br><span class="line">投资与实践</span><br><span class="line">■ 段落具体内容....</span><br></pre></td></tr></table></figure>
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="https://liamjohnson-w.github.io">李俊泽</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://liamjohnson-w.github.io/2025/11/22/LLM2Agent/">https://liamjohnson-w.github.io/2025/11/22/LLM2Agent/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/AI%EF%BC%8CESG/">AI，ESG</a></div><div class="post_share"><div class="social-share" data-image="https://wei-blog.oss-cn-beijing.aliyuncs.com/24-07/pusheen_gemini.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> Donate</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2025/11/14/Fine_tuning&amp;Agent_Workflow/" title="Jason Working Note"><img class="cover" src="https://wei-blog.oss-cn-beijing.aliyuncs.com/24-07/pusheen4.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Jason Working Note</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/24-07/tx.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">李俊泽</div><div class="author-info__description">机器都在学习,你有什么理由不学习?</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">243</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">59</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/weiswift/"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/weiswift" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:1265019024@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">博客为本人搭建 Github托管 仅记录学习过程 不做引流 不做排名 不打广告！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E7%AB%AF%E5%88%B0%E7%AB%AF%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">什么是端到端？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AI%E5%AE%8C%E5%85%A8%E6%9B%BF%E4%BB%A3%E5%B7%A5%E7%A8%8B%E5%B8%88%E5%8F%AF%E8%A1%8C%E6%80%A7"><span class="toc-number">2.</span> <span class="toc-text">AI完全替代工程师可行性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AI%E4%BC%9A%E6%9C%89%E6%8F%90%E7%A4%BA"><span class="toc-number">3.</span> <span class="toc-text">AI会有提示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B7%A5%E7%A8%8B%E5%B8%88%E7%9A%84%E7%AB%9E%E4%BA%89%E5%8A%9B%E5%9C%A8%E4%BA%8E"><span class="toc-number">4.</span> <span class="toc-text">工程师的竞争力在于</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AI%E5%B9%BB%E8%A7%89%E4%BA%A7%E7%94%9F%E5%8E%9F%E5%9B%A0%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">5.</span> <span class="toc-text">AI幻觉产生原因是什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AC%A1%E6%97%B6%E4%BB%A3%E6%A8%A1%E5%9E%8BAgent"><span class="toc-number">6.</span> <span class="toc-text">次时代模型Agent</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Agent%E6%9C%89%E5%93%AA%E5%87%A0%E7%A7%8D%E6%A8%A1%E5%BC%8F"><span class="toc-number">7.</span> <span class="toc-text">Agent有哪几种模式</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#AI%E7%BB%99%E5%87%BA%E7%9A%84%E6%80%9D%E8%80%83"><span class="toc-number"></span> <span class="toc-text">AI给出的思考</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%AF%B9%E2%80%9CAI-%E4%B8%80%E5%8F%A5%E8%AF%9D%E7%94%9F%E6%88%90%E5%AE%8C%E6%95%B4%E7%BD%91%E9%A1%B5%E2%80%9D%E7%9A%84%E5%86%B7%E9%9D%99%E6%80%9D%E8%80%83"><span class="toc-number">1.</span> <span class="toc-text">一、对“AI 一句话生成完整网页”的冷静思考</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%BD%93%E5%89%8D%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E6%A0%B8%E5%BF%83%E7%AB%9E%E4%BA%89%E5%8A%9B"><span class="toc-number">2.</span> <span class="toc-text">二、当前程序员的核心竞争力</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E7%BB%93%E8%AE%BA%EF%BC%9A%E6%9C%AA%E6%9D%A5%E7%9A%84%E8%A7%92%E8%89%B2%E8%BD%AC%E5%8F%98"><span class="toc-number">3.</span> <span class="toc-text">三、结论：未来的角色转变</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#LLM%E8%B5%8B%E8%83%BD%E5%B0%8F%E5%BE%AE%E4%BC%81%E4%B8%9A-ESG-%E4%B8%9A%E5%8A%A1%E5%88%86%E6%9E%90"><span class="toc-number"></span> <span class="toc-text">LLM赋能小微企业 ESG 业务分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ESG-%E5%AE%9E%E8%B7%B5%E4%B8%AD%E7%9A%84%E7%97%9B%E7%82%B9"><span class="toc-number">1.</span> <span class="toc-text">ESG 实践中的痛点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gemini%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8"><span class="toc-number">2.</span> <span class="toc-text">Gemini如何使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%90%E7%A4%BA%E8%AF%8D%E6%8A%80%E6%9C%AF"><span class="toc-number">3.</span> <span class="toc-text">提示词技术</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2025/11/22/LLM2Agent/" title="LLM2Agent"><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/24-07/pusheen_gemini.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="LLM2Agent"/></a><div class="content"><a class="title" href="/2025/11/22/LLM2Agent/" title="LLM2Agent">LLM2Agent</a><time datetime="2025-11-21T16:00:00.000Z" title="Created 2025-11-22 00:00:00">2025-11-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/11/14/Fine_tuning&amp;Agent_Workflow/" title="Jason Working Note"><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/24-07/pusheen4.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Jason Working Note"/></a><div class="content"><a class="title" href="/2025/11/14/Fine_tuning&amp;Agent_Workflow/" title="Jason Working Note">Jason Working Note</a><time datetime="2025-11-13T16:00:00.000Z" title="Created 2025-11-14 00:00:00">2025-11-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/11/03/Fine-Tuning-Note/" title="Fine-Tuning-Note"><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/24-07/Pusheen191.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Fine-Tuning-Note"/></a><div class="content"><a class="title" href="/2025/11/03/Fine-Tuning-Note/" title="Fine-Tuning-Note">Fine-Tuning-Note</a><time datetime="2025-11-02T16:00:00.000Z" title="Created 2025-11-03 00:00:00">2025-11-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/11/02/Fine-Tuning/" title="Fine-Tuning"><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/24-07/pusheen11121.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Fine-Tuning"/></a><div class="content"><a class="title" href="/2025/11/02/Fine-Tuning/" title="Fine-Tuning">Fine-Tuning</a><time datetime="2025-11-01T16:00:00.000Z" title="Created 2025-11-02 00:00:00">2025-11-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/10/30/Agent_all/" title="Agent"><img src="https://wei-blog.oss-cn-beijing.aliyuncs.com/24-07/Pusheen12222.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Agent"/></a><div class="content"><a class="title" href="/2025/10/30/Agent_all/" title="Agent">Agent</a><time datetime="2025-10-29T16:00:00.000Z" title="Created 2025-10-30 00:00:00">2025-10-30</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By 李俊泽</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">Welcome to 李俊泽 の <a target="_blank" rel="noopener" href="https://www.cnblogs.com/liam-sliversucks/">Blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container').forEach(node => {
+            if (node.hasAttribute('display')) {
+              btf.wrap(node, 'div', { class: 'mathjax-overflow' })
+            } else {
+              btf.wrap(node, 'span', { class: 'mathjax-overflow' })
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><script>(() => {
+  const $mermaidWrap = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaidWrap.length) {
+    window.runMermaid = () => {
+      window.loadMermaid = true
+      const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? '' : ''
+
+      Array.from($mermaidWrap).forEach((item, index) => {
+        const mermaidSrc = item.firstElementChild
+        const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+        const mermaidID = 'mermaid-' + index
+        const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+        mermaid.mermaidAPI.render(mermaidID, mermaidDefinition, (svgCode) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svgCode)
+        })
+      })
+    }
+
+    const loadMermaid = () => {
+      window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaid)
+    }
+
+    window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+  }
+})()</script></div><canvas class="fireworks" mobile="true"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = true;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="true"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
